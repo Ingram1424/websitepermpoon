@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจัดการข้อมูลหลังบ้าน (Admin) | บริษัท เพิ่มพูน</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2318181b'/><path d='M30 70 L50 30 L70 70 Z' fill='none' stroke='white' stroke-width='6'/><path d='M42 70 L50 52 L58 70 Z' fill='%23ca8a04'/></svg>">
+
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#18181b',
+              50: '#fafafa',
+              100: '#f4f4f5',
+              200: '#e4e4e7',
+              800: '#27272a',
+              900: '#18181b',
+            }
+          },
+          fontFamily: {
+            sans: ['Prompt', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-zinc-100 text-zinc-800 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Admin Top Bar -->
+  <header class="bg-zinc-900 text-white border-b border-zinc-800 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-white text-zinc-950 flex items-center justify-center font-bold text-sm">
+          พ
+        </div>
+        <div>
+          <div class="font-bold text-sm leading-tight">ระบบจัดการข้อมูลลูกค้า (CRM Admin)</div>
+          <div class="text-[10px] text-zinc-400">บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs">
+        <!-- Database Status Indicator -->
+        <div id="db-status-badge" class="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span id="db-status-text">ตรวจสถานะ...</span>
+        </div>
+
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          <span>ดูหน้าเว็บไซต์</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-6">
+
+    <!-- Overview Stats Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
+        <div class="flex items-center justify-between text-zinc-400 text-xs">
+          <span>รายการติดต่อทั้งหมด</span>
+          <i class="fa-solid fa-users text-sm text-zinc-400"></i>
+        </div>
+        <div class="text-2xl font-bold text-zinc-900 mt-2" id="stat-total">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">จากแบบฟอร์มหน้าเว็บ</div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
+        <div class="flex items-center justify-between text-amber-600 text-xs font-medium">
+          <span>รอดำเนินการ (ใหม่)</span>
+          <i class="fa-solid fa-bell text-sm text-amber-500"></i>
+        </div>
+        <div class="text-2xl font-bold text-amber-600 mt-2" id="stat-new">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">ต้องติดต่อกลับด่วน</div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
+        <div class="flex items-center justify-between text-blue-600 text-xs font-medium">
+          <span>ติดต่อ / สำรวจแล้ว</span>
+          <i class="fa-solid fa-clipboard-check text-sm text-blue-500"></i>
+        </div>
+        <div class="text-2xl font-bold text-blue-600 mt-2" id="stat-contacted">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">อยู่ระหว่างประสานงาน</div>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
+        <div class="flex items-center justify-between text-emerald-600 text-xs font-medium">
+          <span>ส่งมอบ / สำเร็จ</span>
+          <i class="fa-solid fa-circle-check text-sm text-emerald-500"></i>
+        </div>
+        <div class="text-2xl font-bold text-emerald-600 mt-2" id="stat-completed">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">ปิดงานเรียบร้อย</div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="flex items-center justify-between border-b border-zinc-200">
+      <div class="flex gap-2">
+        <button onclick="switchTab('inquiries')" id="tab-inquiries-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-zinc-900 text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-envelope-open-text"></i>
+          <span>รายการลูกค้าติดต่อ (Leads)</span>
+        </button>
+        <button onclick="switchTab('reviews')" id="tab-reviews-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-star text-amber-500"></i>
+          <span>จัดการรีวิวลูกค้า</span>
+        </button>
+        <button onclick="switchTab('firebase')" id="tab-firebase-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-database text-blue-500"></i>
+          <span>ตั้งค่า Firebase Database</span>
+        </button>
+      </div>
+
+      <button onclick="loadAllData()" class="text-xs text-zinc-600 hover:text-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 transition flex items-center gap-1.5 shadow-xs">
+        <i class="fa-solid fa-rotate-right"></i> รีเฟรชข้อมูล
+      </button>
+    </div>
+
+    <!-- TAB 1: Inquiries / Leads Table -->
+    <div id="tab-inquiries" class="space-y-4">
+      
+      <!-- Filter Bar -->
+      <div class="bg-white p-4 rounded-2xl border border-zinc-200 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div class="flex items-center gap-2 text-xs w-full sm:w-auto">
+          <span class="text-zinc-500">กรองสถานะ:</span>
+          <button onclick="filterInquiries('all')" class="filter-status-btn active px-3 py-1 rounded-lg bg-zinc-900 text-white font-medium">ทั้งหมด</button>
+          <button onclick="filterInquiries('new')" class="filter-status-btn px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium">ใหม่</button>
+          <button onclick="filterInquiries('contacted')" class="filter-status-btn px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium">ติดต่อแล้ว</button>
+          <button onclick="filterInquiries('completed')" class="filter-status-btn px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium">สำเร็จ</button>
+        </div>
+
+        <button onclick="exportToCSV()" class="text-xs bg-zinc-100 hover:bg-zinc-200 text-zinc-700 px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-file-excel text-emerald-600"></i> ดาวน์โหลด CSV
+        </button>
+      </div>
+
+      <!-- Inquiries Table Card -->
+      <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-zinc-50 text-zinc-500 font-semibold border-b border-zinc-200">
+              <tr>
+                <th class="p-4">วันที่ / เวลา</th>
+                <th class="p-4">ชื่อลูกค้า</th>
+                <th class="p-4">เบอร์โทร / LINE</th>
+                <th class="p-4">บริการที่สนใจ</th>
+                <th class="p-4">สถานที่</th>
+                <th class="p-4">งบประมาณ</th>
+                <th class="p-4">สถานะ</th>
+                <th class="p-4 text-right">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="inquiries-tbody" class="divide-y divide-zinc-100">
+              <tr>
+                <td colspan="8" class="p-8 text-center text-zinc-400">
+                  <i class="fa-solid fa-spinner fa-spin text-lg mb-2 block"></i> กำลังโหลดข้อมูล...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Reviews Management -->
+    <div id="tab-reviews" class="hidden space-y-4">
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex justify-between items-center">
+        <div>
+          <h3 class="font-bold text-sm text-zinc-900">รีวิวและความคิดเห็นลูกค้า</h3>
+          <p class="text-xs text-zinc-500">รีวิวทั้งหมดที่แสดงบนหน้าแรกของเว็บไซต์</p>
+        </div>
+        <button onclick="openAddReviewModal()" class="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-plus text-[10px]"></i> เพิ่มรีวิวใหม่
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="reviews-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- TAB 3: Firebase Config Settings -->
+    <div id="tab-firebase" class="hidden">
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-3xl space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-2">
+            <i class="fa-solid fa-database"></i> ฐานข้อมูลคลาวด์ Firebase Firestore
+          </div>
+          <h3 class="text-lg font-bold text-zinc-900">ตั้งค่าการเชื่อมต่อ Firebase</h3>
+          <p class="text-xs text-zinc-500 mt-1 leading-relaxed">
+            ท่านสามารถนำค่าคอนฟิกจาก <strong>Firebase Console</strong> (Project Settings -> General -> Your apps -> Web app) มาวางที่นี่เพื่อเชื่อมต่อฐานข้อมูลจริงบนระบบคลาวด์ของ Google ทันที
+          </p>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div>
+            <label class="block font-semibold text-zinc-700 mb-1">วาง Firebase Config Object หรือ JSON:</label>
+            <textarea id="firebase-config-input" rows="10" placeholder='{
+  "apiKey": "AIzaSy...",
+  "authDomain": "your-app.firebaseapp.com",
+  "projectId": "your-app",
+  "storageBucket": "your-app.appspot.com",
+  "messagingSenderId": "1234567890",
+  "appId": "1:1234567890:web:abcd..."
+}' class="w-full font-mono text-xs p-3.5 rounded-xl border border-zinc-200 outline-none focus:ring-2 focus:ring-zinc-900 bg-zinc-50"></textarea>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button onclick="saveFirebaseSettings()" class="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition flex items-center gap-2">
+              <i class="fa-solid fa-floppy-disk"></i> บันทึกและเชื่อมต่อ Firebase
+            </button>
+            <button onclick="resetFirebaseSettings()" class="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium rounded-xl text-xs transition">
+              รีเซ็ตกลับเป็นค่าเริ่มต้น
+            </button>
+          </div>
+
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-[11px] leading-relaxed">
+            <i class="fa-solid fa-circle-info mr-1"></i> <strong>คำแนะนำ:</strong> ในขณะที่ยังไม่ได้เชื่อมต่อ Firebase หรือไม่ได้กรอก API Key ระบบจะใช้ <strong>Smart LocalStorage Mode</strong> ให้อัตโนมัติ ข้อมูลลูกค้าและการทดสอบจะไม่สูญหายและใช้งานได้ทันที 100%
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Add Review Modal -->
+  <div id="add-review-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+      <div class="flex justify-between items-center">
+        <h4 class="font-bold text-sm text-zinc-900">เพิ่มรีวิวลูกค้าใหม่</h4>
+        <button onclick="closeAddReviewModal()" class="text-zinc-400 hover:text-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleReviewSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ชื่อลูกค้า</label>
+          <input type="text" id="rev-name" required placeholder="เช่น คุณสมชาย มั่งคั่ง" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">โครงการ / สถานที่</label>
+          <input type="text" id="rev-role" required placeholder="เช่น เจ้าของบ้านเดี่ยว ม.พฤกษาวิลล์ นนทบุรี" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">คะแนนรีวิว (ดาว)</label>
+          <select id="rev-rating" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+            <option value="5">⭐⭐⭐⭐⭐ 5 ดาว (ยอดเยี่ยม)</option>
+            <option value="4">⭐⭐⭐⭐ 4 ดาว (ดีมาก)</option>
+            <option value="3">⭐⭐⭐ 3 ดาว (ปานกลาง)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ข้อความรีวิว</label>
+          <textarea id="rev-comment" required rows="3" placeholder="ระบุความประทับใจ การทำงานของช่าง..." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 bg-zinc-900 text-white font-medium rounded-xl transition hover:bg-zinc-800">
+          บันทึกรีวิว
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+      <div class="flex justify-between items-center border-b border-zinc-100 pb-3">
+        <h4 class="font-bold text-sm text-zinc-900">รายละเอียดคำขอนัดหมาย</h4>
+        <button onclick="closeDetailModal()" class="text-zinc-400 hover:text-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div id="detail-content" class="text-xs space-y-3">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="pt-3 border-t border-zinc-100 flex justify-end gap-2">
+        <button onclick="closeDetailModal()" class="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-xl text-xs font-medium">ปิด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <!-- Admin Dashboard Logic -->
+  <script>
+    let allInquiries = [];
+    let currentFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkDbStatus();
+      loadAllData();
+      populateFirebaseInput();
+    });
+
+    function checkDbStatus() {
+      const badgeText = document.getElementById('db-status-text');
+      const badge = document.getElementById('db-status-badge');
+      if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive) {
+        badgeText.innerText = 'Firebase Live Connected';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>Firebase Cloud Live</span>';
+        badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300';
+      } else {
+        badgeText.innerText = 'Local Storage Mode';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400"></span> <span>Local Storage Active</span>';
+        badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950 border border-amber-800 text-amber-300';
+      }
+    }
+
+    async function loadAllData() {
+      // 1. Load Inquiries
+      allInquiries = await getInquiries();
+      renderInquiries();
+      updateStats();
+
+      // 2. Load Reviews
+      const reviews = await getReviews();
+      renderReviews(reviews);
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').innerText = allInquiries.length;
+      document.getElementById('stat-new').innerText = allInquiries.filter(i => (i.status || 'new') === 'new').length;
+      document.getElementById('stat-contacted').innerText = allInquiries.filter(i => i.status === 'contacted' || i.status === 'surveyed').length;
+      document.getElementById('stat-completed').innerText = allInquiries.filter(i => i.status === 'completed').length;
+    }
+
+    function renderInquiries() {
+      const tbody = document.getElementById('inquiries-tbody');
+      const filtered = currentFilter === 'all' 
+        ? allInquiries 
+        : allInquiries.filter(i => (i.status || 'new') === currentFilter);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="p-8 text-center text-zinc-400 text-xs">
+              <i class="fa-regular fa-folder-open text-2xl mb-2 block"></i> ไม่พบรายการที่ตรงกับเงื่อนไข
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(item => {
+        const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleDateString('th-TH', {
+          day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit'
+        }) : '-';
+
+        let statusBadge = '';
+        const st = item.status || 'new';
+        if (st === 'new') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px]">ใหม่</span>';
+        else if (st === 'contacted') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-[10px]">ติดต่อแล้ว</span>';
+        else if (st === 'surveyed') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-semibold text-[10px]">สำรวจแล้ว</span>';
+        else if (st === 'completed') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">สำเร็จ</span>';
+        else statusBadge = '<span class="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-800 font-semibold text-[10px]">ยกเลิก</span>';
+
+        return `
+          <tr class="hover:bg-zinc-50 transition">
+            <td class="p-4 text-zinc-500 font-mono text-[11px] whitespace-nowrap">${dateStr}</td>
+            <td class="p-4 font-semibold text-zinc-900">${escapeHtml(item.name || '-')}</td>
+            <td class="p-4 whitespace-nowrap">
+              <a href="tel:${item.phone}" class="text-zinc-800 hover:text-zinc-900 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-phone text-[10px] text-zinc-400"></i> ${escapeHtml(item.phone || '-')}
+              </a>
+              ${item.line ? `<div class="text-[10px] text-emerald-600 font-medium">LINE: ${escapeHtml(item.line)}</div>` : ''}
+            </td>
+            <td class="p-4">${escapeHtml(item.service || '-')}</td>
+            <td class="p-4 text-zinc-600">${escapeHtml(item.location || '-')}</td>
+            <td class="p-4 text-zinc-600">${escapeHtml(item.budget || '-')}</td>
+            <td class="p-4">
+              <select onchange="changeStatus('${item.id}', this.value)" class="text-[11px] px-2 py-1 rounded-lg border border-zinc-200 outline-none bg-white">
+                <option value="new" ${st === 'new' ? 'selected' : ''}>ใหม่</option>
+                <option value="contacted" ${st === 'contacted' ? 'selected' : ''}>ติดต่อแล้ว</option>
+                <option value="surveyed" ${st === 'surveyed' ? 'selected' : ''}>นัดสำรวจแล้ว</option>
+                <option value="completed" ${st === 'completed' ? 'selected' : ''}>สำเร็จ</option>
+                <option value="cancelled" ${st === 'cancelled' ? 'selected' : ''}>ยกเลิก</option>
+              </select>
+            </td>
+            <td class="p-4 text-right whitespace-nowrap space-x-1">
+              <button onclick="viewDetail('${item.id}')" class="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100" title="ดูรายละเอียด">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+              <button onclick="handleDeleteInquiry('${item.id}')" class="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50" title="ลบรายการ">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderReviews(reviews) {
+      const container = document.getElementById('reviews-container');
+      container.innerHTML = reviews.map(rev => `
+        <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex flex-col justify-between space-y-3">
+          <div class="space-y-2">
+            <div class="flex text-amber-500 text-xs">
+              ${'<i class="fa-solid fa-star"></i>'.repeat(rev.rating || 5)}
+            </div>
+            <p class="text-zinc-700 text-xs leading-relaxed italic">"${escapeHtml(rev.comment)}"</p>
+          </div>
+          <div class="pt-3 border-t border-zinc-100 text-xs flex justify-between items-center">
+            <div>
+              <div class="font-bold text-zinc-900">${escapeHtml(rev.name)}</div>
+              <div class="text-[11px] text-zinc-400">${escapeHtml(rev.role || 'ลูกค้า')}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function changeStatus(id, newStatus) {
+      await updateInquiryStatus(id, newStatus);
+      const item = allInquiries.find(i => i.id === id);
+      if (item) item.status = newStatus;
+      updateStats();
+    }
+
+    async function handleDeleteInquiry(id) {
+      if (!confirm('ยืนยันลบรายการติดต่อนี้?')) return;
+      await deleteInquiry(id);
+      allInquiries = allInquiries.filter(i => i.id !== id);
+      renderInquiries();
+      updateStats();
+    }
+
+    function viewDetail(id) {
+      const item = allInquiries.find(i => i.id === id);
+      if (!item) return;
+
+      const dateStr = item.createdAt ? new Date(item.createdAt).toLocaleString('th-TH') : '-';
+      document.getElementById('detail-content').innerHTML = `
+        <div class="grid grid-cols-2 gap-2 pb-2 border-b border-zinc-100">
+          <div><span class="text-zinc-400">ชื่อลูกค้า:</span> <strong class="text-zinc-900">${escapeHtml(item.name)}</strong></div>
+          <div><span class="text-zinc-400">เบอร์โทร:</span> <a href="tel:${item.phone}" class="text-blue-600 font-semibold">${escapeHtml(item.phone)}</a></div>
+          <div><span class="text-zinc-400">LINE ID:</span> <span class="text-emerald-700 font-medium">${escapeHtml(item.line || '-')}</span></div>
+          <div><span class="text-zinc-400">วันที่ส่งข้อมูล:</span> <span>${dateStr}</span></div>
+          <div><span class="text-zinc-400">บริการที่สนใจ:</span> <strong>${escapeHtml(item.service)}</strong></div>
+          <div><span class="text-zinc-400">งบประมาณ:</span> <span>${escapeHtml(item.budget || '-')}</span></div>
+          <div class="col-span-2"><span class="text-zinc-400">สถานที่ตั้งหน้างาน:</span> <span>${escapeHtml(item.location || '-')}</span></div>
+        </div>
+        <div>
+          <div class="text-zinc-400 mb-1">ข้อความ / รายละเอียดงาน:</div>
+          <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-700 leading-relaxed font-light">
+            ${escapeHtml(item.message || 'ไม่มีข้อความเพิ่มเติม')}
+          </div>
+        </div>
+      `;
+      document.getElementById('detail-modal').classList.remove('hidden');
+      document.getElementById('detail-modal').classList.add('flex');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detail-modal').classList.add('hidden');
+      document.getElementById('detail-modal').classList.remove('flex');
+    }
+
+    function filterInquiries(status) {
+      currentFilter = status;
+      document.querySelectorAll('.filter-status-btn').forEach(btn => {
+        btn.className = 'filter-status-btn px-3 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium';
+      });
+      event.target.className = 'filter-status-btn active px-3 py-1 rounded-lg bg-zinc-900 text-white font-medium';
+      renderInquiries();
+    }
+
+    function switchTab(tab) {
+      ['inquiries', 'reviews', 'firebase'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}-btn`).className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2';
+      });
+
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}-btn`).className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-zinc-900 text-zinc-900 transition flex items-center gap-2';
+    }
+
+    function openAddReviewModal() {
+      document.getElementById('add-review-modal').classList.remove('hidden');
+      document.getElementById('add-review-modal').classList.add('flex');
+    }
+    function closeAddReviewModal() {
+      document.getElementById('add-review-modal').classList.add('hidden');
+      document.getElementById('add-review-modal').classList.remove('flex');
+    }
+
+    async function handleReviewSubmit(e) {
+      e.preventDefault();
+      const reviewData = {
+        name: document.getElementById('rev-name').value,
+        role: document.getElementById('rev-role').value,
+        rating: document.getElementById('rev-rating').value,
+        comment: document.getElementById('rev-comment').value
+      };
+      await saveReview(reviewData);
+      closeAddReviewModal();
+      loadAllData();
+      alert('บันทึกรีวิวสำเร็จ!');
+    }
+
+    function populateFirebaseInput() {
+      const saved = localStorage.getItem('permpoon_firebase_config');
+      if (saved) {
+        document.getElementById('firebase-config-input').value = saved;
+      }
+    }
+
+    function saveFirebaseSettings() {
+      const val = document.getElementById('firebase-config-input').value.trim();
+      try {
+        const parsed = JSON.parse(val);
+        localStorage.setItem('permpoon_firebase_config', JSON.stringify(parsed, null, 2));
+        alert('บันทึกการตั้งค่า Firebase สำเร็จ! กำลังรีโหลดหน้าเว็บเพื่อเชื่อมต่อ...');
+        window.location.reload();
+      } catch (err) {
+        alert('รูปแบบ JSON ไม่ถูกต้อง กรุณาตรวจสอบวงเล็บและเครื่องหมายคำพูดอีกครั้ง');
+      }
+    }
+
+    function resetFirebaseSettings() {
+      if (confirm('ต้องการล้างการตั้งค่า Firebase ที่บันทึกไว้ใช่หรือไม่?')) {
+        localStorage.removeItem('permpoon_firebase_config');
+        window.location.reload();
+      }
+    }
+
+    function exportToCSV() {
+      if (allInquiries.length === 0) {
+        alert('ไม่มีข้อมูลให้ส่งออก');
+        return;
+      }
+      let csv = "\uFEFFวันที่,ชื่อลูกค้า,เบอร์โทรศัพท์,LINE ID,บริการ,สถานที่,งบประมาณ,สถานะ,รายละเอียด\n";
+      allInquiries.forEach(i => {
+        csv += `"${i.createdAt || ''}","${i.name || ''}","${i.phone || ''}","${i.line || ''}","${i.service || ''}","${i.location || ''}","${i.budget || ''}","${i.status || ''}","${(i.message || '').replace(/"/g, '""')}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `permpoon_leads_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
+    }
+  </script>
+</body>
+</html>

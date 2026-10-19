@@ -1,0 +1,20 @@
+{
+  "name": "permpoon-construction",
+  "version": "1.0.0",
+  "description": "Website for Permpoon Construction & Design Co., Ltd.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 3000",
+    "deploy": "vercel --prod",
+    "deploy:preview": "vercel"
+  },
+  "keywords": [
+    "permpoon",
+    "construction",
+    "renovation",
+    "interior",
+    "thailand"
+  ],
+  "author": "Permpoon Construction & Design Co., Ltd.",
+  "license": "MIT"
+}

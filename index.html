@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด | รับเหมาก่อสร้าง รีโนเวท ตกแต่งภายใน</title>
+  <meta name="description" content="บริษัท เพิ่มพูน ให้บริการรับเหมาก่อสร้าง รีโนเวทบ้าน อาคาร ตกแต่งภายใน บิวท์อิน และงานต่อเติมครบวงจร มาตรฐานวิศวกรรม คุมงบไม่บานปลาย">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2318181b'/><path d='M30 70 L50 30 L70 70 Z' fill='none' stroke='white' stroke-width='6'/><path d='M42 70 L50 52 L58 70 Z' fill='%23ca8a04'/></svg>">
+
+  <!-- Google Fonts: Prompt -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#18181b', // Zinc 900
+              50: '#fafafa',
+              100: '#f4f4f5',
+              200: '#e4e4e7',
+              300: '#d4d4d8',
+              800: '#27272a',
+              900: '#18181b',
+              950: '#09090b',
+            },
+            amberAccent: '#b45309',
+          },
+          fontFamily: {
+            sans: ['Prompt', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-white text-zinc-800 font-sans antialiased selection:bg-zinc-900 selection:text-white">
+
+  <!-- Top Mini Notice Strip -->
+  <div class="bg-zinc-900 text-zinc-300 text-[11px] py-1.5 px-4 border-b border-zinc-800">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 text-amber-400 font-medium">
+          <i class="fa-solid fa-certificate text-[10px]"></i> มีใบประกอบวิชาชีพวิศวกรรมควบคุม
+        </span>
+        <span class="text-zinc-600 hidden sm:inline">•</span>
+        <span class="text-zinc-400 hidden sm:inline">สัญญามาตรฐาน BOQ โปร่งใส</span>
+      </div>
+      <div class="flex items-center gap-4 text-zinc-300">
+        <a href="tel:0891234567" class="hover:text-white transition flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-[10px] text-zinc-400"></i> 089-123-4567
+        </a>
+        <a href="https://line.me" target="_blank" class="hover:text-emerald-400 transition flex items-center gap-1.5">
+          <i class="fa-brands fa-line text-emerald-400 text-xs"></i> Line: @permpoon
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200/80 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex justify-between items-center h-16">
+        
+        <!-- Brand Logo -->
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-zinc-900 text-white flex items-center justify-center font-bold text-base shadow-sm group-hover:bg-zinc-800 transition">
+            พ
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-base font-bold tracking-tight text-zinc-900">เพิ่มพูน</span>
+              <span class="text-[9px] uppercase tracking-wider bg-zinc-100 text-zinc-600 font-semibold px-1.5 py-0.5 rounded">PERMPOON</span>
+            </div>
+            <p class="text-[10px] text-zinc-400 font-medium leading-none">คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center space-x-6 text-xs font-medium text-zinc-600">
+          <a href="#about" class="nav-item hover:text-zinc-900 transition-colors py-1">ประวัติบริษัท</a>
+          <a href="#services" class="nav-item hover:text-zinc-900 transition-colors py-1">บริการ</a>
+          <a href="#portfolio" class="nav-item hover:text-zinc-900 transition-colors py-1">ผลงาน</a>
+          <a href="#areas" class="nav-item hover:text-zinc-900 transition-colors py-1">พื้นที่บริการ</a>
+          <a href="#calculator" class="nav-item hover:text-zinc-900 transition-colors py-1">ประเมินราคา</a>
+          <a href="#reviews" class="nav-item hover:text-zinc-900 transition-colors py-1">รีวิว</a>
+          <a href="#faq" class="nav-item hover:text-zinc-900 transition-colors py-1">คำถามที่พบบ่อย</a>
+        </nav>
+
+        <!-- Right Action Button -->
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="#contact" class="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition shadow-sm flex items-center gap-1.5">
+            <i class="fa-regular fa-paper-plane text-[10px]"></i>
+            <span>ปรึกษาประเมินราคา</span>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-zinc-700 hover:text-zinc-900 focus:outline-none" aria-label="เปิดเมนู">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-100 bg-white px-5 py-4 space-y-3 text-xs shadow-lg">
+      <a href="#about" class="mobile-nav-link block py-1.5 text-zinc-700">ประวัติบริษัท</a>
+      <a href="#services" class="mobile-nav-link block py-1.5 text-zinc-700">บริการของเรา</a>
+      <a href="#portfolio" class="mobile-nav-link block py-1.5 text-zinc-700">ผลงาน</a>
+      <a href="#areas" class="mobile-nav-link block py-1.5 text-zinc-700">พื้นที่ให้บริการ</a>
+      <a href="#calculator" class="mobile-nav-link block py-1.5 text-zinc-700">ประเมินราคาออนไลน์</a>
+      <a href="#reviews" class="mobile-nav-link block py-1.5 text-zinc-700">รีวิวลูกค้า</a>
+      <a href="#faq" class="mobile-nav-link block py-1.5 text-zinc-700">คำถามที่พบบ่อย</a>
+      <a href="#contact" class="mobile-nav-link block py-2 text-center bg-zinc-900 text-white rounded-lg font-medium">ติดต่อประเมินราคา</a>
+    </div>
+  </header>
+
+  <!-- ========================================================
+       HERO SECTION
+       ======================================================== -->
+  <section id="home" class="relative pt-12 pb-16 sm:pt-16 sm:pb-24 bg-white border-b border-zinc-200/80 overflow-hidden">
+    <!-- Subtle Architectural Background Grid -->
+    <div class="absolute inset-0 bg-[radial-gradient(#e4e4e7_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        <!-- Left Hero Content -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-700 text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>รับเหมาก่อสร้าง • รีโนเวท • ตกแต่งภายใน • งานต่อเติม</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold text-zinc-900 leading-tight tracking-tight">
+            สร้างและรีโนเวททุกพื้นที่ <br>
+            <span class="text-zinc-500 font-normal">ด้วยมาตรฐานช่างมืออาชีพ</span> <br>
+            <span class="border-b-2 border-zinc-900 pb-0.5">งบไม่บานปลาย ไม่ทิ้งงาน</span>
+          </h1>
+
+          <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed max-w-xl font-light">
+            <strong>บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</strong> ผู้เชี่ยวชาญงานวิศวกรรมและสถาปัตยกรรม ดูแลโดยทีมวิศวกรโยธา สัญญาชัดเจน ตรวจสอบ BOQ ได้ทุกขั้นตอน ส่งมอบงานตรงเวลา พร้อมรับประกันผลงานหลังส่งมอบ
+          </p>
+
+          <!-- Core Value Checklist -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1 text-xs text-zinc-700">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-zinc-900 text-[11px]"></i> <span>สัญญามาตรฐาน BOQ ชัดเจน</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-zinc-900 text-[11px]"></i> <span>วิศวกรคุมงานทุกสัปดาห์</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-zinc-900 text-[11px]"></i> <span>รับประกันโครงสร้าง 1-5 ปี</span>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-3 pt-3">
+            <a href="#contact" class="px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold transition shadow-sm flex items-center gap-2">
+              <span>นัดหมายสำรวจหน้างานฟรี</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+            <a href="#portfolio" class="px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-xs font-medium border border-zinc-200 transition">
+              ดูผลงานจริงที่ผ่านมา
+            </a>
+            <a href="#calculator" class="px-4 py-2.5 text-zinc-600 hover:text-zinc-900 text-xs font-medium transition flex items-center gap-1.5">
+              <i class="fa-solid fa-calculator text-zinc-400"></i> คำนวณราคาก่อน
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[16/11] border border-zinc-200 shadow-md bg-zinc-100">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="ผลงานก่อสร้างและรีโนเวท บริษัทเพิ่มพูน" class="w-full h-full object-cover">
+            
+            <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-xl border border-zinc-200/80 shadow-sm flex items-center justify-between text-xs">
+              <div>
+                <div class="font-bold text-zinc-900">บ้านเดี่ยว Modern Tropical</div>
+                <div class="text-[10px] text-zinc-500">โครงการส่งมอบสำเร็จ • จ.นนทบุรี</div>
+              </div>
+              <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">
+                100% เสร็จสมบูรณ์
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       STATISTICS BAR (Bridging Section with clear border & shadow)
+       ======================================================== -->
+  <section class="bg-zinc-50 border-b border-zinc-200 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-zinc-200/80">
+        <div class="pt-2 md:pt-0">
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">15+ ปี</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1">ประสบการณ์งานวิศวกรรมช่าง</div>
+        </div>
+        <div class="pt-2 md:pt-0">
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">1,200+</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1">โครงการที่ส่งมอบสำเร็จ</div>
+        </div>
+        <div class="pt-2 md:pt-0">
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">100%</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1">การันตีตามสัญญา ไม่ทิ้งงาน</div>
+        </div>
+        <div class="pt-2 md:pt-0">
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">4.9 / 5</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1">ความพึงพอใจจากเจ้าของบ้าน</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 01: ABOUT US (ประวัติและข้อมูลบริษัท)
+       ======================================================== -->
+  <section id="about" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">01</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">ABOUT US • เกี่ยวกับเรา</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <!-- History Image -->
+        <div class="lg:col-span-5">
+          <div class="rounded-2xl overflow-hidden aspect-[4/3] border border-zinc-200 shadow-sm bg-white">
+            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80" alt="ทีมงานบริษัทเพิ่มพูน" class="w-full h-full object-cover">
+          </div>
+          <div class="mt-3 flex items-center justify-between text-xs text-zinc-500 px-1">
+            <span><i class="fa-solid fa-award text-zinc-800 mr-1"></i> จดทะเบียนนิติบุคคลถูกต้อง</span>
+            <span>ก่อตั้งตั้งแต่ปี 2554</span>
+          </div>
+        </div>
+
+        <!-- History Content -->
+        <div class="lg:col-span-7 space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">
+            ประวัติและความเป็นมา บริษัท เพิ่มพูน
+          </h2>
+
+          <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed font-light">
+            <strong>บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</strong> ก่อตั้งขึ้นจากความมุ่งมั่นของกลุ่มวิศวกรโยธาและสถาปนิกที่ต้องการยกระดับมาตรฐานงานรับเหมาก่อสร้างในประเทศไทย เพื่อแก้ปัญหาเรื้อรังที่ผู้ว่าจ้างพบบ่อย เช่น ปัญหางบบานปลาย ช่างทิ้งงาน หรือการใช้วัสดุไม่ตรงสเปก
+          </p>
+
+          <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed font-light">
+            ตลอดระยะเวลากว่า 15 ปี เราได้ส่งมอบบ้านเดี่ยว ทาวน์โฮม คอนโด อาคารพาณิชย์ และสำนักงานกว่า 1,200 โครงการ ด้วยหลักการทำงานที่เน้นความโปร่งใส มีเอกสาร BOQ ละเอียดระบุยี่ห้อและสเปกวัสดุทุกรายการ และการแบ่งงวดงานที่สมเหตุสมผล
+          </p>
+
+          <!-- 2 Cards for Vision & Mission -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-white border border-zinc-200 shadow-xs">
+              <div class="text-xs font-bold text-zinc-900 mb-1 flex items-center gap-1.5">
+                <i class="fa-regular fa-compass text-zinc-700"></i> วิสัยทัศน์ (Vision)
+              </div>
+              <p class="text-[11px] text-zinc-500 leading-normal">
+                เป็นบริษัทรับเหมาก่อสร้างและรีโนเวทที่ลูกค้าไว้วางใจสูงสุด ด้วยมาตรฐานวิศวกรรมที่ถูกต้องและซื่อสัตย์
+              </p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white border border-zinc-200 shadow-xs">
+              <div class="text-xs font-bold text-zinc-900 mb-1 flex items-center gap-1.5">
+                <i class="fa-regular fa-circle-check text-zinc-700"></i> พันธกิจ (Mission)
+              </div>
+              <p class="text-[11px] text-zinc-500 leading-normal">
+                ส่งมอบผลงานตรงเวลา ใช้วัสดุมาตรฐาน มอก. คุมงบได้ 100% พร้อมบริการรับประกันหลังการขายจริงใจ
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 02: SERVICES (บริการของเรา)
+       ======================================================== -->
+  <section id="services" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">02</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">OUR SERVICES • บริการของเรา</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">บริการครบวงจร เรื่องบ้านและอาคาร</h2>
+          <p class="text-xs text-zinc-500 mt-1">ดูแลตั้งแต่การออกแบบ สถาปัตย์ วิศวกรรม ก่อสร้าง จนถึงส่งมอบงานเสร็จสมบูรณ์</p>
+        </div>
+      </div>
+
+      <!-- Services Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-house"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">รับเหมาก่อสร้างบ้านและอาคาร</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              สร้างบ้านเดี่ยว ทาวน์โฮม อาคารพาณิชย์ และโกดังเก็บสินค้า ออกแบบตามหลักวิศวกรรมพร้อมยื่นขออนุญาตก่อสร้างครบวงจร
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> งานโครงสร้าง คสล. / โครงสร้างเหล็ก</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> สถาปัตย์ 2D / 3D Perspective</li>
+            </ul>
+          </div>
+          <button onclick="openServiceDetail('construction')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
+            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-hammer"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">รีโนเวทบ้าน คอนโด ทาวน์โฮม</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              ปรับปรุงบ้านเก่าให้สวยทันสมัย ปรับแปลน รื้อถอน เสริมโครงสร้าง และแก้ปัญหาน้ำรั่วซึมทรุดร้าวอย่างถาวร
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> รื้อถอนและเสริมกำลังโครงสร้าง</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ปูกระเบื้อง ทาสี เปลี่ยนระบบไฟประปา</li>
+            </ul>
+          </div>
+          <button onclick="openServiceDetail('renovation')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
+            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-couch"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">ตกแต่งภายใน & บิวท์อิน (Built-in)</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              ออกแบบตกแต่งสไตล์ Minimal, Modern, Nordic บิวท์อินตู้เสื้อผ้า ครัว ห้องนั่งเล่น วัสดุ HMR กันชื้น Soft-close
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ไม้ HMR เกรดกันชื้น ไม่บวมน้ำ</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ออกแบบภาพ 3D เสมือนจริงก่อนผลิต</li>
+            </ul>
+          </div>
+          <button onclick="openServiceDetail('interior')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
+            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-kitchen-set"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">งานต่อเติมครัว หลังคา และโรงรถ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              ต่อเติมครัวหลังบ้าน โรงรถหน้าบ้าน ลงเสาเข็มไมโครไพล์แยกโครงสร้าง ป้องกันปัญหาการทรุดตัวและดึงรั้ง 100%
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เสาเข็มไมโครไพล์ Spun Micropile</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> โครงสร้างแยกอิสระจากตัวบ้านเดิม</li>
+            </ul>
+          </div>
+          <button onclick="openServiceDetail('extension')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
+            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">งานระบบ ไฟฟ้า ประปา สุขาภิบาล</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              ติดตั้งตู้เมนไฟ เดินสายไฟร้อยท่อ เดินท่อน้ำดี PPR ท่อน้ำเสีย ได้มาตรฐานการไฟฟ้านครหลวงและการประปา
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เบรกเกอร์กันดูด RCBO สายดิน</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ท่อน้ำดีเชื่อมความร้อน ไร้รั่วซึม</li>
+            </ul>
+          </div>
+          <button onclick="openServiceDetail('mep')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
+            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </button>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
+              <i class="fa-solid fa-ruler-combined"></i>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base">สำรวจหน้างาน ออกแบบ & ทำ BOQ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+              บริการส่งวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำแนวทางก่อสร้าง พร้อมจัดทำใบเสนอราคา BOQ ละเอียดไม่มีหมกเม็ด
+            </p>
+            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> สำรวจฟรี ไม่มีค่าใช้จ่ายและข้อผูกมัด</li>
+              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เอกสาร BOQ แยกวัสดุ-ค่าแรงชัดเจน</li>
+            </ul>
+          </div>
+          <a href="#contact" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-900 font-semibold flex items-center justify-between">
+            <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- 5-Step Process Card -->
+      <div class="mt-12 p-6 sm:p-8 rounded-2xl bg-zinc-50 border border-zinc-200">
+        <div class="text-xs font-bold text-zinc-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-list-ol text-zinc-700"></i> ขั้นตอนการทำงานที่โปร่งใส 5 สเต็ป
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
+          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
+            <span class="text-[10px] font-bold text-zinc-400">STEP 01</span>
+            <div class="font-bold text-zinc-900 mt-1">ปรึกษาเบื้องต้น</div>
+            <p class="text-zinc-500 text-[11px] mt-0.5">แจ้งขนาดพื้นที่และงบประมาณ</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
+            <span class="text-[10px] font-bold text-zinc-400">STEP 02</span>
+            <div class="font-bold text-zinc-900 mt-1">สำรวจหน้างานฟรี</div>
+            <p class="text-zinc-500 text-[11px] mt-0.5">ทีมวิศวกรเข้าวัดพื้นที่จริง</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
+            <span class="text-[10px] font-bold text-zinc-400">STEP 03</span>
+            <div class="font-bold text-zinc-900 mt-1">ทำ BOQ & สัญญา</div>
+            <p class="text-zinc-500 text-[11px] mt-0.5">แบ่งงวดงานเป็นธรรมและโปร่งใส</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
+            <span class="text-[10px] font-bold text-zinc-400">STEP 04</span>
+            <div class="font-bold text-zinc-900 mt-1">เริ่มงานก่อสร้าง</div>
+            <p class="text-zinc-500 text-[11px] mt-0.5">มีวิศวกรคุม ส่งรายงานทุกสัปดาห์</p>
+          </div>
+          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
+            <span class="text-[10px] font-bold text-zinc-400">STEP 05</span>
+            <div class="font-bold text-zinc-900 mt-1">ตรวจรับ & รับประกัน</div>
+            <p class="text-zinc-500 text-[11px] mt-0.5">ส่งมอบงานพร้อมใบรับประกัน</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 03: PORTFOLIO (ผลงานที่ผ่านมา)
+       ======================================================== -->
+  <section id="portfolio" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">03</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">PORTFOLIO • ผลงานที่ผ่านมา</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">ตัวอย่างผลงานที่ส่งมอบเรียบร้อย</h2>
+          <p class="text-xs text-zinc-500 mt-1">ผลงานจริงจากโครงการบ้านเดี่ยว คอนโด อาคาร และงานต่อเติม</p>
+        </div>
+
+        <!-- Filter Buttons: Clean Pills -->
+        <div class="flex flex-wrap gap-1.5 text-xs" id="portfolio-filters">
+          <button class="filter-btn active px-3.5 py-1.5 rounded-lg font-medium transition bg-zinc-900 text-white" data-filter="all">ทั้งหมด</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200" data-filter="house">สร้างบ้าน</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200" data-filter="renovation">รีโนเวท</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200" data-filter="interior">ตกแต่งภายใน</button>
+          <button class="filter-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200" data-filter="extension">งานต่อเติม</button>
+        </div>
+      </div>
+
+      <!-- Portfolio Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
+        
+        <!-- Project 1 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="house" onclick="openPortfolioModal(0)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="บ้านพักอาศัยโมเดิร์นทรอปิคอล" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">สร้างบ้านเดี่ยว</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">จ.นนทบุรี • 320 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">บ้านพักอาศัยโมเดิร์นทรอปิคอล 2 ชั้น</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 8 เดือน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">ส่งมอบตรงเวลา</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="renovation" onclick="openPortfolioModal(1)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="รีโนเวททาวน์โฮม" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">รีโนเวท</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">ลาดพร้าว, กทม. • 180 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">รีโนเวททาวน์โฮมเก่าเป็น Modern Nordic</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 3.5 เดือน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">ตรงตาม BOQ เป๊ะ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="interior" onclick="openPortfolioModal(2)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80" alt="ตกแต่งภายในคอนโด" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">ตกแต่งภายใน</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">สุขุมวิท, กทม. • 65 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">ตกแต่งภายในและบิวท์อิน คอนโด 2 Bedroom</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 45 วัน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">รับประกัน 1 ปี</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="extension" onclick="openPortfolioModal(3)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80" alt="ต่อเติมครัวและโรงรถ" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">งานต่อเติม</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">บางนา, สมุทรปราการ • 45 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">ต่อเติมครัวไทยหลังบ้าน & โรงจอดรถ</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 30 วัน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">ลงเข็มไมโครไพล์</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="house" onclick="openPortfolioModal(4)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80" alt="สร้างคฤหาสน์หรู" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">สร้างบ้านเดี่ยว</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">ปทุมธานี • 580 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">คฤหาสน์หรู Contemporary Luxury</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 12 เดือน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">ประกันโครงสร้าง 5 ปี</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="interior" onclick="openPortfolioModal(5)">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="ตกแต่งออฟฟิศ" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">ตกแต่งภายใน</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">สาทร, กทม. • 240 ตร.ม.</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">ออกแบบและตกแต่ง Modern Office Space</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> 40 วัน</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">ตรวจรับรอบเดียว</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 04: SERVICE AREAS (พื้นที่ให้บริการ)
+       ======================================================== -->
+  <section id="areas" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">04</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">SERVICE AREAS • พื้นที่ให้บริการ</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="text-left max-w-2xl mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">พร้อมเข้าสำรวจหน้างานทั่วปริมณฑล</h2>
+        <p class="text-xs text-zinc-500 mt-1">ทีมงานพร้อมเข้าวัดพื้นที่จริงและประเมินราคาภายใน 24-48 ชั่วโมง</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Area List -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="p-5 rounded-2xl bg-[#fafaf9] border border-zinc-200">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-bold text-sm text-zinc-900">1. กรุงเทพมหานครและปริมณฑล (เข้าสำรวจได้ทันที)</span>
+              <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">สำรวจฟรี</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-600">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> กรุงเทพฯ (ทุกเขต)</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> นนทบุรี</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ปทุมธานี</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สมุทรปราการ</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สมุทรสาคร</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> นครปฐม</span>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-[#fafaf9] border border-zinc-200">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-bold text-sm text-zinc-900">2. ภาคกลางและภาคตะวันออก (โครงการพิเศษ)</span>
+              <span class="text-[10px] font-semibold bg-zinc-200 text-zinc-800 px-2.5 py-0.5 rounded-full">นัดหมายล่วงหน้า</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-600">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ชลบุรี (พัทยา/ศรีราชา)</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ระยอง</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ฉะเชิงเทรา</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> พระนครศรีอยุธยา</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สระบุรี</span>
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> จังหวัดอื่นๆ ตามตกลง</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Quick Checker -->
+        <div class="lg:col-span-5 p-6 rounded-2xl bg-zinc-50 border border-zinc-200">
+          <h3 class="font-bold text-sm text-zinc-900 mb-1">ระบบตรวจสอบพื้นที่ให้บริการด่วน</h3>
+          <p class="text-xs text-zinc-500 mb-4">พิมพ์ชื่อเขต อำเภอ หรือจังหวัดของคุณ เพื่อเช็คคิวสำรวจ</p>
+          
+          <div class="space-y-3">
+            <input type="text" id="area-search-input" placeholder="เช่น บางนา, นนทบุรี, ลาดพร้าว, รังสิต..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+            
+            <button type="button" onclick="checkServiceArea()" class="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition">
+              ตรวจสอบพื้นที่
+            </button>
+
+            <!-- Result Box -->
+            <div id="area-result" class="hidden p-3.5 rounded-xl text-xs"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 05: ESTIMATOR (คำนวณราคาออนไลน์)
+       ======================================================== -->
+  <section id="calculator" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">05</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">COST ESTIMATOR • คำนวณราคาออนไลน์</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="text-left mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">ประเมินงบประมาณเบื้องต้น</h2>
+        <p class="text-xs text-zinc-500 mt-1">คำนวณงบประมาณคร่าวๆ เพื่อวางแผนงานได้อย่างสบายใจ</p>
+      </div>
+
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- Controls -->
+          <div class="md:col-span-7 space-y-5">
+            <div>
+              <label class="block text-xs font-semibold text-zinc-800 mb-2">1. เลือกประเภทงานที่ต้องการทำ</label>
+              <div class="grid grid-cols-2 gap-2" id="calc-type-selector">
+                <button type="button" class="calc-btn active p-2.5 rounded-xl border border-zinc-900 bg-zinc-900 text-white font-medium text-xs transition" data-type="build" data-rate="14500">
+                  สร้างบ้านใหม่
+                </button>
+                <button type="button" class="calc-btn p-2.5 rounded-xl border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-medium text-xs transition" data-type="renovate" data-rate="6500">
+                  รีโนเวททั้งหลัง
+                </button>
+                <button type="button" class="calc-btn p-2.5 rounded-xl border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-medium text-xs transition" data-type="interior" data-rate="9000">
+                  ตกแต่งภายใน
+                </button>
+                <button type="button" class="calc-btn p-2.5 rounded-xl border border-zinc-200 text-zinc-700 hover:bg-zinc-50 font-medium text-xs transition" data-type="extension" data-rate="8500">
+                  ต่อเติมครัว/โรงรถ
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-zinc-800 mb-2">2. เกรดวัสดุและสเปก</label>
+              <div class="grid grid-cols-3 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="material_tier" value="1" class="hidden peer" checked onchange="calculateEstimate()">
+                  <div class="p-2.5 rounded-xl border border-zinc-200 peer-checked:border-zinc-900 peer-checked:bg-zinc-50 text-center text-xs font-medium text-zinc-700">
+                    Standard
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="material_tier" value="1.25" class="hidden peer" onchange="calculateEstimate()">
+                  <div class="p-2.5 rounded-xl border border-zinc-200 peer-checked:border-zinc-900 peer-checked:bg-zinc-50 text-center text-xs font-medium text-zinc-700">
+                    Premium
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="material_tier" value="1.6" class="hidden peer" onchange="calculateEstimate()">
+                  <div class="p-2.5 rounded-xl border border-zinc-200 peer-checked:border-zinc-900 peer-checked:bg-zinc-50 text-center text-xs font-medium text-zinc-700">
+                    Luxury
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label class="text-xs font-semibold text-zinc-800">3. ขนาดพื้นที่โดยประมาณ</label>
+                <span class="text-xs font-bold text-zinc-900" id="area-display">150 ตร.ม.</span>
+              </div>
+              <input type="range" id="area-slider" min="20" max="600" value="150" step="5" class="w-full accent-zinc-900 cursor-pointer" oninput="updateArea(this.value)">
+              <div class="flex justify-between text-[10px] text-zinc-400 mt-1">
+                <span>20 ตร.ม.</span>
+                <span>300 ตร.ม.</span>
+                <span>600+ ตร.ม.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Result Box -->
+          <div class="md:col-span-5 p-6 rounded-2xl bg-zinc-50 border border-zinc-200 text-center space-y-4">
+            <div>
+              <div class="text-[11px] text-zinc-400 uppercase tracking-wide">งบประมาณประมาณการ</div>
+              <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900 mt-1" id="estimated-cost">฿2,175,000</div>
+              <div class="text-[11px] text-zinc-500 mt-0.5">เฉลี่ย <span id="unit-cost" class="font-semibold text-zinc-800">14,500</span> บ./ตร.ม.</div>
+            </div>
+
+            <div class="text-xs text-zinc-600 border-t border-zinc-200 pt-3 space-y-1.5 text-left">
+              <div class="flex justify-between">
+                <span class="text-zinc-500">ระยะเวลาก่อสร้าง:</span>
+                <span class="font-semibold text-zinc-900" id="estimated-timeline">4 - 6 เดือน</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-zinc-500">สำรวจหน้างาน & BOQ:</span>
+                <span class="font-semibold text-emerald-700">ฟรี ไม่มีค่าใช้จ่าย</span>
+              </div>
+            </div>
+
+            <a href="#contact" class="block w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-semibold transition">
+              ขอใบเสนอราคาอย่างเป็นทางการ
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 06: CLIENT REVIEWS (รีวิวจากลูกค้า)
+       ======================================================== -->
+  <section id="reviews" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">06</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">REVIEWS • รีวิวลูกค้า</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">เสียงตอบรับจากเจ้าของบ้านตัวจริง</h2>
+          <p class="text-xs text-zinc-500 mt-1">ความประทับใจจริงจากลูกค้ากว่า 1,200 โครงการที่เราส่งมอบ</p>
+        </div>
+        <button onclick="openWriteReviewModal()" class="px-3.5 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-100 text-zinc-700 text-xs font-medium transition flex items-center gap-1.5 self-start sm:self-auto">
+          <i class="fa-regular fa-pen-to-square text-amber-600"></i> เขียนรีวิวประสบการณ์
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-reviews-grid">
+        
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex text-amber-500 text-xs">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs text-zinc-600 leading-relaxed font-light">
+              "ประทับใจทีมงานเพิ่มพูนมากครับ รีโนเวทบ้านเดี่ยว 2 ชั้น ช่างทำงานเรียบร้อย ตรงเวลา ส่งอัปเดตงานในไลน์กลุ่มทุกวันศุกร์ ไม่ต้องคอยตามจี้ คุมงบได้ตาม BOQ เป๊ะ"
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+            <div class="font-bold text-zinc-900">คุณกิตติศักดิ์ พ.</div>
+            <div class="text-[11px] text-zinc-500">เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี</div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex text-amber-500 text-xs">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs text-zinc-600 leading-relaxed font-light">
+              "ต่อเติมครัวหลังบ้านและโรงจอดรถ ลงเข็มไมโครไพล์แยกโครงสร้างให้ ผ่านหน้าฝนมาไม่มีปัญหารอยร้าวหรือรั่วซึมเลยค่ะ มีวิศวกรมาคุมงานจริง สบายใจมากค่ะ"
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+            <div class="font-bold text-zinc-900">คุณวิภาวรรณ ส.</div>
+            <div class="text-[11px] text-zinc-500">โครงการบ้านกลางเมือง ลาดพร้าว</div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex text-amber-500 text-xs">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-xs text-zinc-600 leading-relaxed font-light">
+              "งานบิวท์อินคอนโด 2 ห้องนอน เก็บงานประณีต ฟิตติ้ง Soft-close ทั้งหมด ทีมงานให้คำปรึกษาโทนสีและระบบไฟดีมาก ห้องออกมาสวยตรงปกเหมือน 3D เลยครับ"
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+            <div class="font-bold text-zinc-900">คุณธนากร ภ.</div>
+            <div class="text-[11px] text-zinc-500">Life Asoke Hype, กทม.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 07: FAQ (คำถามที่พบบ่อย)
+       ======================================================== -->
+  <section id="faq" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">07</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">FAQ • คำถามที่พบบ่อย</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="text-left mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">ข้อสงสัยก่อนเริ่มงานกับเพิ่มพูน</h2>
+      </div>
+
+      <div class="space-y-3">
+        <!-- FAQ 1 -->
+        <div class="faq-item bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-xs">
+          <button class="faq-toggle w-full px-5 py-3.5 text-left font-medium text-xs sm:text-sm text-zinc-900 flex justify-between items-center hover:text-zinc-600" onclick="toggleFaq(this)">
+            <span>1. บริษัท เพิ่มพูน การันตีไม่ทิ้งงานอย่างไร?</span>
+            <i class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+          </button>
+          <div class="faq-content px-5 pb-4 text-xs text-zinc-500 hidden leading-relaxed border-t border-zinc-100 pt-2.5">
+            เรามีการทำสัญญาว่าจ้างมาตรฐานแนบรายการ BOQ ละเอียด และแบ่งจ่ายเงินเป็นงวดๆ ตามเนื้องานที่ส่งมอบจริง 4-6 งวด ไม่มีการเรียกเก็บเงินก้อนโตก่อนเริ่มงาน
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-xs">
+          <button class="faq-toggle w-full px-5 py-3.5 text-left font-medium text-xs sm:text-sm text-zinc-900 flex justify-between items-center hover:text-zinc-600" onclick="toggleFaq(this)">
+            <span>2. การนัดสำรวจหน้างานและขอใบเสนอราคา มีค่าใช้จ่ายไหม?</span>
+            <i class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+          </button>
+          <div class="faq-content px-5 pb-4 text-xs text-zinc-500 hidden leading-relaxed border-t border-zinc-100 pt-2.5">
+            ในพื้นที่กรุงเทพฯ และปริมณฑล เราบริการส่งวิศวกรเข้าสำรวจหน้างานและจัดทำ BOQ ให้ฟรี ไม่มีค่าใช้จ่ายและไม่มีข้อผูกมัดใดๆ ครับ
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-xs">
+          <button class="faq-toggle w-full px-5 py-3.5 text-left font-medium text-xs sm:text-sm text-zinc-900 flex justify-between items-center hover:text-zinc-600" onclick="toggleFaq(this)">
+            <span>3. มีการรับประกันงานหลังส่งมอบกี่ปี?</span>
+            <i class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+          </button>
+          <div class="faq-content px-5 pb-4 text-xs text-zinc-500 hidden leading-relaxed border-t border-zinc-100 pt-2.5">
+            รับประกันโครงสร้าง 1 - 5 ปี และรับประกันงานระบบไฟฟ้า ประปา สี และรอยรั่วซึม 1 ปีเต็ม พร้อมมีทีมเข้าตรวจสอบภายใน 48 ชั่วโมงหากพบปัญหา
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item bg-white rounded-xl border border-zinc-200 overflow-hidden shadow-xs">
+          <button class="faq-toggle w-full px-5 py-3.5 text-left font-medium text-xs sm:text-sm text-zinc-900 flex justify-between items-center hover:text-zinc-600" onclick="toggleFaq(this)">
+            <span>4. มีบริการช่วยยื่นขออนุญาตก่อสร้างและสินเชื่อธนาคารหรือไม่?</span>
+            <i class="fa-solid fa-chevron-down text-zinc-400 text-xs transition-transform"></i>
+          </button>
+          <div class="faq-content px-5 pb-4 text-xs text-zinc-500 hidden leading-relaxed border-t border-zinc-100 pt-2.5">
+            มีครบถ้วนครับ ทางบริษัทมีวิศวกรและสถาปนิกเซ็นรับรองแบบสำหรับการยื่นขออนุญาตกับสำนักงานเขต และจัดเตรียมเอกสาร BOQ สำหรับยื่นกู้กับสถาบันการเงินได้ทันที
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION 08: CONTACT (ติดต่อเรา / นัดหมายสำรวจหน้างาน)
+       ======================================================== -->
+  <section id="contact" class="py-20 sm:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Tag Header -->
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">08</span>
+        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">CONTACT US • ติดต่อเรา</span>
+        <div class="flex-1 h-px bg-zinc-200"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+        
+        <!-- Contact Info -->
+        <div class="md:col-span-5 space-y-5">
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">
+            พร้อมคุยรายละเอียด <br>และประเมินราคาฟรี
+          </h2>
+          <p class="text-xs text-zinc-500 font-light leading-relaxed">
+            ติดต่อสอบถามหรือส่งแบบแปลนมาให้เราประเมินเบื้องต้นได้ฟรี วิศวกรจะตอบกลับภายใน 24 ชม.
+          </p>
+
+          <div class="space-y-3 pt-2 text-xs">
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-location-dot text-zinc-400 mt-1"></i>
+              <div>
+                <div class="font-bold text-zinc-900">สำนักงานใหญ่</div>
+                <div class="text-zinc-500">เลขที่ 88/12 ถนนงามวงศ์วาน ต.บางเขน อ.เมืองนนทบุรี จ.นนทบุรี 11000</div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-phone text-zinc-400 mt-1"></i>
+              <div>
+                <div class="font-bold text-zinc-900">โทรศัพท์ติดต่อ</div>
+                <div class="text-zinc-700">
+                  <a href="tel:0891234567" class="hover:underline font-semibold">089-123-4567</a>, <a href="tel:029876543" class="hover:underline">02-987-6543</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i class="fa-brands fa-line text-emerald-600 text-sm mt-0.5"></i>
+              <div>
+                <div class="font-bold text-zinc-900">LINE Official</div>
+                <div class="text-zinc-700 font-semibold">@permpoon (มี @ ข้างหน้า)</div>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <i class="fa-solid fa-envelope text-zinc-400 mt-1"></i>
+              <div>
+                <div class="font-bold text-zinc-900">อีเมล</div>
+                <div class="text-zinc-500">contact@permpoon-construction.co.th</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clean Form Card -->
+        <div class="md:col-span-7 bg-[#fafaf9] p-6 sm:p-8 rounded-2xl border border-zinc-200">
+          <h3 class="font-bold text-sm text-zinc-900 mb-1">ลงทะเบียนขอนัดหมายสำรวจหน้างาน</h3>
+          <p class="text-[11px] text-zinc-400 mb-5">กรอกข้อมูลเพื่อให้วิศวกรติดต่อกลับประสานงาน</p>
+
+          <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-medium text-zinc-700 mb-1">ชื่อ - นามสกุล *</label>
+                <input type="text" id="form-name" required placeholder="คุณสมชาย" class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-zinc-700 mb-1">เบอร์โทรศัพท์ *</label>
+                <input type="tel" id="form-phone" required placeholder="0812345678" class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-medium text-zinc-700 mb-1">LINE ID</label>
+                <input type="text" id="form-line" placeholder="ID สำหรับส่งรูป" class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+              </div>
+              <div>
+                <label class="block text-[11px] font-medium text-zinc-700 mb-1">บริการที่สนใจ *</label>
+                <select id="form-service" required class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+                  <option value="สร้างบ้านใหม่">สร้างบ้านใหม่</option>
+                  <option value="รีโนเวทบ้าน">รีโนเวทบ้าน/คอนโด</option>
+                  <option value="ตกแต่งภายใน">ตกแต่งภายใน บิวท์อิน</option>
+                  <option value="งานต่อเติม">งานต่อเติมครัว/โรงรถ</option>
+                  <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-zinc-700 mb-1">สถานที่ตั้งหน้างาน (เขต / จังหวัด) *</label>
+              <input type="text" id="form-location" required placeholder="เช่น นนทบุรี, บางนา" class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-medium text-zinc-700 mb-1">รายละเอียดเพิ่มเติม</label>
+              <textarea id="form-message" rows="3" placeholder="ระบุขนาดพื้นที่ หรือรายละเอียดงาน..." class="w-full px-3 py-2 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white resize-none"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition mt-2">
+              ส่งข้อมูลขอนัดสำรวจฟรี
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       MINIMAL FOOTER
+       ======================================================== -->
+  <footer class="py-12 bg-zinc-950 text-zinc-400 text-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-zinc-800">
+        <div class="flex items-center gap-2">
+          <span class="w-7 h-7 rounded-lg bg-white text-zinc-950 flex items-center justify-center font-bold text-xs">พ</span>
+          <span class="font-bold text-white">บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</span>
+        </div>
+        <div class="flex items-center gap-4 text-[11px]">
+          <a href="#about" class="hover:text-white transition">ประวัติบริษัท</a>
+          <a href="#services" class="hover:text-white transition">บริการ</a>
+          <a href="#portfolio" class="hover:text-white transition">ผลงาน</a>
+          <a href="#contact" class="hover:text-white transition">ติดต่อเรา</a>
+          <a href="admin.html" class="hover:text-amber-400 text-zinc-400 transition flex items-center gap-1 font-medium"><i class="fa-solid fa-lock text-[9px]"></i> ระบบหลังบ้าน (Admin)</a>
+        </div>
+      </div>
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-zinc-500">
+        <div>
+          &copy; 2026 Permpoon Construction & Design Co., Ltd. All rights reserved.
+        </div>
+        <div>
+          เลขทะเบียนนิติบุคคล: 01055540xxxxx
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MINIMAL FLOATING ACTION BUTTONS -->
+  <div class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5">
+    <a href="https://line.me" target="_blank" class="w-11 h-11 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-md flex items-center justify-center text-lg transition" aria-label="ทักไลน์">
+      <i class="fa-brands fa-line"></i>
+    </a>
+    <a href="tel:0891234567" class="w-11 h-11 rounded-full bg-zinc-900 hover:bg-zinc-800 text-white shadow-md flex items-center justify-center text-sm transition" aria-label="โทรด่วน">
+      <i class="fa-solid fa-phone"></i>
+    </a>
+  </div>
+
+  <!-- PORTFOLIO DETAIL MODAL -->
+  <div id="portfolio-modal" class="fixed inset-0 z-50 bg-zinc-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl max-h-[88vh] flex flex-col relative animate-fade-in">
+      <button onclick="closePortfolioModal()" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="h-60 sm:h-72 w-full relative bg-zinc-100">
+        <img id="modal-img" src="" alt="ภาพผลงาน" class="w-full h-full object-cover">
+      </div>
+
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-3">
+        <div class="flex items-center justify-between">
+          <span id="modal-badge" class="bg-zinc-100 text-zinc-700 text-[10px] font-semibold px-2 py-0.5 rounded-full"></span>
+          <span id="modal-location" class="text-xs text-zinc-400"></span>
+        </div>
+        <h3 id="modal-title" class="text-lg font-bold text-zinc-900"></h3>
+        <p id="modal-desc" class="text-zinc-600 text-xs leading-relaxed"></p>
+
+        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-zinc-100 text-[11px]">
+          <div>
+            <div class="text-zinc-400">ขนาดพื้นที่</div>
+            <div id="modal-area" class="font-semibold text-zinc-800"></div>
+          </div>
+          <div>
+            <div class="text-zinc-400">ระยะเวลา</div>
+            <div id="modal-duration" class="font-semibold text-zinc-800"></div>
+          </div>
+          <div>
+            <div class="text-zinc-400">สถานะ</div>
+            <div id="modal-status" class="font-semibold text-emerald-600"></div>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <a href="#contact" onclick="closePortfolioModal()" class="block w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white text-center rounded-xl font-medium text-xs transition">
+            สนใจสร้างแบบนี้ ติดต่อเรา
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE DETAIL MODAL -->
+  <div id="service-modal" class="fixed inset-0 z-50 bg-zinc-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl max-h-[85vh] flex flex-col relative animate-fade-in">
+      <button onclick="closeServiceModal()" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="p-6 overflow-y-auto space-y-3">
+        <div id="service-modal-icon" class="w-10 h-10 rounded-xl bg-zinc-100 text-zinc-800 flex items-center justify-center text-base mb-1"></div>
+        <h3 id="service-modal-title" class="text-base font-bold text-zinc-900"></h3>
+        <p id="service-modal-desc" class="text-zinc-600 text-xs leading-relaxed"></p>
+
+        <div class="space-y-2 pt-2">
+          <h4 class="font-semibold text-zinc-800 text-xs">ขอบเขตงานที่เราส่งมอบ:</h4>
+          <ul id="service-modal-list" class="space-y-1.5 text-xs text-zinc-500"></ul>
+        </div>
+
+        <div class="pt-3">
+          <a href="#contact" onclick="closeServiceModal()" class="block w-full py-2 bg-zinc-900 hover:bg-zinc-800 text-white text-center rounded-xl font-medium text-xs transition">
+            นัดหมายสำรวจหน้างานฟรี
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WRITE REVIEW MODAL -->
+  <div id="write-review-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-xl">
+      <div class="flex justify-between items-center">
+        <h4 class="font-bold text-sm text-zinc-900">เขียนรีวิวผลงาน</h4>
+        <button onclick="closeWriteReviewModal()" class="text-zinc-400 hover:text-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handlePublicReviewSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ชื่อ - นามสกุลของคุณ</label>
+          <input type="text" id="pub-rev-name" required placeholder="เช่น คุณสมศรี พ." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">โครงการ / บริการที่ใช้</label>
+          <input type="text" id="pub-rev-role" required placeholder="เช่น เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ / รีโนเวทคอนโด" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">คะแนนความพึงพอใจ</label>
+          <select id="pub-rev-rating" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+            <option value="5">⭐⭐⭐⭐⭐ 5 ดาว (ยอดเยี่ยม ประทับใจมาก)</option>
+            <option value="4">⭐⭐⭐⭐ 4 ดาว (ดีมาก ส่งงานตรงเวลา)</option>
+            <option value="3">⭐⭐⭐ 3 ดาว (ปานกลาง)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ข้อความรีวิว</label>
+          <textarea id="pub-rev-comment" required rows="3" placeholder="แชร์ความรู้สึกของคุณที่มีต่อการทำงานของทีมช่างและผลงาน..." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 bg-zinc-900 text-white font-medium rounded-xl transition hover:bg-zinc-800">
+          ส่งรีวิวบันทึกลงระบบ
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-20 right-5 z-50 bg-zinc-900 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs flex items-center gap-2.5 transition-all transform translate-y-20 opacity-0 pointer-events-none">
+    <div id="toast-icon" class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div id="toast-message" class="font-medium">ส่งข้อมูลสำเร็จ!</div>
+  </div>
+
+  <!-- Firebase Cloud SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+
+  <!-- Main JavaScript Logic -->
+  <script src="js/main.js"></script>
+</body>
+</html>
