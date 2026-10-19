@@ -1,78 +1,68 @@
-# เว็บไซต์ บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด (Permpoon Website)
+# บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด (Permpoon Website)
 
-เว็บไซต์องค์กรทันสมัย (Modern Responsive Corporate Website) สำหรับ **บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด** ให้บริการรับเหมาก่อสร้าง รีโนเวทบ้าน ตกแต่งภายใน และงานต่อเติมครบวงจร
-
----
-
-## 🌟 จุดเด่นและฟังก์ชันการทำงาน
-
-1. **ข้อมูลและประวัติบริษัท (About & History)**
-   - ความเป็นมากว่า 15 ปี, วิสัยทัศน์ (Vision), พันธกิจ (Mission) และจุดเด่น 4 ด้านที่ลูกค้ามั่นใจ
-2. **บริการครบวงจร (Services)**
-   - แสดง 6 หมวดหมู่งานบริการ พร้อมปุ่มดูรายละเอียดขอบเขตงาน (Modal Popup) และขั้นตอนการให้บริการ 5 สเต็ป
-3. **คลังผลงานจริง (Portfolio & Past Projects)**
-   - ระบบแท็บกรองประเภทงาน (สร้างบ้าน, รีโนเวท, ตกแต่งภายใน, งานต่อเติม)
-   - หน้าต่างพรีวิวรายละเอียดโครงการ (Modal Popup) แสดงขนาดพื้นที่ ระยะเวลาก่อสร้าง และสถานะ
-4. **ระบบตรวจสอบพื้นที่ให้บริการ (Interactive Service Area Checker)**
-   - ช่องค้นหาเขต/อำเภอ/จังหวัด อัตโนมัติ พร้อมแจ้งเตือนเงื่อนไขการเข้าสำรวจหน้างานทันที
-5. **เครื่องคิดเลขออนไลน์ประเมินงบประมาณ (Instant Cost Estimator)**
-   - ปรับเลือกประเภทงาน เกรดวัสดุ (Standard / Premium / Luxury) และแถบเลื่อนขนาดพื้นที่ (ตร.ม.)
-   - คำนวณราคารวมและระยะเวลาทำงานโดยประมาณแบบ Realtime
-6. **รีวิวและคะแนนจากลูกค้าจริง (Customer Reviews & Ratings)**
-   - แสดงความประทับใจ การควบคุมงบประมาณ และความพึงพอใจ 4.9/5 จากผู้ใช้งาน
-7. **คำถามที่พบบ่อย (Interactive FAQ Accordion)**
-   - ชี้แจงข้อกังวลเรื่องการคุมงบ สัญญา การรับประกัน และงวดงาน
-8. **ระบบฟอร์มนัดหมาย & ปุ่มติดต่อด่วน (Call-to-Action)**
-   - ฟอร์มลงทะเบียนขอรับการประเมินราคา พร้อมระบบแจ้งเตือน Toast แจ้งสถานะ
-   - ปุ่มโทรออกด่วน และปุ่ม LINE ลอยมุมขวาล่าง สะดวกต่อการใช้งานบนมือถือ
+เว็บไซต์องค์กรสไตล์ Minimal & Clean พร้อมระบบฐานข้อมูล **Firebase Cloud Firestore** และเชื่อมต่อระบบขึ้น **Vercel** เรียบร้อยแล้ว
 
 ---
 
-## 📁 โครงสร้างโปรเจกต์
+## 🚀 ลิงก์ออนไลน์ (Live Website)
 
-```text
-เว็บบริษัทเพิ่มพูน/
-├── index.html         # ไฟล์หน้าเว็บหลัก (HTML5 + Tailwind CSS + Font Awesome)
-├── css/
-│   └── style.css      # สไตล์แอนิเมชัน การเลื่อนหน้าจอ และตัวปรับแต่งเพิ่มเติม
-├── js/
-│   └── main.js        # ตรรกะการทำงาน (ระบบคัดกรองผลงาน, คำนวณราคา, เช็คพื้นที่, ป๊อปอัป)
-└── README.md          # คู่มือการใช้งานและปรับแต่ง
+- **ลิงก์หน้าเว็บไซต์หลัก:** [https://temporary-agile-sequoia-n6i0owa.vercel.app](https://temporary-agile-sequoia-n6i0owa.vercel.app)
+- **ระบบหลังบ้านจัดการข้อมูล (Admin):** [https://temporary-agile-sequoia-n6i0owa.vercel.app/admin.html](https://temporary-agile-sequoia-n6i0owa.vercel.app/admin.html)
+
+> ⭐️ **การผูกเข้าบัญชี Vercel ถาวร (Claim Deployment):**  
+> คลิกที่ลิงก์นี้เพื่อบันทึกโปรเจกต์เข้าสู่บัญชี Vercel ของคุณถาวร:  
+> [https://vercel.com/claim-deployment?code=e7944c1c-8dca-4d1b-bffd-0e2e7552d3d2](https://vercel.com/claim-deployment?code=e7944c1c-8dca-4d1b-bffd-0e2e7552d3d2)
+
+---
+
+## 🛠️ สรุประบบที่จัดทำเสร็จสมบูรณ์
+
+### 1. ฐานข้อมูล Firebase Firestore (`js/firebase-config.js`)
+- **ระบบจัดเก็บข้อมูลลูกค้าติดต่อ (Inquiries / Leads):**
+  - เมื่อลูกค้ากรอกแบบฟอร์มนัดหมายสำรวจหน้างาน ข้อมูลจะถูกบันทึกส่งตรงเข้า Firestore Collection `inquiries`
+  - มีระบบ **Smart Fallback Mode** หากยังไม่ได้ใส่ API Key หรือขณะออฟไลน์ ข้อมูลจะถูกเก็บลง LocalStorage อัตโนมัติ ไม่สูญหาย 100%
+- **ระบบรีวิวลูกค้า (Reviews):**
+  - ดึงข้อมูลรีวิวมาแสดงผลบนหน้าแรกแบบ Real-time
+  - ลูกค้าสามารถกดปุ่ม **"+ เขียนรีวิวประสบการณ์"** บนหน้าแรกเพื่อส่งรีวิวเข้าฐานข้อมูลได้ทันที
+
+### 2. ระบบหลังบ้าน CRM Admin (`admin.html`)
+- ดูรายการลูกค้าที่ติดต่อเข้ามาทั้งหมด พร้อมปุ่มโทรออกด่วน (`tel:`) และ LINE
+- อัปเดตสถานะงาน (`ใหม่`, `ติดต่อแล้ว`, `นัดสำรวจแล้ว`, `สำเร็จ`, `ยกเลิก`)
+- ดาวน์โหลดรายชื่อลูกค้าเป็นไฟล์ Excel / CSV ได้ด้วยคลิกเดียว
+- มีแท็บสำหรับ **วาง Firebase Config** ผ่านหน้าเว็บได้โดยตรง ไม่ต้องแก้โค้ด
+
+### 3. การดีพลอยบน Vercel (`vercel.json`)
+- ติดตั้ง **Vercel CLI** พร้อมคอนฟิก Clean URLs และ Security Headers
+- อัปโหลดขึ้น Production บน Vercel เรียบร้อย
+
+---
+
+## 🔑 วิธีเชื่อมต่อ Firebase ของคุณเอง (ทำเพียง 3 นาที)
+
+1. เข้าไปที่ [Firebase Console](https://console.firebase.google.com/) แล้วกด **"Add project"** ตั้งชื่อโปรเจกต์ (เช่น `permpoon-construction`)
+2. ไปที่เมนู **Build -> Firestore Database** แล้วกด **Create database** (เลือกโหมด Start in test mode)
+3. ไปที่ **Project Settings (รูปเฟือง) -> General -> Your apps** กดปุ่มไอคอนเว็บ `</>` เพื่อสร้าง Web App
+4. คัดลอกโค้ด `firebaseConfig` ที่ได้ เช่น:
+```javascript
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "your-app.firebaseapp.com",
+  projectId: "your-app",
+  storageBucket: "your-app.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abcd..."
+};
 ```
+5. นำไปวางในไฟล์ [js/firebase-config.js](file:///Users/ingram/Downloads/เว็บบริษัทเพิ่มพูน/js/firebase-config.js) หรือเปิดหน้า **Admin -> แท็บ "ตั้งค่า Firebase Database"** แล้วกดบันทึกได้ทันที!
 
 ---
 
-## 🚀 วิธีเปิดใช้งาน
+## 💻 คำสั่งสำหรับรันและดีพลอย (Terminal Commands)
 
-### วิธีที่ 1: ดับเบิลคลิกเปิดได้ทันที (ไม่ต้องติดตั้งโปรแกรมใดๆ)
-- ดับเบิลคลิกที่ไฟล์ `index.html` เพื่อเปิดผ่านเว็บเบราว์เซอร์ใดก็ได้ เช่น Google Chrome, Safari, Microsoft Edge หรือ Firefox
-
-### วิธีที่ 2: รันผ่าน Local Server (แนะนำสำหรับการทดสอบ)
-เปิด Terminal ในโฟลเดอร์นี้ แล้วสั่ง:
 ```bash
-# ใช้ Python 3
-python3 -m http.server 8080
+# รันเซิร์ฟเวอร์ดูในเครื่อง (Local)
+python3 -m http.server 3000
+
+# ดีพลอยขึ้น Vercel ด้วยตัวเองอีกครั้ง
+vercel --prod
 ```
-จากนั้นเปิดเบราว์เซอร์ไปที่ `http://localhost:8080`
-
----
-
-## 🛠️ แนวทางการปรับแต่งข้อมูล (Customization)
-
-- **เบอร์โทรศัพท์ และ LINE ID**:
-  - ค้นหา `089-123-4567` หรือ `@permpoon` ใน `index.html` แล้วแทนที่ด้วยเบอร์โทรและไอดีไลน์จริง
-- **ที่อยู่บริษัท**:
-  - แก้ไขที่ส่วน `<section id="contact">` ใน `index.html`
-- **เพิ่มหรือเปลี่ยนรูปผลงาน**:
-  - แก้ไขตัวแปร `portfolioData` ในไฟล์ `js/main.js`
-- **ปรับเรทราคาประเมินเบื้องต้น**:
-  - ปรับค่า `data-rate` ในปุ่มคำนวณที่ไฟล์ `index.html` และค่าคำนวณใน `js/main.js`
-
----
-
-## 🌐 การนำขึ้นระบบออนไลน์ (Deployment)
-
-สามารถอัปโหลดไฟล์ขึ้นเว็บโฮสติ้งได้ทันที เช่น:
-- **Netlify / Vercel**: ลากโฟลเดอร์นี้วางเพื่อ Deploy ฟรี
-- **GitHub Pages**: อัปโหลดขึ้น Repository แล้วเปิด GitHub Pages (เลือก Root)
-- **Shared Hosting / cPanel**: อัปโหลดไฟล์ทั้งหมดขึ้นโฟลเดอร์ `public_html`
