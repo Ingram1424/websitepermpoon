@@ -3,19 +3,17 @@
  * Firebase & Cloud Firestore Configuration & Services
  */
 
-// 1. Firebase Configuration Object
-// Replace with your real Firebase Project credentials from Firebase Console (https://console.firebase.google.com/)
-// Project Settings -> General -> Your apps -> Web app
+// 1. Firebase Configuration Object (Connected to project: permpoon-15ae8)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "permpoon-construction.firebaseapp.com",
-  projectId: "permpoon-construction",
-  storageBucket: "permpoon-construction.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef1234567890"
+  apiKey: "AIzaSydbre0q-1Wsk5RN5E0uILPtO1qJffLGOa8",
+  authDomain: "permpoon-15ae8.firebaseapp.com",
+  projectId: "permpoon-15ae8",
+  storageBucket: "permpoon-15ae8.firebasestorage.app",
+  messagingSenderId: "500706462069",
+  appId: "1:500706462069:web:426a14ba3252711b3c6b3c"
 };
 
-// Check if localStorage has custom config saved from Admin panel
+// Check if localStorage has custom override config
 const savedConfig = localStorage.getItem('permpoon_firebase_config');
 const activeConfig = savedConfig ? JSON.parse(savedConfig) : firebaseConfig;
 
@@ -24,15 +22,15 @@ let db = null;
 let isFirebaseActive = false;
 
 try {
-  if (typeof firebase !== 'undefined' && activeConfig.apiKey && activeConfig.apiKey !== "YOUR_API_KEY") {
+  if (typeof firebase !== 'undefined' && activeConfig.apiKey) {
     if (!firebase.apps.length) {
       firebase.initializeApp(activeConfig);
     }
     db = firebase.firestore();
     isFirebaseActive = true;
-    console.log("✅ Firebase Firestore Connected successfully!");
+    console.log("✅ Firebase Firestore Connected successfully to permpoon-15ae8!");
   } else {
-    console.warn("ℹ️ Running in Smart Fallback Mode (LocalStorage). To connect real Firebase, add your credentials in js/firebase-config.js or via /admin.html");
+    console.warn("ℹ️ Running in Smart Fallback Mode (LocalStorage).");
   }
 } catch (error) {
   console.error("⚠️ Firebase initialization error, falling back to local storage:", error);
@@ -56,6 +54,7 @@ async function saveInquiry(data) {
   if (isFirebaseActive && db) {
     try {
       const docRef = await db.collection('inquiries').add(inquiryData);
+      console.log("Lead saved to Firebase Firestore with ID:", docRef.id);
       return { success: true, id: docRef.id, mode: 'firebase' };
     } catch (err) {
       console.error("Firebase save error, saving to local fallback:", err);
@@ -78,7 +77,9 @@ async function getInquiries() {
   if (isFirebaseActive && db) {
     try {
       const snapshot = await db.collection('inquiries').orderBy('timestamp', 'desc').get();
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      if (!snapshot.empty) {
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
     } catch (err) {
       console.warn("Could not fetch from Firebase, reading local storage:", err);
     }
