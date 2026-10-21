@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบจัดการข้อมูลหลังบ้าน (Admin) | บริษัท เพิ่มพูน</title>
+  <title>ระบบจัดการหลังบ้าน (Admin CMS) | บริษัท เพิ่มพูน</title>
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2318181b'/><path d='M30 70 L50 30 L70 70 Z' fill='none' stroke='white' stroke-width='6'/><path d='M42 70 L50 52 L58 70 Z' fill='%23ca8a04'/></svg>">
@@ -42,6 +42,35 @@
 </head>
 <body class="bg-zinc-100 text-zinc-800 font-sans antialiased min-h-screen flex flex-col">
 
+  <!-- PIN Protection Gate (Locked Overlay) -->
+  <div id="pin-lock-overlay" class="fixed inset-0 z-50 bg-zinc-950 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-8 shadow-2xl text-center space-y-5">
+      <div class="w-14 h-14 rounded-2xl bg-zinc-100 text-zinc-900 mx-auto flex items-center justify-center text-2xl shadow-xs">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <div>
+        <h3 class="text-lg font-bold text-zinc-900">เข้าสู่ระบบหลังบ้าน (Admin)</h3>
+        <p class="text-xs text-zinc-500 mt-1">บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด</p>
+      </div>
+      
+      <form onsubmit="handlePinSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-zinc-700 mb-1.5">ใส่รหัส PIN เข้าใช้งาน:</label>
+          <input type="password" id="admin-pin-input" required maxlength="8" placeholder="รหัส PIN (เริ่มต้น: 1234)" class="w-full text-center tracking-widest text-lg font-bold py-2.5 px-4 rounded-xl border border-zinc-200 outline-none focus:ring-2 focus:ring-zinc-900">
+          <p class="text-[10px] text-zinc-400 mt-1">รหัสเริ่มต้นคือ: <strong class="text-zinc-700">1234</strong> (สามารถเปลี่ยนได้ข้างใน)</p>
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition">
+          ปลดล็อกเข้าสู่ระบบ
+        </button>
+      </form>
+      <div class="pt-2">
+        <a href="index.html" class="text-xs text-zinc-400 hover:text-zinc-700 flex items-center justify-center gap-1">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i> กลับหน้าหลักเว็บไซต์
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Admin Top Bar -->
   <header class="bg-zinc-900 text-white border-b border-zinc-800 sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -50,21 +79,28 @@
           พ
         </div>
         <div>
-          <div class="font-bold text-sm leading-tight">ระบบจัดการข้อมูลลูกค้า (CRM Admin)</div>
-          <div class="text-[10px] text-zinc-400">บริษัท เพิ่มพูน คอนสตรัคชั่น แอนด์ ดีไซน์ จำกัด</div>
+          <div class="font-bold text-sm leading-tight flex items-center gap-2">
+            <span>ระบบจัดการหลังบ้าน (Admin CMS)</span>
+            <span class="text-[9px] bg-amber-500/20 text-amber-300 font-semibold px-2 py-0.5 rounded border border-amber-500/30">โหมดแก้ไข</span>
+          </div>
+          <div class="text-[10px] text-zinc-400">บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด</div>
         </div>
       </div>
 
-      <div class="flex items-center gap-4 text-xs">
+      <div class="flex items-center gap-3 text-xs">
         <!-- Database Status Indicator -->
         <div id="db-status-badge" class="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-300">
           <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
           <span id="db-status-text">ตรวจสถานะ...</span>
         </div>
 
-        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium transition flex items-center gap-1.5">
+        <button onclick="lockAdmin()" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition" title="ล็อกหน้าจอ">
+          <i class="fa-solid fa-lock"></i>
+        </button>
+
+        <a href="index.html" class="px-3 py-1.5 rounded-lg bg-white hover:bg-zinc-100 text-zinc-900 font-medium transition flex items-center gap-1.5">
           <i class="fa-solid fa-arrow-left text-[10px]"></i>
-          <span>ดูหน้าเว็บไซต์</span>
+          <span>ดูหน้าเว็บจริง</span>
         </a>
       </div>
     </div>
@@ -77,11 +113,11 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
         <div class="flex items-center justify-between text-zinc-400 text-xs">
-          <span>รายการติดต่อทั้งหมด</span>
+          <span>รายการลูกค้าติดต่อ</span>
           <i class="fa-solid fa-users text-sm text-zinc-400"></i>
         </div>
         <div class="text-2xl font-bold text-zinc-900 mt-2" id="stat-total">0</div>
-        <div class="text-[11px] text-zinc-500 mt-0.5">จากแบบฟอร์มหน้าเว็บ</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">จากฟอร์มหน้าเว็บ</div>
       </div>
 
       <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
@@ -95,49 +131,57 @@
 
       <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
         <div class="flex items-center justify-between text-blue-600 text-xs font-medium">
-          <span>ติดต่อ / สำรวจแล้ว</span>
-          <i class="fa-solid fa-clipboard-check text-sm text-blue-500"></i>
+          <span>ผลงานโครงการ</span>
+          <i class="fa-solid fa-images text-sm text-blue-500"></i>
         </div>
-        <div class="text-2xl font-bold text-blue-600 mt-2" id="stat-contacted">0</div>
-        <div class="text-[11px] text-zinc-500 mt-0.5">อยู่ระหว่างประสานงาน</div>
+        <div class="text-2xl font-bold text-blue-600 mt-2" id="stat-projects">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">แสดงบนหน้าเว็บ</div>
       </div>
 
       <div class="bg-white p-5 rounded-2xl border border-zinc-200/90 shadow-xs">
         <div class="flex items-center justify-between text-emerald-600 text-xs font-medium">
-          <span>ส่งมอบ / สำเร็จ</span>
-          <i class="fa-solid fa-circle-check text-sm text-emerald-500"></i>
+          <span>รีวิวลูกค้า</span>
+          <i class="fa-solid fa-star text-sm text-emerald-500"></i>
         </div>
-        <div class="text-2xl font-bold text-emerald-600 mt-2" id="stat-completed">0</div>
-        <div class="text-[11px] text-zinc-500 mt-0.5">ปิดงานเรียบร้อย</div>
+        <div class="text-2xl font-bold text-emerald-600 mt-2" id="stat-reviews">0</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5">คะแนนเฉลี่ย 4.9/5</div>
       </div>
     </div>
 
     <!-- Main Navigation Tabs -->
-    <div class="flex items-center justify-between border-b border-zinc-200">
-      <div class="flex gap-2">
+    <div class="flex items-center justify-between border-b border-zinc-200 overflow-x-auto">
+      <div class="flex gap-1 sm:gap-2 min-w-max">
         <button onclick="switchTab('inquiries')" id="tab-inquiries-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-zinc-900 text-zinc-900 transition flex items-center gap-2">
           <i class="fa-solid fa-envelope-open-text"></i>
           <span>รายการลูกค้าติดต่อ (Leads)</span>
+        </button>
+        <button onclick="switchTab('portfolio')" id="tab-portfolio-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-images text-blue-600"></i>
+          <span>จัดการผลงานโครงการ</span>
+        </button>
+        <button onclick="switchTab('settings')" id="tab-settings-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-pen-to-square text-amber-600"></i>
+          <span>แก้ไขข้อมูลติดต่อ & ราคา</span>
         </button>
         <button onclick="switchTab('reviews')" id="tab-reviews-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
           <i class="fa-solid fa-star text-amber-500"></i>
           <span>จัดการรีวิวลูกค้า</span>
         </button>
-        <button onclick="switchTab('firebase')" id="tab-firebase-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
-          <i class="fa-solid fa-database text-blue-500"></i>
-          <span>ตั้งค่า Firebase Database</span>
+        <button onclick="switchTab('security')" id="tab-security-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+          <span>ความปลอดภัย & Firebase</span>
         </button>
       </div>
 
-      <button onclick="loadAllData()" class="text-xs text-zinc-600 hover:text-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 transition flex items-center gap-1.5 shadow-xs">
-        <i class="fa-solid fa-rotate-right"></i> รีเฟรชข้อมูล
+      <button onclick="loadAllData()" class="text-xs text-zinc-600 hover:text-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 transition flex items-center gap-1.5 shadow-xs whitespace-nowrap ml-4">
+        <i class="fa-solid fa-rotate-right"></i> รีเฟรช
       </button>
     </div>
 
-    <!-- TAB 1: Inquiries / Leads Table -->
+    <!-- ==========================================
+         TAB 1: Inquiries / Leads Table
+         ========================================== -->
     <div id="tab-inquiries" class="space-y-4">
-      
-      <!-- Filter Bar -->
       <div class="bg-white p-4 rounded-2xl border border-zinc-200 flex flex-col sm:flex-row justify-between items-center gap-3">
         <div class="flex items-center gap-2 text-xs w-full sm:w-auto">
           <span class="text-zinc-500">กรองสถานะ:</span>
@@ -148,11 +192,10 @@
         </div>
 
         <button onclick="exportToCSV()" class="text-xs bg-zinc-100 hover:bg-zinc-200 text-zinc-700 px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5">
-          <i class="fa-solid fa-file-excel text-emerald-600"></i> ดาวน์โหลด CSV
+          <i class="fa-solid fa-file-excel text-emerald-600"></i> ดาวน์โหลด CSV (Excel)
         </button>
       </div>
 
-      <!-- Inquiries Table Card -->
       <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
@@ -180,7 +223,116 @@
       </div>
     </div>
 
-    <!-- TAB 2: Reviews Management -->
+    <!-- ==========================================
+         TAB 2: Portfolio Projects Manager
+         ========================================== -->
+    <div id="tab-portfolio" class="hidden space-y-4">
+      <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex justify-between items-center">
+        <div>
+          <h3 class="font-bold text-sm text-zinc-900">ผลงานโครงการทั้งหมด (Portfolio)</h3>
+          <p class="text-xs text-zinc-500">สามารถเพิ่ม แก้ไขรูปภาพ หรือลบผลงานที่จะแสดงบนหน้าแรกได้ทันที</p>
+        </div>
+        <button onclick="openAddProjectModal()" class="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-plus text-[10px]"></i> เพิ่มผลงานใหม่
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-admin-container">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 3: Site Settings & Price Rates Editor
+         ========================================== -->
+    <div id="tab-settings" class="hidden">
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-4xl space-y-6">
+        <div>
+          <h3 class="text-base font-bold text-zinc-900">แก้ไขข้อมูลติดต่อและเรทราคาประเมิน</h3>
+          <p class="text-xs text-zinc-500 mt-0.5">ข้อมูลที่บันทึกตรงนี้จะอัปเดตไปแสดงผลบนหน้าแรกของเว็บไซต์ทันที</p>
+        </div>
+
+        <form onsubmit="handleSiteSettingsSubmit(event)" class="space-y-6 text-xs">
+          <!-- Contact Info Section -->
+          <div class="space-y-4 border-b border-zinc-100 pb-6">
+            <h4 class="font-bold text-zinc-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-building text-zinc-500"></i> ข้อมูลบริษัทและการติดต่อ
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">ชื่อบริษัท</label>
+                <input type="text" id="set-company-name" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">ลักษณะกิจการ / สโลแกน</label>
+                <input type="text" id="set-tagline" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="รับเหมา ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">เบอร์โทรศัพท์หลัก</label>
+                <input type="text" id="set-phone" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">เบอร์โทรศัพท์สำรอง / ออฟฟิศ</label>
+                <input type="text" id="set-phone2" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">LINE Official ID (เช่น @permpoon)</label>
+                <input type="text" id="set-line" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">อีเมลติดต่อ</label>
+                <input type="email" id="set-email" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-700 mb-1">ที่ตั้งสำนักงานใหญ่</label>
+              <input type="text" id="set-address" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-700 mb-1">เวลาทำการ</label>
+              <input type="text" id="set-business-hours" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+            </div>
+          </div>
+
+          <!-- Price Calculator Rates Section -->
+          <div class="space-y-4 border-b border-zinc-100 pb-6">
+            <h4 class="font-bold text-zinc-800 text-xs uppercase tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-calculator text-zinc-500"></i> เรทราคาคำนวณเบื้องต้น (บาท / ตร.ม.)
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">สร้างบ้านใหม่</label>
+                <input type="number" id="set-rate-build" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">รีโนเวททั้งหลัง</label>
+                <input type="number" id="set-rate-renovate" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">ตกแต่งภายใน</label>
+                <input type="number" id="set-rate-interior" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">ต่อเติมครัว/โรงรถ</label>
+                <input type="number" id="set-rate-extension" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition flex items-center gap-2">
+            <i class="fa-solid fa-floppy-disk"></i> บันทึกการเปลี่ยนแปลงข้อมูลหน้าเว็บ
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 4: Reviews Management
+         ========================================== -->
     <div id="tab-reviews" class="hidden space-y-4">
       <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex justify-between items-center">
         <div>
@@ -197,49 +349,115 @@
       </div>
     </div>
 
-    <!-- TAB 3: Firebase Config Settings -->
-    <div id="tab-firebase" class="hidden">
-      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-3xl space-y-6">
-        <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-2">
-            <i class="fa-solid fa-database"></i> ฐานข้อมูลคลาวด์ Firebase Firestore
-          </div>
-          <h3 class="text-lg font-bold text-zinc-900">ตั้งค่าการเชื่อมต่อ Firebase</h3>
-          <p class="text-xs text-zinc-500 mt-1 leading-relaxed">
-            ท่านสามารถนำค่าคอนฟิกจาก <strong>Firebase Console</strong> (Project Settings -> General -> Your apps -> Web app) มาวางที่นี่เพื่อเชื่อมต่อฐานข้อมูลจริงบนระบบคลาวด์ของ Google ทันที
-          </p>
-        </div>
+    <!-- ==========================================
+         TAB 5: Security & Firebase Settings
+         ========================================== -->
+    <div id="tab-security" class="hidden space-y-6">
+      
+      <!-- Change PIN Card -->
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-xl space-y-4 text-xs">
+        <h4 class="font-bold text-sm text-zinc-900 flex items-center gap-2">
+          <i class="fa-solid fa-key text-zinc-700"></i> เปลี่ยนรหัส PIN เข้าหลังบ้าน
+        </h4>
+        <p class="text-zinc-500">รหัสผ่านสำหรับเข้าหน้าจัดการนี้เพื่อป้องกันบุคคลภายนอกแก้ไขข้อมูล</p>
 
-        <div class="space-y-4 text-xs">
+        <form onsubmit="handleChangePin(event)" class="space-y-3">
           <div>
-            <label class="block font-semibold text-zinc-700 mb-1">วาง Firebase Config Object หรือ JSON:</label>
-            <textarea id="firebase-config-input" rows="10" placeholder='{
-  "apiKey": "AIzaSy...",
-  "authDomain": "your-app.firebaseapp.com",
-  "projectId": "your-app",
-  "storageBucket": "your-app.appspot.com",
-  "messagingSenderId": "1234567890",
-  "appId": "1:1234567890:web:abcd..."
-}' class="w-full font-mono text-xs p-3.5 rounded-xl border border-zinc-200 outline-none focus:ring-2 focus:ring-zinc-900 bg-zinc-50"></textarea>
+            <label class="block font-medium text-zinc-700 mb-1">รหัส PIN ใหม่ (ตัวเลขหรือตัวอักษร 4-8 หลัก)</label>
+            <input type="password" id="new-pin-input" required minlength="4" maxlength="8" placeholder="ระบุ PIN ใหม่" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
           </div>
+          <button type="submit" class="px-4 py-2 bg-zinc-900 text-white font-medium rounded-xl transition hover:bg-zinc-800">
+            บันทึก PIN ใหม่
+          </button>
+        </form>
+      </div>
 
-          <div class="flex items-center gap-3">
-            <button onclick="saveFirebaseSettings()" class="px-5 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition flex items-center gap-2">
-              <i class="fa-solid fa-floppy-disk"></i> บันทึกและเชื่อมต่อ Firebase
-            </button>
-            <button onclick="resetFirebaseSettings()" class="px-4 py-2.5 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-medium rounded-xl text-xs transition">
-              รีเซ็ตกลับเป็นค่าเริ่มต้น
-            </button>
-          </div>
+      <!-- Firebase Settings -->
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-3xl space-y-4 text-xs">
+        <div class="flex items-center gap-2 text-blue-700 font-bold">
+          <i class="fa-solid fa-database"></i> การเชื่อมต่อ Firebase Firestore (permpoon-15ae8)
+        </div>
+        <p class="text-zinc-500">โปรเจกต์ปัจจุบันเชื่อมต่อกับ Google Firebase เรียบร้อยแล้ว หากต้องการเปลี่ยนหรือปรับแต่งสามารถแก้ไขได้ด้านล่าง:</p>
 
-          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-[11px] leading-relaxed">
-            <i class="fa-solid fa-circle-info mr-1"></i> <strong>คำแนะนำ:</strong> ในขณะที่ยังไม่ได้เชื่อมต่อ Firebase หรือไม่ได้กรอก API Key ระบบจะใช้ <strong>Smart LocalStorage Mode</strong> ให้อัตโนมัติ ข้อมูลลูกค้าและการทดสอบจะไม่สูญหายและใช้งานได้ทันที 100%
-          </div>
+        <textarea id="firebase-config-input" rows="8" class="w-full font-mono text-xs p-3.5 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-zinc-50"></textarea>
+
+        <div class="flex gap-2">
+          <button onclick="saveFirebaseSettings()" class="px-4 py-2 bg-zinc-900 text-white rounded-xl font-medium transition">
+            บันทึกการตั้งค่า Firebase
+          </button>
+          <button onclick="resetFirebaseSettings()" class="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-xl font-medium transition">
+            รีเซ็ตค่าเริ่มต้น
+          </button>
         </div>
       </div>
     </div>
 
   </main>
+
+  <!-- Add/Edit Project Modal -->
+  <div id="project-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-zinc-100 pb-3">
+        <h4 class="font-bold text-sm text-zinc-900" id="project-modal-title">เพิ่มผลงานโครงการใหม่</h4>
+        <button onclick="closeProjectModal()" class="text-zinc-400 hover:text-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleProjectSubmit(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="proj-id">
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ชื่อผลงาน / โครงการ *</label>
+          <input type="text" id="proj-title" required placeholder="เช่น บ้านเดี่ยวสไตล์ Nordic ม.ชัยพฤกษ์" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-medium text-zinc-700 mb-1">หมวดหมู่งาน *</label>
+            <select id="proj-category" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+              <option value="house">สร้างบ้านเดี่ยว</option>
+              <option value="renovation">รีโนเวทบ้าน/คอนโด</option>
+              <option value="interior">ตกแต่งภายใน</option>
+              <option value="extension">งานต่อเติม</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-medium text-zinc-700 mb-1">ป้ายกำกับ (Badge)</label>
+            <input type="text" id="proj-badge" placeholder="เช่น สร้างบ้านเดี่ยว / รีโนเวท" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block font-medium text-zinc-700 mb-1">สถานที่ (จังหวัด/เขต) *</label>
+            <input type="text" id="proj-location" required placeholder="เช่น นนทบุรี" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+          </div>
+          <div>
+            <label class="block font-medium text-zinc-700 mb-1">ขนาดพื้นที่</label>
+            <input type="text" id="proj-area" placeholder="เช่น 240 ตร.ม." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+          </div>
+          <div>
+            <label class="block font-medium text-zinc-700 mb-1">ระยะเวลาก่อสร้าง</label>
+            <input type="text" id="proj-duration" placeholder="เช่น 6 เดือน" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">ลิงก์รูปภาพ (Image URL) *</label>
+          <input type="url" id="proj-img" required placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none font-mono text-[11px]">
+          <p class="text-[10px] text-zinc-400 mt-1">สามารถนำ URL รูปภาพจากอินเทอร์เน็ตหรือฝากรูปไว้แล้วนำลิงก์มาวางได้</p>
+        </div>
+
+        <div>
+          <label class="block font-medium text-zinc-700 mb-1">คำอธิบายรายละเอียดผลงาน</label>
+          <textarea id="proj-desc" rows="3" placeholder="ระบุรายละเอียดโครงสร้าง สเปกงาน จุดเด่นของงานก่อสร้าง..." class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none resize-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-2.5 bg-zinc-900 text-white font-medium rounded-xl transition hover:bg-zinc-800">
+          บันทึกผลงานโครงการ
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- Add Review Modal -->
   <div id="add-review-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
@@ -257,7 +475,7 @@
 
         <div>
           <label class="block font-medium text-zinc-700 mb-1">โครงการ / สถานที่</label>
-          <input type="text" id="rev-role" required placeholder="เช่น เจ้าของบ้านเดี่ยว ม.พฤกษาวิลล์ นนทบุรี" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
+          <input type="text" id="rev-role" required placeholder="เช่น เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900">
         </div>
 
         <div>
@@ -289,9 +507,7 @@
         <button onclick="closeDetailModal()" class="text-zinc-400 hover:text-zinc-700"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div id="detail-content" class="text-xs space-y-3">
-        <!-- Rendered by JS -->
-      </div>
+      <div id="detail-content" class="text-xs space-y-3"></div>
 
       <div class="pt-3 border-t border-zinc-100 flex justify-end gap-2">
         <button onclick="closeDetailModal()" class="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-xl text-xs font-medium">ปิด</button>
@@ -307,20 +523,62 @@
   <!-- Admin Dashboard Logic -->
   <script>
     let allInquiries = [];
+    let allProjects = [];
     let currentFilter = 'all';
 
     document.addEventListener('DOMContentLoaded', () => {
+      checkPinAuth();
       checkDbStatus();
       loadAllData();
+      loadSettingsForm();
       populateFirebaseInput();
     });
 
+    // 1. PIN Security Authentication
+    function checkPinAuth() {
+      const isUnlocked = sessionStorage.getItem('permpoon_admin_unlocked');
+      if (isUnlocked === 'true') {
+        document.getElementById('pin-lock-overlay').classList.add('hidden');
+      } else {
+        document.getElementById('pin-lock-overlay').classList.remove('hidden');
+      }
+    }
+
+    function handlePinSubmit(e) {
+      e.preventDefault();
+      const pin = document.getElementById('admin-pin-input').value;
+      if (typeof verifyAdminPin === 'function' && verifyAdminPin(pin)) {
+        sessionStorage.setItem('permpoon_admin_unlocked', 'true');
+        document.getElementById('pin-lock-overlay').classList.add('hidden');
+      } else {
+        alert('รหัส PIN ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+        document.getElementById('admin-pin-input').value = '';
+      }
+    }
+
+    function lockAdmin() {
+      sessionStorage.removeItem('permpoon_admin_unlocked');
+      window.location.reload();
+    }
+
+    function handleChangePin(e) {
+      e.preventDefault();
+      const newPin = document.getElementById('new-pin-input').value.trim();
+      if (typeof updateAdminPin === 'function' && updateAdminPin(newPin)) {
+        alert(`เปลี่ยนรหัส PIN สำเร็จ! รหัสใหม่ของคุณคือ: ${newPin}`);
+        document.getElementById('new-pin-input').value = '';
+      } else {
+        alert('รหัส PIN ต้องมีความยาวอย่างน้อย 4 หลัก');
+      }
+    }
+
+    // 2. Database Status Check
     function checkDbStatus() {
       const badgeText = document.getElementById('db-status-text');
       const badge = document.getElementById('db-status-badge');
       if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive) {
-        badgeText.innerText = 'Firebase Live Connected';
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>Firebase Cloud Live</span>';
+        badgeText.innerText = 'Firebase Cloud Live';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>Firebase Live (permpoon-15ae8)</span>';
         badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300';
       } else {
         badgeText.innerText = 'Local Storage Mode';
@@ -329,24 +587,32 @@
       }
     }
 
+    // 3. Load All Data
     async function loadAllData() {
-      // 1. Load Inquiries
+      // 1. Inquiries
       allInquiries = await getInquiries();
       renderInquiries();
       updateStats();
 
-      // 2. Load Reviews
+      // 2. Projects
+      if (typeof getPortfolioProjects === 'function') {
+        allProjects = await getPortfolioProjects();
+        renderProjects();
+        document.getElementById('stat-projects').innerText = allProjects.length;
+      }
+
+      // 3. Reviews
       const reviews = await getReviews();
       renderReviews(reviews);
+      document.getElementById('stat-reviews').innerText = reviews.length;
     }
 
     function updateStats() {
       document.getElementById('stat-total').innerText = allInquiries.length;
       document.getElementById('stat-new').innerText = allInquiries.filter(i => (i.status || 'new') === 'new').length;
-      document.getElementById('stat-contacted').innerText = allInquiries.filter(i => i.status === 'contacted' || i.status === 'surveyed').length;
-      document.getElementById('stat-completed').innerText = allInquiries.filter(i => i.status === 'completed').length;
     }
 
+    // 4. Render Inquiries
     function renderInquiries() {
       const tbody = document.getElementById('inquiries-tbody');
       const filtered = currentFilter === 'all' 
@@ -369,14 +635,7 @@
           day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit'
         }) : '-';
 
-        let statusBadge = '';
         const st = item.status || 'new';
-        if (st === 'new') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[10px]">ใหม่</span>';
-        else if (st === 'contacted') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-[10px]">ติดต่อแล้ว</span>';
-        else if (st === 'surveyed') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 font-semibold text-[10px]">สำรวจแล้ว</span>';
-        else if (st === 'completed') statusBadge = '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[10px]">สำเร็จ</span>';
-        else statusBadge = '<span class="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-800 font-semibold text-[10px]">ยกเลิก</span>';
-
         return `
           <tr class="hover:bg-zinc-50 transition">
             <td class="p-4 text-zinc-500 font-mono text-[11px] whitespace-nowrap">${dateStr}</td>
@@ -412,6 +671,148 @@
       }).join('');
     }
 
+    // 5. Portfolio Projects Render & CRUD
+    function renderProjects() {
+      const container = document.getElementById('portfolio-admin-container');
+      if (!container) return;
+
+      container.innerHTML = allProjects.map((p, index) => `
+        <div class="bg-white rounded-2xl border border-zinc-200 overflow-hidden shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="aspect-[16/10] bg-zinc-100 relative overflow-hidden">
+              <img src="${p.img}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover">
+              <span class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full text-[10px] font-semibold text-zinc-800">
+                ${escapeHtml(p.badge || p.category)}
+              </span>
+            </div>
+            <div class="p-4 space-y-1">
+              <div class="text-[11px] text-zinc-400">${escapeHtml(p.location)} • ${escapeHtml(p.area || '')}</div>
+              <h4 class="font-bold text-zinc-900 text-sm">${escapeHtml(p.title)}</h4>
+              <p class="text-[11px] text-zinc-500 line-clamp-2 mt-1">${escapeHtml(p.desc || '')}</p>
+            </div>
+          </div>
+          <div class="p-4 pt-2 border-t border-zinc-100 flex justify-between items-center text-xs">
+            <span class="text-zinc-400 text-[11px]"><i class="fa-regular fa-clock mr-1"></i> ${escapeHtml(p.duration || '-')}</span>
+            <div class="space-x-1">
+              <button onclick="editProject(${index})" class="px-2.5 py-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-700 rounded-lg text-[11px] font-medium">
+                <i class="fa-solid fa-pen"></i> แก้ไข
+              </button>
+              <button onclick="handleDeleteProject('${p.id}')" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-[11px] font-medium">
+                <i class="fa-solid fa-trash"></i> ลบ
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddProjectModal() {
+      document.getElementById('project-modal-title').innerText = 'เพิ่มผลงานโครงการใหม่';
+      document.getElementById('proj-id').value = '';
+      document.getElementById('proj-title').value = '';
+      document.getElementById('proj-category').value = 'house';
+      document.getElementById('proj-badge').value = 'สร้างบ้านเดี่ยว';
+      document.getElementById('proj-location').value = '';
+      document.getElementById('proj-area').value = '';
+      document.getElementById('proj-duration').value = '';
+      document.getElementById('proj-img').value = '';
+      document.getElementById('proj-desc').value = '';
+
+      document.getElementById('project-modal').classList.remove('hidden');
+      document.getElementById('project-modal').classList.add('flex');
+    }
+
+    function editProject(index) {
+      const p = allProjects[index];
+      if (!p) return;
+      document.getElementById('project-modal-title').innerText = 'แก้ไขผลงานโครงการ';
+      document.getElementById('proj-id').value = p.id;
+      document.getElementById('proj-title').value = p.title || '';
+      document.getElementById('proj-category').value = p.category || 'house';
+      document.getElementById('proj-badge').value = p.badge || '';
+      document.getElementById('proj-location').value = p.location || '';
+      document.getElementById('proj-area').value = p.area || '';
+      document.getElementById('proj-duration').value = p.duration || '';
+      document.getElementById('proj-img').value = p.img || '';
+      document.getElementById('proj-desc').value = p.desc || '';
+
+      document.getElementById('project-modal').classList.remove('hidden');
+      document.getElementById('project-modal').classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.add('hidden');
+      document.getElementById('project-modal').classList.remove('flex');
+    }
+
+    async function handleProjectSubmit(e) {
+      e.preventDefault();
+      const proj = {
+        id: document.getElementById('proj-id').value || undefined,
+        title: document.getElementById('proj-title').value.trim(),
+        category: document.getElementById('proj-category').value,
+        badge: document.getElementById('proj-badge').value.trim() || document.getElementById('proj-category').value,
+        location: document.getElementById('proj-location').value.trim(),
+        area: document.getElementById('proj-area').value.trim(),
+        duration: document.getElementById('proj-duration').value.trim(),
+        img: document.getElementById('proj-img').value.trim(),
+        desc: document.getElementById('proj-desc').value.trim()
+      };
+
+      await savePortfolioProject(proj);
+      closeProjectModal();
+      alert('บันทึกผลงานโครงการสำเร็จ! ข้อมูลอัปเดตไปแสดงผลบนหน้าแรกทันที');
+      loadAllData();
+    }
+
+    async function handleDeleteProject(id) {
+      if (!confirm('ยืนยันลบผลงานโครงการนี้?')) return;
+      await deletePortfolioProject(id);
+      allProjects = allProjects.filter(p => p.id !== id);
+      renderProjects();
+      document.getElementById('stat-projects').innerText = allProjects.length;
+    }
+
+    // 6. Site Settings (Edit Contact & Price)
+    async function loadSettingsForm() {
+      if (typeof getSiteSettings !== 'function') return;
+      const s = await getSiteSettings();
+      if (document.getElementById('set-company-name')) document.getElementById('set-company-name').value = s.companyName || '';
+      if (document.getElementById('set-tagline')) document.getElementById('set-tagline').value = s.tagline || '';
+      document.getElementById('set-phone').value = s.phone || '';
+      document.getElementById('set-phone2').value = s.phone2 || '';
+      document.getElementById('set-line').value = s.line || '';
+      document.getElementById('set-email').value = s.email || '';
+      document.getElementById('set-address').value = s.address || '';
+      document.getElementById('set-business-hours').value = s.businessHours || '';
+      document.getElementById('set-rate-build').value = s.rateBuild || 14500;
+      document.getElementById('set-rate-renovate').value = s.rateRenovate || 6500;
+      document.getElementById('set-rate-interior').value = s.rateInterior || 9000;
+      document.getElementById('set-rate-extension').value = s.rateExtension || 8500;
+    }
+
+    async function handleSiteSettingsSubmit(e) {
+      e.preventDefault();
+      const newSettings = {
+        companyName: (document.getElementById('set-company-name')?.value || '').trim() || 'บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด',
+        tagline: (document.getElementById('set-tagline')?.value || '').trim() || 'รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล',
+        phone: document.getElementById('set-phone').value.trim(),
+        phone2: document.getElementById('set-phone2').value.trim(),
+        line: document.getElementById('set-line').value.trim(),
+        email: document.getElementById('set-email').value.trim(),
+        address: document.getElementById('set-address').value.trim(),
+        businessHours: document.getElementById('set-business-hours').value.trim(),
+        rateBuild: Number(document.getElementById('set-rate-build').value) || 14500,
+        rateRenovate: Number(document.getElementById('set-rate-renovate').value) || 6500,
+        rateInterior: Number(document.getElementById('set-rate-interior').value) || 9000,
+        rateExtension: Number(document.getElementById('set-rate-extension').value) || 8500,
+      };
+
+      await saveSiteSettings(newSettings);
+      alert('บันทึกข้อมูลเว็บไซต์และราคาสำเร็จ! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+    }
+
+    // 7. Reviews Render
     function renderReviews(reviews) {
       const container = document.getElementById('reviews-container');
       container.innerHTML = reviews.map(rev => `
@@ -432,6 +833,7 @@
       `).join('');
     }
 
+    // Helper functions
     async function changeStatus(id, newStatus) {
       await updateInquiryStatus(id, newStatus);
       const item = allInquiries.find(i => i.id === id);
@@ -488,13 +890,17 @@
     }
 
     function switchTab(tab) {
-      ['inquiries', 'reviews', 'firebase'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}-btn`).className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2';
+      ['inquiries', 'portfolio', 'settings', 'reviews', 'security'].forEach(t => {
+        const el = document.getElementById(`tab-${t}`);
+        const btn = document.getElementById(`tab-${t}-btn`);
+        if (el) el.classList.add('hidden');
+        if (btn) btn.className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2';
       });
 
-      document.getElementById(`tab-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}-btn`).className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-zinc-900 text-zinc-900 transition flex items-center gap-2';
+      const activeEl = document.getElementById(`tab-${tab}`);
+      const activeBtn = document.getElementById(`tab-${tab}-btn`);
+      if (activeEl) activeEl.classList.remove('hidden');
+      if (activeBtn) activeBtn.className = 'tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-zinc-900 text-zinc-900 transition flex items-center gap-2';
     }
 
     function openAddReviewModal() {
@@ -522,9 +928,7 @@
 
     function populateFirebaseInput() {
       const saved = localStorage.getItem('permpoon_firebase_config');
-      if (saved) {
-        document.getElementById('firebase-config-input').value = saved;
-      }
+      document.getElementById('firebase-config-input').value = saved || JSON.stringify(firebaseConfig, null, 2);
     }
 
     function saveFirebaseSettings() {

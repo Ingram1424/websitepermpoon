@@ -40,13 +40,11 @@ try {
 
 /**
  * Save new contact / consultation lead
- * @param {Object} data - { name, phone, line, service, location, budget, message }
- * @returns {Promise<Object>}
  */
 async function saveInquiry(data) {
   const inquiryData = {
     ...data,
-    status: 'new', // 'new' | 'contacted' | 'surveyed' | 'completed' | 'cancelled'
+    status: 'new',
     createdAt: new Date().toISOString(),
     timestamp: Date.now()
   };
@@ -71,7 +69,6 @@ async function saveInquiry(data) {
 
 /**
  * Fetch all contact inquiries (for Admin Dashboard)
- * @returns {Promise<Array>}
  */
 async function getInquiries() {
   if (isFirebaseActive && db) {
@@ -85,10 +82,8 @@ async function getInquiries() {
     }
   }
 
-  // Fallback: Read from LocalStorage
   const localData = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
   if (localData.length === 0) {
-    // Seed with realistic demo leads if empty
     const demoLeads = [
       {
         id: 'demo_1',
@@ -138,8 +133,6 @@ async function getInquiries() {
 
 /**
  * Update Inquiry status
- * @param {string} id 
- * @param {string} newStatus 
  */
 async function updateInquiryStatus(id, newStatus) {
   if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
@@ -151,7 +144,6 @@ async function updateInquiryStatus(id, newStatus) {
     }
   }
 
-  // Update in LocalStorage
   const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
   const index = list.findIndex(item => item.id === id);
   if (index !== -1) {
@@ -164,7 +156,6 @@ async function updateInquiryStatus(id, newStatus) {
 
 /**
  * Delete an inquiry
- * @param {string} id 
  */
 async function deleteInquiry(id) {
   if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
@@ -176,7 +167,6 @@ async function deleteInquiry(id) {
     }
   }
 
-  // Delete from LocalStorage
   const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
   const filtered = list.filter(item => item.id !== id);
   localStorage.setItem('permpoon_inquiries', JSON.stringify(filtered));
@@ -253,4 +243,237 @@ async function saveReview(reviewData) {
   existing.unshift({ id: 'rev_' + Date.now(), ...data });
   localStorage.setItem('permpoon_reviews', JSON.stringify(existing));
   return { success: true, id: 'rev_' + Date.now() };
+}
+
+/**
+ * 4. Site Settings (แก้ไขข้อมูลเว็บไซต์และเบอร์ติดต่อ)
+ */
+const DEFAULT_SITE_SETTINGS = {
+  companyName: "บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด",
+  tagline: "รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล",
+  phone: "089-123-4567",
+  phone2: "02-987-6543",
+  line: "@permpoon",
+  email: "phoemphoon.pp@gmail.com",
+  address: "เลขที่ 19/57 ซอยเลียบคลองสอง 27 แขวงสามวาตะวันตก เขตคลองสามวา กรุงเทพมหานคร 10510",
+  businessHours: "จันทร์ - เสาร์ (08:30 - 18:00 น.)",
+  rateBuild: 14500,
+  rateRenovate: 6500,
+  rateInterior: 9000,
+  rateExtension: 8500
+};
+
+async function getSiteSettings() {
+  if (isFirebaseActive && db) {
+    try {
+      const doc = await db.collection('settings').doc('site_info').get();
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.address && data.address.includes('งามวงศ์วาน')) {
+          data.address = DEFAULT_SITE_SETTINGS.address;
+          data.email = DEFAULT_SITE_SETTINGS.email;
+          data.companyName = DEFAULT_SITE_SETTINGS.companyName;
+          try {
+            await db.collection('settings').doc('site_info').set(data, { merge: true });
+          } catch (e) {}
+        }
+        return { ...DEFAULT_SITE_SETTINGS, ...data };
+      }
+    } catch (err) {
+      console.warn("Could not load site settings from Firebase, reading local:", err);
+    }
+  }
+
+  const saved = localStorage.getItem('permpoon_site_settings');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (parsed.address && parsed.address.includes('งามวงศ์วาน')) {
+        parsed.address = DEFAULT_SITE_SETTINGS.address;
+        parsed.email = DEFAULT_SITE_SETTINGS.email;
+        parsed.companyName = DEFAULT_SITE_SETTINGS.companyName;
+        localStorage.setItem('permpoon_site_settings', JSON.stringify(parsed));
+      }
+      return { ...DEFAULT_SITE_SETTINGS, ...parsed };
+    } catch (e) {}
+  }
+  return DEFAULT_SITE_SETTINGS;
+}
+
+async function saveSiteSettings(newSettings) {
+  const merged = { ...DEFAULT_SITE_SETTINGS, ...newSettings };
+  if (isFirebaseActive && db) {
+    try {
+      await db.collection('settings').doc('site_info').set(merged, { merge: true });
+    } catch (err) {
+      console.error("Error saving site settings to Firebase:", err);
+    }
+  }
+  localStorage.setItem('permpoon_site_settings', JSON.stringify(merged));
+  return true;
+}
+
+/**
+ * 5. Portfolio Projects CRUD (เพิ่ม/ลบ/แก้ไขผลงานโครงการ)
+ */
+const INITIAL_PROJECTS = [
+  {
+    id: 'proj_1',
+    title: 'บ้านพักอาศัยโมเดิร์นทรอปิคอล 2 ชั้น',
+    category: 'house',
+    badge: 'สร้างบ้านเดี่ยว',
+    location: 'จ.นนทบุรี',
+    img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+    desc: 'งานก่อสร้างบ้านเดี่ยวสไตล์ Modern Tropical เน้นความโปร่งโล่ง รับลมธรรมชาติ ประหยัดพลังงาน โครงสร้างคอนกรีตเสริมเหล็กมาตรฐาน มอก.',
+    area: '320 ตร.ม.',
+    duration: '8 เดือน',
+    status: 'ส่งมอบตรงเวลา'
+  },
+  {
+    id: 'proj_2',
+    title: 'รีโนเวททาวน์โฮมเก่าเป็น Modern Nordic',
+    category: 'renovation',
+    badge: 'รีโนเวท',
+    location: 'ลาดพร้าว, กทม.',
+    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    desc: 'พลิกโฉมทาวน์โฮมเก่ายุค 90 ให้กลายเป็นบ้านมินิมอลนอร์ดิกสุดโมเดิร์น ทุบผนังเปิด Open Plan วางระบบไฟประปาร้อยท่อใหม่หมด',
+    area: '180 ตร.ม.',
+    duration: '3.5 เดือน',
+    status: 'ตรงตาม BOQ'
+  },
+  {
+    id: 'proj_3',
+    title: 'ตกแต่งภายในและบิวท์อิน คอนโด 2 Bedroom',
+    category: 'interior',
+    badge: 'ตกแต่งภายใน',
+    location: 'สุขุมวิท, กทม.',
+    img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+    desc: 'งานบิวท์อินเฟอร์นิเจอร์สั่งทำพิเศษ ไม้ HMR เกรดทนชื้น ปิดผิวลามิเนตลายไม้และหินอ่อน ตู้เสื้อผ้า Walk-in Closet พร้อมไฟ LED',
+    area: '65 ตร.ม.',
+    duration: '45 วัน',
+    status: 'รับประกัน 1 ปี'
+  },
+  {
+    id: 'proj_4',
+    title: 'ต่อเติมครัวไทยหลังบ้าน & โรงจอดรถ',
+    category: 'extension',
+    badge: 'งานต่อเติม',
+    location: 'บางนา, สมุทรปราการ',
+    img: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80',
+    desc: 'ต่อเติมครัวไทยระบายอากาศได้ดี ตอกเสาเข็มไมโครไพล์ I-18 ลึก 19 เมตรถึงชั้นดินดาน โครงสร้างแยกอิสระจากตัวบ้านเดิม 100%',
+    area: '45 ตร.ม.',
+    duration: '30 วัน',
+    status: 'ลงเข็มไมโครไพล์'
+  },
+  {
+    id: 'proj_5',
+    title: 'คฤหาสน์หรู Contemporary Luxury',
+    category: 'house',
+    badge: 'สร้างบ้านเดี่ยว',
+    location: 'ปทุมธานี',
+    img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80',
+    desc: 'โครงการบ้านพักอาศัยระดับลักชัวรี 2 ชั้น พร้อมสระว่ายน้ำส่วนตัว คานโครงสร้างขนาดใหญ่รองรับแผ่นดินไหว ระบบ Solar Air-Flow',
+    area: '580 ตร.ม.',
+    duration: '12 เดือน',
+    status: 'ประกันโครงสร้าง 5 ปี'
+  },
+  {
+    id: 'proj_6',
+    title: 'ออกแบบและตกแต่ง Modern Office Space',
+    category: 'interior',
+    badge: 'ตกแต่งภายใน',
+    location: 'สาทร, กทม.',
+    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+    desc: 'ตกแต่งออฟฟิศทำงานสไตล์ Modern Loft โทนอบอุ่น กั้นห้องประชุมกระจก Acoustic Glass เก็บเสียงระดับสูง พร้อมระบบตู้ Rack และ LAN',
+    area: '240 ตร.ม.',
+    duration: '40 วัน',
+    status: 'ตรวจรับรอบเดียว'
+  }
+];
+
+async function getPortfolioProjects() {
+  if (isFirebaseActive && db) {
+    try {
+      const snapshot = await db.collection('portfolio').get();
+      if (!snapshot.empty) {
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      }
+    } catch (err) {
+      console.warn("Could not load portfolio from Firebase, fallback:", err);
+    }
+  }
+
+  const local = JSON.parse(localStorage.getItem('permpoon_portfolio') || '[]');
+  if (local.length === 0) {
+    localStorage.setItem('permpoon_portfolio', JSON.stringify(INITIAL_PROJECTS));
+    return INITIAL_PROJECTS;
+  }
+  return local;
+}
+
+async function savePortfolioProject(proj) {
+  const isNew = !proj.id;
+  const projectData = {
+    ...proj,
+    timestamp: Date.now()
+  };
+
+  if (isFirebaseActive && db) {
+    try {
+      if (isNew) {
+        const ref = await db.collection('portfolio').add(projectData);
+        return { success: true, id: ref.id };
+      } else {
+        await db.collection('portfolio').doc(proj.id).set(projectData, { merge: true });
+        return { success: true, id: proj.id };
+      }
+    } catch (err) {
+      console.error("Firebase portfolio save error:", err);
+    }
+  }
+
+  const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
+  if (isNew) {
+    const id = 'proj_' + Date.now();
+    list.unshift({ id, ...projectData });
+  } else {
+    const idx = list.findIndex(p => p.id === proj.id);
+    if (idx !== -1) list[idx] = { ...list[idx], ...projectData };
+  }
+  localStorage.setItem('permpoon_portfolio', JSON.stringify(list));
+  return { success: true };
+}
+
+async function deletePortfolioProject(id) {
+  if (isFirebaseActive && db && !id.startsWith('proj_')) {
+    try {
+      await db.collection('portfolio').doc(id).delete();
+    } catch (err) {
+      console.error("Firebase delete project error:", err);
+    }
+  }
+
+  const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
+  const filtered = list.filter(p => p.id !== id);
+  localStorage.setItem('permpoon_portfolio', JSON.stringify(filtered));
+  return true;
+}
+
+/**
+ * 6. Admin Passcode Security
+ */
+const DEFAULT_ADMIN_PIN = "1234";
+
+function getAdminPin() {
+  return localStorage.getItem('permpoon_admin_pin') || DEFAULT_ADMIN_PIN;
+}
+
+function verifyAdminPin(inputPin) {
+  return String(inputPin).trim() === getAdminPin();
+}
+
+function updateAdminPin(newPin) {
+  if (!newPin || newPin.length < 4) return false;
+  localStorage.setItem('permpoon_admin_pin', String(newPin).trim());
+  return true;
 }

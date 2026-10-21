@@ -48,32 +48,31 @@ window.addEventListener('scroll', () => {
 });
 
 // 3. Portfolio Filter
-const filterButtons = document.querySelectorAll('.filter-btn');
-const portfolioItems = document.querySelectorAll('.portfolio-item');
+function setupPortfolioFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  filterButtons.forEach(btn => {
+    btn.onclick = () => {
+      filterButtons.forEach(b => {
+        b.className = 'filter-btn px-3.5 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200';
+      });
+      btn.className = 'filter-btn active px-3.5 py-1.5 rounded-lg font-medium transition bg-zinc-900 text-white';
 
-filterButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    // update button states
-    filterButtons.forEach(b => {
-      b.className = 'filter-btn px-3 py-1.5 rounded-lg font-medium transition bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200/80';
-    });
-    btn.className = 'filter-btn active px-3 py-1.5 rounded-lg font-medium transition bg-zinc-900 text-white';
-
-    const filter = btn.getAttribute('data-filter');
-
-    portfolioItems.forEach(item => {
-      const category = item.getAttribute('data-category');
-      if (filter === 'all' || category === filter) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
-    });
+      const filter = btn.getAttribute('data-filter');
+      const items = document.querySelectorAll('.portfolio-item');
+      items.forEach(item => {
+        const category = item.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    };
   });
-});
+}
 
 // 4. Portfolio Projects Data & Modal
-const portfolioData = [
+let portfolioData = [
   {
     title: 'บ้านพักอาศัยโมเดิร์นทรอปิคอล 2 ชั้น',
     badge: 'สร้างบ้านเดี่ยว',
@@ -258,8 +257,9 @@ function closeServiceModal() {
 
 // 6. Interactive Service Area Checker
 const availableAreas = [
+  'คลองสามวา', 'เลียบคลองสอง', 'สามวาตะวันตก', 'สามวา', 'มีนบุรี', 'หทัยราษฎร์', 'นิมิตใหม่', 'รามอินทรา', 'คู้บอน',
   'กรุงเทพ', 'กทม', 'บางนา', 'บางเขน', 'ลาดพร้าว', 'จตุจักร', 'ห้วยขวาง', 'สุขุมวิท', 'พระราม', 'สาทร',
-  'บางแค', 'ตลิ่งชัน', 'สายไหม', 'ดอนเมือง', 'ประเวศ', 'บางกะปิ', 'มีนบุรี', 'คันนายาว', 'สวนหลวง',
+  'บางแค', 'ตลิ่งชัน', 'สายไหม', 'ดอนเมือง', 'ประเวศ', 'บางกะปิ', 'คันนายาว', 'สวนหลวง',
   'นนทบุรี', 'บางใหญ่', 'ปากเกร็ด', 'บางบัวทอง', 'เมืองนนทบุรี', 'ไทรน้อย', 'บางกรวย',
   'ปทุมธานี', 'รังสิต', 'คลองหลวง', 'ลำลูกกา', 'ธัญบุรี', 'เมืองปทุมธานี',
   'สมุทรปราการ', 'บางพลี', 'สำโรง', 'แพรกษา', 'เมืองสมุทรปราการ', 'บางบ่อ',
@@ -527,8 +527,134 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
+// 12. Dynamic CMS Data Synchronization (Portfolio & Site Settings)
+async function loadDynamicPortfolio() {
+  const grid = document.getElementById('portfolio-grid');
+  if (!grid || typeof getPortfolioProjects !== 'function') return;
+
+  try {
+    const projects = await getPortfolioProjects();
+    if (projects && projects.length > 0) {
+      portfolioData = projects;
+      grid.innerHTML = projects.map((p, idx) => `
+        <div class="portfolio-item bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:shadow-md transition cursor-pointer group" data-category="${escapeHtml(p.category || 'house')}" onclick="openPortfolioModal(${idx})">
+          <div class="aspect-[16/10] overflow-hidden bg-zinc-100 relative">
+            <img src="${escapeHtml(p.img || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80')}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'">
+            <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm text-[10px] font-semibold text-zinc-800 px-2.5 py-0.5 rounded-full shadow-xs">${escapeHtml(p.badge || 'ผลงาน')}</span>
+          </div>
+          <div class="p-4 space-y-1">
+            <div class="text-[11px] text-zinc-400">${escapeHtml(p.location || 'กรุงเทพและปริมณฑล')} • ${escapeHtml(p.area || '')}</div>
+            <h4 class="font-bold text-zinc-900 text-sm group-hover:text-zinc-600 transition">${escapeHtml(p.title)}</h4>
+            <div class="flex justify-between items-center pt-2 text-[11px]">
+              <span class="text-zinc-500"><i class="fa-regular fa-clock mr-1"></i> ${escapeHtml(p.duration || '-')}</span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">${escapeHtml(p.status || 'ส่งมอบเรียบร้อย')}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      setupPortfolioFilters();
+    }
+  } catch (err) {
+    console.warn("Could not load dynamic portfolio:", err);
+  }
+}
+
+async function loadDynamicSiteSettings() {
+  if (typeof getSiteSettings !== 'function') return;
+
+  try {
+    const settings = await getSiteSettings();
+    if (!settings) return;
+
+    // 0. Company Name & Tagline
+    if (settings.companyName) {
+      document.querySelectorAll('[data-bind="companyName"]').forEach(el => {
+        el.innerText = settings.companyName;
+      });
+    }
+    if (settings.tagline) {
+      document.querySelectorAll('[data-bind="tagline"]').forEach(el => {
+        el.innerText = settings.tagline;
+      });
+    }
+
+    // 1. Phone numbers
+    if (settings.phone) {
+      document.querySelectorAll('[data-bind="phone"]').forEach(el => {
+        el.innerText = settings.phone;
+      });
+      document.querySelectorAll('[data-bind-href="phone"]').forEach(el => {
+        el.href = `tel:${settings.phone.replace(/[^0-9]/g, '')}`;
+      });
+    }
+
+    if (settings.phone2) {
+      document.querySelectorAll('[data-bind="phone2"]').forEach(el => {
+        el.innerText = settings.phone2;
+      });
+      document.querySelectorAll('[data-bind-href="phone2"]').forEach(el => {
+        el.href = `tel:${settings.phone2.replace(/[^0-9]/g, '')}`;
+      });
+    }
+
+    // 2. LINE
+    if (settings.line) {
+      document.querySelectorAll('[data-bind="line"]').forEach(el => {
+        el.innerText = el.innerText.includes('Line:') ? `Line: ${settings.line}` : `${settings.line} (มี @ ข้างหน้า)`;
+      });
+      document.querySelectorAll('[data-bind-href="line"]').forEach(el => {
+        const lineId = settings.line.replace('@', '');
+        el.href = `https://line.me/ti/p/~${lineId}`;
+      });
+    }
+
+    // 3. Address & Email
+    if (settings.address) {
+      document.querySelectorAll('[data-bind="address"]').forEach(el => {
+        el.innerText = settings.address;
+      });
+    }
+    if (settings.email) {
+      document.querySelectorAll('[data-bind="email"]').forEach(el => {
+        el.innerText = settings.email;
+      });
+    }
+
+    // 4. Calculator rates
+    if (settings.rateBuild) {
+      const btn = document.querySelector('.calc-btn[data-type="build"]');
+      if (btn) btn.setAttribute('data-rate', settings.rateBuild);
+    }
+    if (settings.rateRenovate) {
+      const btn = document.querySelector('.calc-btn[data-type="renovate"]');
+      if (btn) btn.setAttribute('data-rate', settings.rateRenovate);
+    }
+    if (settings.rateInterior) {
+      const btn = document.querySelector('.calc-btn[data-type="interior"]');
+      if (btn) btn.setAttribute('data-rate', settings.rateInterior);
+    }
+    if (settings.rateExtension) {
+      const btn = document.querySelector('.calc-btn[data-type="extension"]');
+      if (btn) btn.setAttribute('data-rate', settings.rateExtension);
+    }
+
+    // Recalculate if active button rate changed
+    const activeCalc = document.querySelector('.calc-btn.active');
+    if (activeCalc) {
+      currentRate = parseFloat(activeCalc.getAttribute('data-rate')) || currentRate;
+      calculateEstimate();
+    }
+  } catch (err) {
+    console.warn("Could not load dynamic site settings:", err);
+  }
+}
+
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+  setupPortfolioFilters();
+  loadDynamicPortfolio();
+  loadDynamicSiteSettings();
   loadHomeReviews();
 });
 
