@@ -193,27 +193,51 @@
   </section>
 
   <!-- ========================================================
-       STATISTICS BAR (Bridging Section with clear border & shadow)
+       STATISTICS BAR (Bridging Executive Scorecard)
        ======================================================== -->
-  <section class="bg-zinc-50 border-b border-zinc-200 py-8">
+  <section class="bg-zinc-50/70 border-b border-zinc-200 py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-zinc-200/80">
-        <div class="pt-2 md:pt-0">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-zinc-300 transition-all group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-400">EXPERIENCE</span>
+            <span class="w-7 h-7 rounded-lg bg-zinc-100 group-hover:bg-zinc-900 group-hover:text-amber-400 text-zinc-700 flex items-center justify-center text-xs transition-colors"><i class="fa-solid fa-award"></i></span>
+          </div>
           <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat1Num">15+ ปี</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat1Text">ประสบการณ์งานวิศวกรรมช่าง</div>
+          <div class="text-xs text-zinc-500 font-medium mt-0.5" data-bind="stat1Text">ประสบการณ์งานวิศวกรรมช่าง</div>
         </div>
-        <div class="pt-2 md:pt-0">
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-zinc-300 transition-all group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-400">DELIVERY</span>
+            <span class="w-7 h-7 rounded-lg bg-zinc-100 group-hover:bg-zinc-900 group-hover:text-amber-400 text-zinc-700 flex items-center justify-center text-xs transition-colors"><i class="fa-solid fa-city"></i></span>
+          </div>
           <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat2Num">1,200+</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat2Text">โครงการที่ส่งมอบสำเร็จ</div>
+          <div class="text-xs text-zinc-500 font-medium mt-0.5" data-bind="stat2Text">โครงการที่ส่งมอบสำเร็จ</div>
         </div>
-        <div class="pt-2 md:pt-0">
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-zinc-300 transition-all group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-400">GUARANTEE</span>
+            <span class="w-7 h-7 rounded-lg bg-zinc-100 group-hover:bg-zinc-900 group-hover:text-amber-400 text-zinc-700 flex items-center justify-center text-xs transition-colors"><i class="fa-solid fa-file-contract"></i></span>
+          </div>
           <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat3Num">100%</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat3Text">การันตีตามสัญญา ไม่ทิ้งงาน</div>
+          <div class="text-xs text-zinc-500 font-medium mt-0.5" data-bind="stat3Text">การันตีตามสัญญา ไม่ทิ้งงาน</div>
         </div>
-        <div class="pt-2 md:pt-0">
-          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat4Num">4.9 / 5</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat4Text">ความพึงพอใจจากเจ้าของบ้าน</div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_10px_-2px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-zinc-300 transition-all group">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-400">CLIENT TRUST</span>
+            <span class="w-7 h-7 rounded-lg bg-zinc-100 group-hover:bg-zinc-900 group-hover:text-amber-400 text-zinc-700 flex items-center justify-center text-xs transition-colors"><i class="fa-solid fa-star text-amber-500"></i></span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900 flex items-center gap-2">
+            <span data-bind="stat4Num">4.9 / 5</span>
+            <span class="text-xs font-normal text-amber-500 flex"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+          </div>
+          <div class="text-xs text-zinc-500 font-medium mt-0.5" data-bind="stat4Text">ความพึงพอใจจากเจ้าของบ้าน</div>
         </div>
+
       </div>
     </div>
   </section>
@@ -221,33 +245,53 @@
   <!-- ========================================================
        SECTION 01: ABOUT US (ประวัติและข้อมูลบริษัท)
        ======================================================== -->
-  <section id="about" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+  <section id="about" class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-200/80">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">01</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">ABOUT US • เกี่ยวกับเรา</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">01</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">ABOUT US</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">เกี่ยวกับเรา</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         <!-- History Image -->
         <div class="lg:col-span-5">
-          <div class="rounded-2xl overflow-hidden aspect-[4/3] border border-zinc-200 shadow-sm bg-white">
-            <img src="img/company-office.jpg" alt="สำนักงาน บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด" class="w-full h-full object-cover">
+          <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-zinc-200/90 shadow-md bg-white group">
+            <img src="img/company-office.jpg" alt="สำนักงาน บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <div class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-zinc-900/85 backdrop-blur-md text-white text-[10px] font-semibold flex items-center gap-1.5 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>สำนักงานใหญ่ มีตัวตนจริง</span>
+            </div>
           </div>
           <div class="mt-3 flex items-center justify-between text-xs text-zinc-500 px-1">
-            <span><i class="fa-solid fa-location-dot text-zinc-800 mr-1"></i> คลองสามวา กรุงเทพฯ</span>
-            <span>สำนักงานใหญ่ เพิ่มพูน คอนสตรัคชั่น</span>
+            <span class="flex items-center gap-1.5 font-medium text-zinc-700">
+              <i class="fa-solid fa-location-dot text-zinc-900"></i> เขตคลองสามวา กรุงเทพฯ
+            </span>
+            <span class="font-mono text-[11px] text-zinc-400 tracking-wider">EST. 2008</span>
           </div>
         </div>
 
         <!-- History Content -->
-        <div class="lg:col-span-7 space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">
-            ประวัติและความเป็นมา บริษัท เพิ่มพูน คอนสตรัคชั่น
-          </h2>
+        <div class="lg:col-span-7 space-y-5">
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-wider text-zinc-500 mb-1">COMPANY PROFILE & VALUES</div>
+            <h2 class="text-2xl sm:text-3xl lg:text-[34px] font-bold text-zinc-900 leading-tight">
+              ประวัติและความเป็นมา <br>
+              <span class="text-zinc-600 font-semibold">บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด</span>
+            </h2>
+          </div>
 
           <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed font-light">
             <strong>บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด</strong> (Poemphoon Construction Co., Ltd.) ประกอบกิจการรับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคารทุกประเภท รวมทั้งงานระบบประปาและระบบสุขาภิบาลครบวงจร ก่อตั้งขึ้นจากความมุ่งมั่นที่จะยกระดับมาตรฐานงานก่อสร้างและงานระบบให้ได้คุณภาพ ตรงตามหลักวิศวกรรม
@@ -257,22 +301,33 @@
             เรามุ่งเน้นการทำงานด้วยความซื่อสัตย์ โปร่งใส มีเอกสาร BOQ ละเอียดระบุยี่ห้อและสเปกวัสดุทุกรายการ และการแบ่งงวดงานที่สมเหตุสมผล เพื่อแก้ปัญหาช่างทิ้งงานหรืองบบานปลาย พร้อมบริการดูแลรับประกันหลังส่งมอบงานอย่างจริงใจ
           </p>
 
-          <!-- 2 Cards for Vision & Mission -->
+          <!-- Executive 2 Cards for Vision & Mission -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            <div class="p-4 rounded-xl bg-white border border-zinc-200 shadow-xs">
-              <div class="text-xs font-bold text-zinc-900 mb-1 flex items-center gap-1.5">
-                <i class="fa-regular fa-compass text-zinc-700"></i> วิสัยทัศน์ (Vision)
+            <!-- Vision: Dark Executive Card -->
+            <div class="p-5 rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-900 to-zinc-800 text-white shadow-md border border-zinc-800 space-y-2 relative overflow-hidden group">
+              <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-400/5 rounded-full blur-xl pointer-events-none"></div>
+              <div class="flex items-center justify-between">
+                <div class="w-8 h-8 rounded-lg bg-amber-400/15 border border-amber-400/25 text-amber-400 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-compass"></i>
+                </div>
+                <span class="text-[9px] font-mono tracking-widest uppercase text-zinc-400 font-semibold">DIRECTION</span>
               </div>
-              <p class="text-[11px] text-zinc-500 leading-normal">
+              <div class="text-xs font-bold text-white tracking-wide">วิสัยทัศน์ (Vision)</div>
+              <p class="text-[11px] text-zinc-300 leading-relaxed font-light">
                 เป็นบริษัทรับเหมาก่อสร้างและรีโนเวทที่ลูกค้าไว้วางใจสูงสุด ด้วยมาตรฐานวิศวกรรมที่ถูกต้องและซื่อสัตย์
               </p>
             </div>
 
-            <div class="p-4 rounded-xl bg-white border border-zinc-200 shadow-xs">
-              <div class="text-xs font-bold text-zinc-900 mb-1 flex items-center gap-1.5">
-                <i class="fa-regular fa-circle-check text-zinc-700"></i> พันธกิจ (Mission)
+            <!-- Mission: Crisp Engineering White Card -->
+            <div class="p-5 rounded-2xl bg-white border border-zinc-200/90 shadow-sm hover:border-zinc-400 transition space-y-2 relative group">
+              <div class="flex items-center justify-between">
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <span class="text-[9px] font-mono tracking-widest uppercase text-zinc-400 font-semibold">ACTION</span>
               </div>
-              <p class="text-[11px] text-zinc-500 leading-normal">
+              <div class="text-xs font-bold text-zinc-900 tracking-wide">พันธกิจ (Mission)</div>
+              <p class="text-[11px] text-zinc-600 leading-relaxed font-light">
                 ส่งมอบผลงานตรงเวลา ใช้วัสดุมาตรฐาน มอก. คุมงบได้ 100% พร้อมบริการรับประกันหลังการขายจริงใจ
               </p>
             </div>
@@ -289,11 +344,21 @@
   <section id="services" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">02</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">OUR SERVICES • บริการของเรา</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">02</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">OUR SERVICES</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">บริการของเรา</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
@@ -307,161 +372,244 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <!-- Card 1 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-house"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-house"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">01</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc1Title">รับเหมาก่อสร้างบ้านและอาคาร</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc1Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc1Title">รับเหมาก่อสร้างบ้านและอาคาร</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc1Desc">
               สร้างบ้านเดี่ยว ทาวน์โฮม อาคารพาณิชย์ และโกดังเก็บสินค้า ออกแบบตามหลักวิศวกรรมพร้อมยื่นขออนุญาตก่อสร้างครบวงจร
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> งานโครงสร้าง คสล. / โครงสร้างเหล็ก</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> สถาปัตย์ 2D / 3D Perspective</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>งานโครงสร้าง คสล. / โครงสร้างเหล็ก</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>สถาปัตย์ 2D / 3D Perspective</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openServiceDetail('construction')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
-            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <button onclick="openServiceDetail('construction')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer">
+            <span>ดูขอบเขตงานและมาตรฐาน</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </button>
         </div>
 
         <!-- Card 2 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-hammer"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-hammer"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">02</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc2Title">รีโนเวทบ้าน คอนโด ทาวน์โฮม</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc2Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc2Title">รีโนเวทบ้าน คอนโด ทาวน์โฮม</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc2Desc">
               ปรับปรุงบ้านเก่าให้สวยทันสมัย ปรับแปลน รื้อถอน เสริมโครงสร้าง และแก้ปัญหาน้ำรั่วซึมทรุดร้าวอย่างถาวร
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> รื้อถอนและเสริมกำลังโครงสร้าง</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ปูกระเบื้อง ทาสี เปลี่ยนระบบไฟประปา</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>รื้อถอนและเสริมกำลังโครงสร้าง</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>ปูกระเบื้อง ทาสี เปลี่ยนระบบไฟประปา</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openServiceDetail('renovation')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
-            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <button onclick="openServiceDetail('renovation')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer">
+            <span>ดูขอบเขตงานและมาตรฐาน</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </button>
         </div>
 
         <!-- Card 3 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-couch"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-couch"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">03</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc3Title">ตกแต่งภายใน & บิวท์อิน (Built-in)</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc3Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc3Title">ตกแต่งภายใน & บิวท์อิน (Built-in)</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc3Desc">
               ออกแบบตกแต่งสไตล์ Minimal, Modern, Nordic บิวท์อินตู้เสื้อผ้า ครัว ห้องนั่งเล่น วัสดุ HMR กันชื้น Soft-close
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ไม้ HMR เกรดกันชื้น ไม่บวมน้ำ</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ออกแบบภาพ 3D เสมือนจริงก่อนผลิต</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>ไม้ HMR เกรดกันชื้น ไม่บวมน้ำ</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>ออกแบบภาพ 3D เสมือนจริงก่อนผลิต</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openServiceDetail('interior')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
-            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <button onclick="openServiceDetail('interior')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer">
+            <span>ดูขอบเขตงานและมาตรฐาน</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </button>
         </div>
 
         <!-- Card 4 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-kitchen-set"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-kitchen-set"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">04</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc4Title">งานต่อเติมครัว หลังคา และโรงรถ</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc4Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc4Title">งานต่อเติมครัว หลังคา และโรงรถ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc4Desc">
               ต่อเติมครัวหลังบ้าน โรงรถหน้าบ้าน ลงเสาเข็มไมโครไพล์แยกโครงสร้าง ป้องกันปัญหาการทรุดตัวและดึงรั้ง 100%
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เสาเข็มไมโครไพล์ Spun Micropile</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> โครงสร้างแยกอิสระจากตัวบ้านเดิม</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>เสาเข็มไมโครไพล์ Spun Micropile</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>โครงสร้างแยกอิสระจากตัวบ้านเดิม</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openServiceDetail('extension')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
-            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <button onclick="openServiceDetail('extension')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer">
+            <span>ดูขอบเขตงานและมาตรฐาน</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </button>
         </div>
 
         <!-- Card 5 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-bolt"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">05</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc5Title">งานระบบ ไฟฟ้า ประปา สุขาภิบาล</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc5Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc5Title">งานระบบ ไฟฟ้า ประปา สุขาภิบาล</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc5Desc">
               ติดตั้งตู้เมนไฟ เดินสายไฟร้อยท่อ เดินท่อน้ำดี PPR ท่อน้ำเสีย ได้มาตรฐานการไฟฟ้านครหลวงและการประปา
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เบรกเกอร์กันดูด RCBO สายดิน</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> ท่อน้ำดีเชื่อมความร้อน ไร้รั่วซึม</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>เบรกเกอร์กันดูด RCBO สายดิน</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>ท่อน้ำดีเชื่อมความร้อน ไร้รั่วซึม</span>
+              </li>
             </ul>
           </div>
-          <button onclick="openServiceDetail('mep')" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-700 hover:text-zinc-900 font-semibold flex items-center justify-between">
-            <span>ดูขอบเขตงานบริการ</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <button onclick="openServiceDetail('mep')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer">
+            <span>ดูขอบเขตงานและมาตรฐาน</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </button>
         </div>
 
         <!-- Card 6 -->
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200/90 hover:border-zinc-400 hover:shadow-md transition flex flex-col justify-between group">
-          <div class="space-y-3">
-            <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
-              <i class="fa-solid fa-ruler-combined"></i>
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="fa-solid fa-ruler-combined"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">06</span>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc6Title">สำรวจหน้างาน ออกแบบ & ทำ BOQ</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc6Desc">
+            <h3 class="font-bold text-zinc-900 text-base mb-2" data-bind="svc6Title">สำรวจหน้างาน ออกแบบ & ทำ BOQ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4" data-bind="svc6Desc">
               บริการส่งวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำแนวทางก่อสร้าง พร้อมจัดทำใบเสนอราคา BOQ ละเอียดไม่มีหมกเม็ด
             </p>
-            <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> สำรวจฟรี ไม่มีค่าใช้จ่ายและข้อผูกมัด</li>
-              <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เอกสาร BOQ แยกวัสดุ-ค่าแรงชัดเจน</li>
+            <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>สำรวจฟรี ไม่มีค่าใช้จ่ายและข้อผูกมัด</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+                <span>เอกสาร BOQ แยกวัสดุ-ค่าแรงชัดเจน</span>
+              </li>
             </ul>
           </div>
-          <a href="#contact" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-900 font-semibold flex items-center justify-between">
-            <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </a>
-        </div>
-          <a href="#contact" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-900 font-semibold flex items-center justify-between">
-            <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          <a href="#contact" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-900 font-bold flex items-center justify-between group/btn cursor-pointer">
+            <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
           </a>
         </div>
 
       </div>
 
-      <!-- 5-Step Process Card -->
-      <div class="mt-12 p-6 sm:p-8 rounded-2xl bg-zinc-50 border border-zinc-200">
-        <div class="text-xs font-bold text-zinc-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-list-ol text-zinc-700"></i> ขั้นตอนการทำงานที่โปร่งใส 5 สเต็ป
+      <!-- 5-Step Executive Process Blueprint -->
+      <div class="mt-14 p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-zinc-50 to-white border border-zinc-200/90 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-zinc-200">
+          <div>
+            <span class="text-[10px] font-bold tracking-widest uppercase text-zinc-400 font-mono">ENGINEERING WORKFLOW</span>
+            <h3 class="text-base sm:text-lg font-bold text-zinc-900 flex items-center gap-2 mt-0.5">
+              <i class="fa-solid fa-list-check text-emerald-600"></i> ขั้นตอนการดำเนินงานมาตรฐาน 5 สเต็ป
+            </h3>
+          </div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold w-fit">
+            <i class="fa-solid fa-circle-check"></i> ตรวจสอบ BOQ & งวดงานได้ทุกขั้นตอน
+          </div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 text-xs">
-          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
-            <span class="text-[10px] font-bold text-zinc-400">STEP 01</span>
-            <div class="font-bold text-zinc-900 mt-1">ปรึกษาเบื้องต้น</div>
-            <p class="text-zinc-500 text-[11px] mt-0.5">แจ้งขนาดพื้นที่และงบประมาณ</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 relative">
+          <!-- Step 1 -->
+          <div class="p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-sm transition relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-full bg-zinc-900 text-white font-mono text-[10px] font-bold flex items-center justify-center">1</span>
+              <span class="text-[9px] font-mono text-zinc-400 uppercase font-semibold">STEP 01</span>
+            </div>
+            <div class="font-bold text-zinc-900 text-xs">ปรึกษาเบื้องต้น</div>
+            <p class="text-zinc-500 text-[11px] mt-1 leading-normal font-light">แจ้งขนาดพื้นที่ สเปกที่ต้องการ และงบประมาณ</p>
           </div>
-          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
-            <span class="text-[10px] font-bold text-zinc-400">STEP 02</span>
-            <div class="font-bold text-zinc-900 mt-1">สำรวจหน้างานฟรี</div>
-            <p class="text-zinc-500 text-[11px] mt-0.5">ทีมวิศวกรเข้าวัดพื้นที่จริง</p>
+
+          <!-- Step 2 -->
+          <div class="p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-sm transition relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-full bg-zinc-900 text-white font-mono text-[10px] font-bold flex items-center justify-center">2</span>
+              <span class="text-[9px] font-mono text-zinc-400 uppercase font-semibold">STEP 02</span>
+            </div>
+            <div class="font-bold text-zinc-900 text-xs">สำรวจหน้างานฟรี</div>
+            <p class="text-zinc-500 text-[11px] mt-1 leading-normal font-light">ทีมวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำเชิงโครงสร้าง</p>
           </div>
-          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
-            <span class="text-[10px] font-bold text-zinc-400">STEP 03</span>
-            <div class="font-bold text-zinc-900 mt-1">ทำ BOQ & สัญญา</div>
-            <p class="text-zinc-500 text-[11px] mt-0.5">แบ่งงวดงานเป็นธรรมและโปร่งใส</p>
+
+          <!-- Step 3 -->
+          <div class="p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-sm transition relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-full bg-zinc-900 text-white font-mono text-[10px] font-bold flex items-center justify-center">3</span>
+              <span class="text-[9px] font-mono text-zinc-400 uppercase font-semibold">STEP 03</span>
+            </div>
+            <div class="font-bold text-zinc-900 text-xs">ทำ BOQ & สัญญา</div>
+            <p class="text-zinc-500 text-[11px] mt-1 leading-normal font-light">ทำรายการวัสดุชัดเจน แบ่งงวดงานโปร่งใสตามเนื้องาน</p>
           </div>
-          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
-            <span class="text-[10px] font-bold text-zinc-400">STEP 04</span>
-            <div class="font-bold text-zinc-900 mt-1">เริ่มงานก่อสร้าง</div>
-            <p class="text-zinc-500 text-[11px] mt-0.5">มีวิศวกรคุม ส่งรายงานทุกสัปดาห์</p>
+
+          <!-- Step 4 -->
+          <div class="p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-sm transition relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-full bg-zinc-900 text-white font-mono text-[10px] font-bold flex items-center justify-center">4</span>
+              <span class="text-[9px] font-mono text-zinc-400 uppercase font-semibold">STEP 04</span>
+            </div>
+            <div class="font-bold text-zinc-900 text-xs">เริ่มงานก่อสร้าง</div>
+            <p class="text-zinc-500 text-[11px] mt-1 leading-normal font-light">วิศวกรและโฟร์แมนคุมงาน พร้อมรายงานความคืบหน้ารายสัปดาห์</p>
           </div>
-          <div class="p-3 rounded-xl bg-white border border-zinc-200/70">
-            <span class="text-[10px] font-bold text-zinc-400">STEP 05</span>
-            <div class="font-bold text-zinc-900 mt-1">ตรวจรับ & รับประกัน</div>
-            <p class="text-zinc-500 text-[11px] mt-0.5">ส่งมอบงานพร้อมใบรับประกัน</p>
+
+          <!-- Step 5 -->
+          <div class="p-4 rounded-xl bg-white border border-zinc-200/80 shadow-xs hover:border-zinc-400 hover:shadow-sm transition relative group">
+            <div class="flex items-center justify-between mb-2">
+              <span class="w-6 h-6 rounded-full bg-zinc-900 text-amber-400 font-mono text-[10px] font-bold flex items-center justify-center">5</span>
+              <span class="text-[9px] font-mono text-zinc-400 uppercase font-semibold">STEP 05</span>
+            </div>
+            <div class="font-bold text-zinc-900 text-xs">ตรวจรับ & รับประกัน</div>
+            <p class="text-zinc-500 text-[11px] mt-1 leading-normal font-light">ส่งมอบงานเรียบร้อย พร้อมใบรับประกันผลงาน 1-5 ปี</p>
           </div>
         </div>
       </div>
@@ -475,11 +623,21 @@
   <section id="portfolio" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">03</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">PORTFOLIO • ผลงานที่ผ่านมา</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">03</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">PORTFOLIO</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">ผลงานที่ผ่านมา</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
@@ -608,11 +766,21 @@
   <section id="areas" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">04</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">SERVICE AREAS • พื้นที่ให้บริการ</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">04</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">SERVICE AREAS</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">พื้นที่ให้บริการ</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="text-left max-w-2xl mb-8">
@@ -624,46 +792,57 @@
         
         <!-- Left Area List -->
         <div class="lg:col-span-7 space-y-4">
-          <div class="p-5 rounded-2xl bg-[#fafaf9] border border-zinc-200">
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-bold text-sm text-zinc-900">1. กรุงเทพมหานครและปริมณฑล (เข้าสำรวจได้ทันที)</span>
-              <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">สำรวจฟรี</span>
+          <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-md transition-all">
+            <div class="flex items-center justify-between mb-3.5 pb-2 border-b border-zinc-100">
+              <span class="font-bold text-sm text-zinc-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>1. กรุงเทพมหานครและปริมณฑล (เข้าสำรวจได้ทันที)</span>
+              </span>
+              <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full">สำรวจฟรี</span>
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-600">
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> กรุงเทพฯ (ทุกเขต)</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> นนทบุรี</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ปทุมธานี</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สมุทรปราการ</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สมุทรสาคร</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> นครปฐม</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-700">
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> กรุงเทพฯ (ทุกเขต)</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> นนทบุรี</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> ปทุมธานี</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> สมุทรปราการ</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> สมุทรสาคร</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-900 text-[10px]"></i> นครปฐม</span>
             </div>
           </div>
 
-          <div class="p-5 rounded-2xl bg-[#fafaf9] border border-zinc-200">
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-bold text-sm text-zinc-900">2. ภาคกลางและภาคตะวันออก (โครงการพิเศษ)</span>
-              <span class="text-[10px] font-semibold bg-zinc-200 text-zinc-800 px-2.5 py-0.5 rounded-full">นัดหมายล่วงหน้า</span>
+          <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.04)] hover:shadow-md transition-all">
+            <div class="flex items-center justify-between mb-3.5 pb-2 border-b border-zinc-100">
+              <span class="font-bold text-sm text-zinc-900 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                <span>2. ภาคกลางและภาคตะวันออก (โครงการพิเศษ)</span>
+              </span>
+              <span class="text-[10px] font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200 px-2.5 py-0.5 rounded-full">นัดหมายล่วงหน้า</span>
             </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-600">
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ชลบุรี (พัทยา/ศรีราชา)</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ระยอง</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ฉะเชิงเทรา</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> พระนครศรีอยุธยา</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สระบุรี</span>
-              <span class="flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> จังหวัดอื่นๆ ตามตกลง</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-zinc-700">
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ชลบุรี (พัทยา/ศรีราชา)</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ระยอง</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> ฉะเชิงเทรา</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> อยุธยา</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> สระบุรี</span>
+              <span class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-100 font-medium"><i class="fa-solid fa-location-dot text-zinc-400 text-[10px]"></i> อื่นๆ ตามตกลง</span>
             </div>
           </div>
         </div>
 
         <!-- Right Quick Checker -->
-        <div class="lg:col-span-5 p-6 rounded-2xl bg-zinc-50 border border-zinc-200">
-          <h3 class="font-bold text-sm text-zinc-900 mb-1">ระบบตรวจสอบพื้นที่ให้บริการด่วน</h3>
-          <p class="text-xs text-zinc-500 mb-4">พิมพ์ชื่อเขต อำเภอ หรือจังหวัดของคุณ เพื่อเช็คคิวสำรวจ</p>
+        <div class="lg:col-span-5 p-6 rounded-2xl bg-gradient-to-b from-zinc-50 to-white border border-zinc-200/90 shadow-sm">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="w-8 h-8 rounded-lg bg-zinc-900 text-amber-400 flex items-center justify-center text-xs"><i class="fa-solid fa-map-location-dot"></i></span>
+            <div>
+              <h3 class="font-bold text-sm text-zinc-900">ตรวจสอบพื้นที่ให้บริการด่วน</h3>
+              <p class="text-[11px] text-zinc-500">เช็คคิวและสถานะการเข้าสำรวจหน้างาน</p>
+            </div>
+          </div>
           
-          <div class="space-y-3">
-            <input type="text" id="area-search-input" placeholder="เช่น บางนา, นนทบุรี, ลาดพร้าว, รังสิต..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
+          <div class="space-y-3 pt-3">
+            <input type="text" id="area-search-input" placeholder="พิมพ์ชื่อเขต อำเภอ หรือจังหวัดของคุณ..." class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 text-xs focus:ring-1 focus:ring-zinc-900 outline-none bg-white">
             
-            <button type="button" onclick="checkServiceArea()" class="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition">
+            <button type="button" onclick="checkServiceArea()" class="w-full py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-semibold rounded-xl text-xs transition cursor-pointer shadow-xs">
               ตรวจสอบพื้นที่
             </button>
 
@@ -680,14 +859,24 @@
   <!-- ========================================================
        SECTION 05: ESTIMATOR (คำนวณราคาออนไลน์)
        ======================================================== -->
-  <section id="calculator" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
+  <section id="calculator" class="py-20 sm:py-24 bg-zinc-50/50 border-b border-zinc-200/80">
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">05</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">COST ESTIMATOR • คำนวณราคาออนไลน์</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">05</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">COST ESTIMATOR</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">คำนวณราคาออนไลน์</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="text-left mb-8">
@@ -792,11 +981,21 @@
   <section id="reviews" class="py-20 sm:py-24 bg-white border-b border-zinc-200/80">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">06</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">REVIEWS • รีวิวลูกค้า</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">06</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">REVIEWS</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">รีวิวลูกค้า</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
@@ -804,55 +1003,70 @@
           <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">เสียงตอบรับจากเจ้าของบ้านตัวจริง</h2>
           <p class="text-xs text-zinc-500 mt-1">ความประทับใจจริงจากลูกค้ากว่า 1,200 โครงการที่เราส่งมอบ</p>
         </div>
-        <button onclick="openWriteReviewModal()" class="px-3.5 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-100 text-zinc-700 text-xs font-medium transition flex items-center gap-1.5 self-start sm:self-auto">
-          <i class="fa-regular fa-pen-to-square text-amber-600"></i> เขียนรีวิวประสบการณ์
+        <button onclick="openWriteReviewModal()" class="px-4 py-2 rounded-xl border border-zinc-200 hover:border-zinc-900 hover:bg-zinc-50 text-zinc-800 text-xs font-semibold transition flex items-center gap-2 self-start sm:self-auto cursor-pointer shadow-xs">
+          <i class="fa-regular fa-pen-to-square text-amber-500"></i> เขียนรีวิวประสบการณ์
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="home-reviews-grid">
         
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all flex flex-col justify-between group">
           <div class="space-y-3">
-            <div class="flex text-amber-500 text-xs">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-500 text-xs">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded flex items-center gap-1">
+                <i class="fa-solid fa-check text-[9px]"></i> ลูกค้าจริง
+              </span>
             </div>
             <p class="text-xs text-zinc-600 leading-relaxed font-light">
               "ประทับใจทีมงานเพิ่มพูนมากครับ รีโนเวทบ้านเดี่ยว 2 ชั้น ช่างทำงานเรียบร้อย ตรงเวลา ส่งอัปเดตงานในไลน์กลุ่มทุกวันศุกร์ ไม่ต้องคอยตามจี้ คุมงบได้ตาม BOQ เป๊ะ"
             </p>
           </div>
-          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+          <div class="pt-4 border-t border-zinc-100 mt-4 text-xs">
             <div class="font-bold text-zinc-900">คุณกิตติศักดิ์ พ.</div>
-            <div class="text-[11px] text-zinc-500">เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี</div>
+            <div class="text-[11px] text-zinc-400">เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี</div>
           </div>
         </div>
 
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all flex flex-col justify-between group">
           <div class="space-y-3">
-            <div class="flex text-amber-500 text-xs">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-500 text-xs">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded flex items-center gap-1">
+                <i class="fa-solid fa-check text-[9px]"></i> ลูกค้าจริง
+              </span>
             </div>
             <p class="text-xs text-zinc-600 leading-relaxed font-light">
               "ต่อเติมครัวหลังบ้านและโรงจอดรถ ลงเข็มไมโครไพล์แยกโครงสร้างให้ ผ่านหน้าฝนมาไม่มีปัญหารอยร้าวหรือรั่วซึมเลยค่ะ มีวิศวกรมาคุมงานจริง สบายใจมากค่ะ"
             </p>
           </div>
-          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+          <div class="pt-4 border-t border-zinc-100 mt-4 text-xs">
             <div class="font-bold text-zinc-900">คุณวิภาวรรณ ส.</div>
-            <div class="text-[11px] text-zinc-500">โครงการบ้านกลางเมือง ลาดพร้าว</div>
+            <div class="text-[11px] text-zinc-400">โครงการบ้านกลางเมือง ลาดพร้าว</div>
           </div>
         </div>
 
-        <div class="p-6 rounded-2xl bg-[#fafaf9] border border-zinc-200 flex flex-col justify-between">
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-md transition-all flex flex-col justify-between group">
           <div class="space-y-3">
-            <div class="flex text-amber-500 text-xs">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-500 text-xs">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded flex items-center gap-1">
+                <i class="fa-solid fa-check text-[9px]"></i> ลูกค้าจริง
+              </span>
             </div>
             <p class="text-xs text-zinc-600 leading-relaxed font-light">
               "งานบิวท์อินคอนโด 2 ห้องนอน เก็บงานประณีต ฟิตติ้ง Soft-close ทั้งหมด ทีมงานให้คำปรึกษาโทนสีและระบบไฟดีมาก ห้องออกมาสวยตรงปกเหมือน 3D เลยครับ"
             </p>
           </div>
-          <div class="pt-4 border-t border-zinc-200 mt-4 text-xs">
+          <div class="pt-4 border-t border-zinc-100 mt-4 text-xs">
             <div class="font-bold text-zinc-900">คุณธนากร ภ.</div>
-            <div class="text-[11px] text-zinc-500">Life Asoke Hype, กทม.</div>
+            <div class="text-[11px] text-zinc-400">Life Asoke Hype, กทม.</div>
           </div>
         </div>
 
@@ -867,11 +1081,21 @@
   <section id="faq" class="py-20 sm:py-24 bg-zinc-100/60 border-b border-zinc-200/80">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">07</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">FAQ • คำถามที่พบบ่อย</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">07</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">FAQ</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">คำถามที่พบบ่อย</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="text-left mb-8">
@@ -933,11 +1157,21 @@
   <section id="contact" class="py-20 sm:py-24 bg-white">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       
-      <!-- Section Tag Header -->
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-xs font-bold text-zinc-900 bg-zinc-200 px-2.5 py-1 rounded-md">08</span>
-        <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">CONTACT US • ติดต่อเรา</span>
-        <div class="flex-1 h-px bg-zinc-200"></div>
+      <!-- Executive Architectural Section Header -->
+      <div class="flex items-center gap-3.5 mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 text-white shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          <span class="font-mono text-xs font-bold tracking-wider">08</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-zinc-800">CONTACT US</span>
+          <span class="text-zinc-300">/</span>
+          <span class="text-xs font-medium text-zinc-500">ติดต่อเรา</span>
+        </div>
+        <div class="flex-1 flex items-center gap-1.5">
+          <div class="h-px bg-gradient-to-r from-zinc-300 via-zinc-200 to-transparent flex-1"></div>
+          <div class="w-1.5 h-1.5 rotate-45 border border-zinc-300 shrink-0 hidden sm:block"></div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
@@ -989,7 +1223,7 @@
         </div>
 
         <!-- Clean Form Card -->
-        <div class="md:col-span-7 bg-[#fafaf9] p-6 sm:p-8 rounded-2xl border border-zinc-200">
+        <div class="md:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200/90 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.08)]">
           <h3 class="font-bold text-sm text-zinc-900 mb-1">ลงทะเบียนขอนัดหมายสำรวจหน้างาน</h3>
           <p class="text-[11px] text-zinc-400 mb-5">กรอกข้อมูลเพื่อให้วิศวกรติดต่อกลับประสานงาน</p>
 
