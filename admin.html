@@ -343,21 +343,6 @@
                 <label class="block font-medium text-zinc-700 mb-1">หรือใส่ลิงก์รูปภาพ (Image URL / Path)</label>
                 <input type="text" id="set-hero-img" oninput="updateHeroImgPreview(this.value)" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 font-mono text-[11px] bg-white" placeholder="https://images.unsplash.com/... หรือ อัปโหลดจากเครื่อง">
               </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                <div>
-                  <label class="block font-medium text-zinc-700 mb-1">ชื่อโครงการบนรูป</label>
-                  <input type="text" id="set-hero-img-title" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="บ้านเดี่ยว Modern Tropical">
-                </div>
-                <div>
-                  <label class="block font-medium text-zinc-700 mb-1">สถานที่ / รายละเอียด</label>
-                  <input type="text" id="set-hero-img-sub" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="โครงการส่งมอบสำเร็จ • จ.นนทบุรี">
-                </div>
-                <div>
-                  <label class="block font-medium text-zinc-700 mb-1">ป้ายสถานะ (Badge)</label>
-                  <input type="text" id="set-hero-img-badge" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="100% เสร็จสมบูรณ์">
-                </div>
-              </div>
             </div>
           </div>
 
@@ -1193,9 +1178,9 @@
         heroTitle3: document.getElementById('set-hero-title3').value.trim(),
         heroDesc: document.getElementById('set-hero-desc').value.trim(),
         heroImg: document.getElementById('set-hero-img').value.trim(),
-        heroImgTitle: document.getElementById('set-hero-img-title').value.trim(),
-        heroImgSub: document.getElementById('set-hero-img-sub').value.trim(),
-        heroImgBadge: document.getElementById('set-hero-img-badge').value.trim(),
+        heroImgTitle: document.getElementById('set-hero-img-title')?.value.trim() || '',
+        heroImgSub: document.getElementById('set-hero-img-sub')?.value.trim() || '',
+        heroImgBadge: document.getElementById('set-hero-img-badge')?.value.trim() || '',
 
         stat1Num: document.getElementById('set-stat1-num').value.trim(),
         stat1Text: document.getElementById('set-stat1-text').value.trim(),
