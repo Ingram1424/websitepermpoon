@@ -1397,55 +1397,88 @@
       renderAdminServices();
     }
 
+    function showAdminToast(message, type = 'success') {
+      let toast = document.getElementById('admin-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'admin-toast';
+        document.body.appendChild(toast);
+      }
+
+      const isSuccess = type === 'success';
+      toast.className = `fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl transition-all duration-300 text-xs font-semibold ${
+        isSuccess ? 'bg-zinc-900 text-white border border-zinc-700' : 'bg-red-600 text-white'
+      }`;
+      toast.innerHTML = `
+        <span class="w-6 h-6 rounded-lg ${isSuccess ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/20 text-white'} flex items-center justify-center shrink-0">
+          <i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i>
+        </span>
+        <span>${message}</span>
+      `;
+
+      toast.style.transform = 'translateY(0)';
+      toast.style.opacity = '1';
+
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.style.transform = 'translateY(12px)';
+        toast.style.opacity = '0';
+      }, 3500);
+    }
+
     async function handleHomepageSubmit(e) {
-      e.preventDefault();
-      syncAdminServicesFromDOM();
-
-      const homepageData = {
-        heroBadge: document.getElementById('set-hero-badge').value.trim(),
-        heroTitle1: document.getElementById('set-hero-title1').value.trim(),
-        heroTitle2: document.getElementById('set-hero-title2').value.trim(),
-        heroTitle3: document.getElementById('set-hero-title3').value.trim(),
-        heroDesc: document.getElementById('set-hero-desc').value.trim(),
-        heroImg: document.getElementById('set-hero-img').value.trim(),
-        heroImgTitle: document.getElementById('set-hero-img-title')?.value.trim() || '',
-        heroImgSub: document.getElementById('set-hero-img-sub')?.value.trim() || '',
-        heroImgBadge: document.getElementById('set-hero-img-badge')?.value.trim() || '',
-
-        stat1Num: document.getElementById('set-stat1-num').value.trim(),
-        stat1Text: document.getElementById('set-stat1-text').value.trim(),
-        stat2Num: document.getElementById('set-stat2-num').value.trim(),
-        stat2Text: document.getElementById('set-stat2-text').value.trim(),
-        stat3Num: document.getElementById('set-stat3-num').value.trim(),
-        stat3Text: document.getElementById('set-stat3-text').value.trim(),
-        stat4Num: document.getElementById('set-stat4-num').value.trim(),
-        stat4Text: document.getElementById('set-stat4-text').value.trim(),
-
-        servicesTitle: document.getElementById('set-services-title').value.trim(),
-        servicesSubtitle: document.getElementById('set-services-subtitle').value.trim(),
-      };
-
-      // Backwards compatibility for first 6 services
-      adminServices.slice(0, 6).forEach((svc, i) => {
-        homepageData[`svc${i + 1}Title`] = svc.title || '';
-        homepageData[`svc${i + 1}Desc`] = svc.desc || '';
-      });
-
-      const saveBtn = e.target.querySelector('button[type="submit"]');
+      if (e && e.preventDefault) e.preventDefault();
+      
+      const saveBtn = document.querySelector('#tab-homepage form button[type="submit"]') || (e && e.target ? e.target.querySelector('button[type="submit"]') : null);
       const originalHtml = saveBtn ? saveBtn.innerHTML : '';
       if (saveBtn) {
         saveBtn.disabled = true;
-        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...';
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> กำลังบันทึกข้อมูล...';
       }
 
       try {
-        await Promise.all([
-          saveSiteSettings(homepageData),
-          saveServicesList(adminServices)
-        ]);
-        alert('บันทึกเนื้อหาหน้าแรกและการ์ดบริการเรียบร้อยแล้ว! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+        syncAdminServicesFromDOM();
+
+        const homepageData = {
+          heroBadge: document.getElementById('set-hero-badge')?.value?.trim() || '',
+          heroTitle1: document.getElementById('set-hero-title1')?.value?.trim() || '',
+          heroTitle2: document.getElementById('set-hero-title2')?.value?.trim() || '',
+          heroTitle3: document.getElementById('set-hero-title3')?.value?.trim() || '',
+          heroDesc: document.getElementById('set-hero-desc')?.value?.trim() || '',
+          heroImg: document.getElementById('set-hero-img')?.value?.trim() || '',
+          heroImgTitle: document.getElementById('set-hero-img-title')?.value?.trim() || '',
+          heroImgSub: document.getElementById('set-hero-img-sub')?.value?.trim() || '',
+          heroImgBadge: document.getElementById('set-hero-img-badge')?.value?.trim() || '',
+
+          stat1Num: document.getElementById('set-stat1-num')?.value?.trim() || '',
+          stat1Text: document.getElementById('set-stat1-text')?.value?.trim() || '',
+          stat2Num: document.getElementById('set-stat2-num')?.value?.trim() || '',
+          stat2Text: document.getElementById('set-stat2-text')?.value?.trim() || '',
+          stat3Num: document.getElementById('set-stat3-num')?.value?.trim() || '',
+          stat3Text: document.getElementById('set-stat3-text')?.value?.trim() || '',
+          stat4Num: document.getElementById('set-stat4-num')?.value?.trim() || '',
+          stat4Text: document.getElementById('set-stat4-text')?.value?.trim() || '',
+
+          servicesTitle: document.getElementById('set-services-title')?.value?.trim() || '',
+          servicesSubtitle: document.getElementById('set-services-subtitle')?.value?.trim() || '',
+        };
+
+        // Backwards compatibility for first 6 services
+        if (Array.isArray(adminServices)) {
+          adminServices.slice(0, 6).forEach((svc, i) => {
+            homepageData[`svc${i + 1}Title`] = svc.title || '';
+            homepageData[`svc${i + 1}Desc`] = svc.desc || '';
+          });
+        }
+
+        await saveSiteSettings(homepageData);
+        await saveServicesList(adminServices);
+
+        showAdminToast('บันทึกเนื้อหาหน้าแรกและการ์ดบริการเรียบร้อยแล้ว!', 'success');
+        alert('✅ บันทึกเนื้อหาหน้าแรกและการ์ดบริการสำเร็จ! ข้อมูลถูกอัปเดตและพร้อมแสดงผลทันที');
       } catch (err) {
         console.error("Save failed:", err);
+        showAdminToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
         alert('เกิดข้อผิดพลาดในการบันทึก: ' + err.message);
       } finally {
         if (saveBtn) {
@@ -1456,24 +1489,44 @@
     }
 
     async function handleSiteSettingsSubmit(e) {
-      e.preventDefault();
-      const newSettings = {
-        companyName: (document.getElementById('set-company-name')?.value || '').trim() || 'บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด',
-        tagline: (document.getElementById('set-tagline')?.value || '').trim() || 'รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล',
-        phone: document.getElementById('set-phone').value.trim(),
-        phone2: document.getElementById('set-phone2').value.trim(),
-        line: document.getElementById('set-line').value.trim(),
-        email: document.getElementById('set-email').value.trim(),
-        address: document.getElementById('set-address').value.trim(),
-        businessHours: document.getElementById('set-business-hours').value.trim(),
-        rateBuild: Number(document.getElementById('set-rate-build').value) || 14500,
-        rateRenovate: Number(document.getElementById('set-rate-renovate').value) || 6500,
-        rateInterior: Number(document.getElementById('set-rate-interior').value) || 9000,
-        rateExtension: Number(document.getElementById('set-rate-extension').value) || 8500,
-      };
+      if (e && e.preventDefault) e.preventDefault();
 
-      await saveSiteSettings(newSettings);
-      alert('บันทึกข้อมูลเว็บไซต์และราคาสำเร็จ! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+      const saveBtn = document.querySelector('#tab-settings form button[type="submit"]') || (e && e.target ? e.target.querySelector('button[type="submit"]') : null);
+      const originalHtml = saveBtn ? saveBtn.innerHTML : '';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> กำลังบันทึกข้อมูล...';
+      }
+
+      try {
+        const newSettings = {
+          companyName: (document.getElementById('set-company-name')?.value || '').trim() || 'บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด',
+          tagline: (document.getElementById('set-tagline')?.value || '').trim() || 'รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล',
+          phone: (document.getElementById('set-phone')?.value || '').trim(),
+          phone2: (document.getElementById('set-phone2')?.value || '').trim(),
+          line: (document.getElementById('set-line')?.value || '').trim(),
+          email: (document.getElementById('set-email')?.value || '').trim(),
+          address: (document.getElementById('set-address')?.value || '').trim(),
+          businessHours: (document.getElementById('set-business-hours')?.value || '').trim(),
+          rateBuild: Number(document.getElementById('set-rate-build')?.value) || 14500,
+          rateRenovate: Number(document.getElementById('set-rate-renovate')?.value) || 6500,
+          rateInterior: Number(document.getElementById('set-rate-interior')?.value) || 9000,
+          rateExtension: Number(document.getElementById('set-rate-extension')?.value) || 8500,
+        };
+
+        await saveSiteSettings(newSettings);
+        showAdminToast('บันทึกข้อมูลเว็บไซต์และราคาสำเร็จ!', 'success');
+        alert('✅ บันทึกข้อมูลเว็บไซต์และราคาสำเร็จ! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+      } catch (err) {
+        console.error("Save site settings failed:", err);
+        showAdminToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
+        alert('เกิดข้อผิดพลาดในการบันทึก: ' + err.message);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = originalHtml;
+        }
+      }
     }
 
     // 7. Reviews Render

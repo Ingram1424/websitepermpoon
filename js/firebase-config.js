@@ -21,6 +21,19 @@ const activeConfig = savedConfig ? JSON.parse(savedConfig) : firebaseConfig;
 let db = null;
 let isFirebaseActive = false;
 
+// Strict Promise Timeout Helper (prevents UI hanging if network or Firestore API is inactive/disabled)
+async function withTimeout(promise, ms = 2000) {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error('Firebase network timeout')), ms);
+  });
+  try {
+    return await Promise.race([promise, timeoutPromise]);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 try {
   if (typeof firebase !== 'undefined' && activeConfig.apiKey) {
     if (!firebase.apps.length) {
@@ -49,22 +62,27 @@ async function saveInquiry(data) {
     timestamp: Date.now()
   };
 
+  // 1. Always save to LocalStorage immediately
+  const existing = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
+  const localId = 'lead_' + Date.now();
+  existing.unshift({ id: localId, ...inquiryData });
+  localStorage.setItem('permpoon_inquiries', JSON.stringify(existing));
+
+  // 2. Sync to Firebase with timeout
   if (isFirebaseActive && db) {
     try {
-      const docRef = await db.collection('inquiries').add(inquiryData);
+      const docRef = await withTimeout(db.collection('inquiries').add(inquiryData), 2500);
       console.log("Lead saved to Firebase Firestore with ID:", docRef.id);
       return { success: true, id: docRef.id, mode: 'firebase' };
     } catch (err) {
-      console.error("Firebase save error, saving to local fallback:", err);
+      console.warn("Firebase save error, saved locally:", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
 
-  // Fallback: Save to LocalStorage
-  const existing = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const id = 'local_' + Date.now();
-  existing.unshift({ id, ...inquiryData });
-  localStorage.setItem('permpoon_inquiries', JSON.stringify(existing));
-  return { success: true, id, mode: 'local' };
+  return { success: true, id: localId, mode: 'local' };
 }
 
 /**
@@ -73,12 +91,15 @@ async function saveInquiry(data) {
 async function getInquiries() {
   if (isFirebaseActive && db) {
     try {
-      const snapshot = await db.collection('inquiries').orderBy('timestamp', 'desc').get();
+      const snapshot = await withTimeout(db.collection('inquiries').orderBy('timestamp', 'desc').get(), 2000);
       if (!snapshot.empty) {
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       }
     } catch (err) {
-      console.warn("Could not fetch from Firebase, reading local storage:", err);
+      console.warn("Could not fetch from Firebase, reading local storage:", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
 
@@ -118,9 +139,9 @@ async function getInquiries() {
         line: 'attapol.c',
         service: 'ตกแต่งภายใน',
         location: 'สุขุมวิท 39, กทม.',
-        budget: '3 - 7 แสน',
-        message: 'คอนโด 2 ห้องนอน ต้องการบิวท์อินตู้เสื้อผ้า Walk-in และชุดวางทีวี',
-        status: 'completed',
+        budget: '5 แสน - 1 ล้าน',
+        message: 'บิวท์อินคอนโด 45 ตร.ม. สไตล์ Minimal Modern ขอใบเสนอราคาด่วนครับ',
+        status: 'closed',
         createdAt: new Date(Date.now() - 3600000 * 72).toISOString(),
         timestamp: Date.now() - 3600000 * 72
       }
@@ -135,41 +156,52 @@ async function getInquiries() {
  * Update Inquiry status
  */
 async function updateInquiryStatus(id, newStatus) {
-  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
-    try {
-      await db.collection('inquiries').doc(id).update({ status: newStatus });
-      return true;
-    } catch (err) {
-      console.error("Firebase update status error:", err);
-    }
-  }
-
+  // 1. Update locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
   const index = list.findIndex(item => item.id === id);
   if (index !== -1) {
     list[index].status = newStatus;
     localStorage.setItem('permpoon_inquiries', JSON.stringify(list));
-    return true;
   }
-  return false;
+
+  // 2. Sync to Firebase with timeout
+  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
+    try {
+      await withTimeout(db.collection('inquiries').doc(id).update({ status: newStatus }), 2000);
+      return true;
+    } catch (err) {
+      console.warn("Firebase update status error (updated locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
+    }
+  }
+
+  return index !== -1;
 }
 
 /**
  * Delete an inquiry
  */
 async function deleteInquiry(id) {
-  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
-    try {
-      await db.collection('inquiries').doc(id).delete();
-      return true;
-    } catch (err) {
-      console.error("Firebase delete error:", err);
-    }
-  }
-
+  // 1. Delete locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
   const filtered = list.filter(item => item.id !== id);
   localStorage.setItem('permpoon_inquiries', JSON.stringify(filtered));
+
+  // 2. Sync to Firebase with timeout
+  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
+    try {
+      await withTimeout(db.collection('inquiries').doc(id).delete(), 2000);
+      return true;
+    } catch (err) {
+      console.warn("Firebase delete error (deleted locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
+    }
+  }
+
   return true;
 }
 
@@ -179,12 +211,15 @@ async function deleteInquiry(id) {
 async function getReviews() {
   if (isFirebaseActive && db) {
     try {
-      const snapshot = await db.collection('reviews').orderBy('timestamp', 'desc').get();
+      const snapshot = await withTimeout(db.collection('reviews').orderBy('timestamp', 'desc').get(), 2000);
       if (!snapshot.empty) {
         return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       }
     } catch (err) {
-      console.warn("Could not fetch reviews from Firebase, fallback:", err);
+      console.warn("Could not fetch reviews from Firebase, fallback:", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
 
@@ -230,19 +265,26 @@ async function saveReview(reviewData) {
     createdAt: new Date().toISOString()
   };
 
+  // 1. Save locally immediately
+  const existing = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
+  const localId = 'rev_' + Date.now();
+  existing.unshift({ id: localId, ...data });
+  localStorage.setItem('permpoon_reviews', JSON.stringify(existing));
+
+  // 2. Sync to Firebase with timeout
   if (isFirebaseActive && db) {
     try {
-      const docRef = await db.collection('reviews').add(data);
+      const docRef = await withTimeout(db.collection('reviews').add(data), 2000);
       return { success: true, id: docRef.id };
     } catch (err) {
-      console.error("Firebase save review error:", err);
+      console.warn("Firebase save review error (saved locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
 
-  const existing = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
-  existing.unshift({ id: 'rev_' + Date.now(), ...data });
-  localStorage.setItem('permpoon_reviews', JSON.stringify(existing));
-  return { success: true, id: 'rev_' + Date.now() };
+  return { success: true, id: localId };
 }
 
 /**
@@ -301,26 +343,7 @@ const DEFAULT_SITE_SETTINGS = {
 };
 
 async function getSiteSettings() {
-  if (isFirebaseActive && db) {
-    try {
-      const doc = await db.collection('settings').doc('site_info').get();
-      if (doc.exists) {
-        const data = doc.data();
-        if (data.address && data.address.includes('งามวงศ์วาน')) {
-          data.address = DEFAULT_SITE_SETTINGS.address;
-          data.email = DEFAULT_SITE_SETTINGS.email;
-          data.companyName = DEFAULT_SITE_SETTINGS.companyName;
-          try {
-            await db.collection('settings').doc('site_info').set(data, { merge: true });
-          } catch (e) {}
-        }
-        return { ...DEFAULT_SITE_SETTINGS, ...data };
-      }
-    } catch (err) {
-      console.warn("Could not load site settings from Firebase, reading local:", err);
-    }
-  }
-
+  let settings = { ...DEFAULT_SITE_SETTINGS };
   const saved = localStorage.getItem('permpoon_site_settings');
   if (saved) {
     try {
@@ -331,22 +354,58 @@ async function getSiteSettings() {
         parsed.companyName = DEFAULT_SITE_SETTINGS.companyName;
         localStorage.setItem('permpoon_site_settings', JSON.stringify(parsed));
       }
-      return { ...DEFAULT_SITE_SETTINGS, ...parsed };
+      settings = { ...settings, ...parsed };
     } catch (e) {}
   }
-  return DEFAULT_SITE_SETTINGS;
+
+  if (isFirebaseActive && db) {
+    try {
+      const doc = await withTimeout(db.collection('settings').doc('site_info').get(), 1500);
+      if (doc && doc.exists) {
+        const data = doc.data();
+        if (data.address && data.address.includes('งามวงศ์วาน')) {
+          data.address = DEFAULT_SITE_SETTINGS.address;
+          data.email = DEFAULT_SITE_SETTINGS.email;
+          data.companyName = DEFAULT_SITE_SETTINGS.companyName;
+        }
+        settings = { ...settings, ...data };
+        localStorage.setItem('permpoon_site_settings', JSON.stringify(settings));
+      }
+    } catch (err) {
+      console.warn("Could not load site settings from Firebase, reading local:", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
+    }
+  }
+
+  return settings;
 }
 
 async function saveSiteSettings(newSettings) {
-  const merged = { ...DEFAULT_SITE_SETTINGS, ...newSettings };
+  let current = { ...DEFAULT_SITE_SETTINGS };
+  try {
+    const saved = localStorage.getItem('permpoon_site_settings');
+    if (saved) current = { ...current, ...JSON.parse(saved) };
+  } catch (e) {}
+
+  const merged = { ...current, ...newSettings };
+
+  // 1. Always save to LocalStorage immediately (guaranteed, instant, offline-safe)
+  localStorage.setItem('permpoon_site_settings', JSON.stringify(merged));
+
+  // 2. Sync to Firebase with timeout so UI never hangs
   if (isFirebaseActive && db) {
     try {
-      await db.collection('settings').doc('site_info').set(merged, { merge: true });
+      await withTimeout(db.collection('settings').doc('site_info').set(merged, { merge: true }), 2000);
+      console.log("Site settings synced to Firebase successfully");
     } catch (err) {
-      console.error("Error saving site settings to Firebase:", err);
+      console.warn("Could not sync site settings to Firebase (saved locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
-  localStorage.setItem('permpoon_site_settings', JSON.stringify(merged));
   return true;
 }
 
@@ -423,43 +482,56 @@ const DEFAULT_SERVICES_LIST = [
 ];
 
 async function getServicesList() {
-  if (isFirebaseActive && db) {
-    try {
-      const doc = await db.collection('settings').doc('services_list').get();
-      if (doc.exists && doc.data() && Array.isArray(doc.data().items) && doc.data().items.length > 0) {
-        return doc.data().items;
-      }
-    } catch (err) {
-      console.warn("Could not load services list from Firebase:", err);
-    }
-  }
-
+  let list = null;
   const saved = localStorage.getItem('permpoon_services_list');
   if (saved) {
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        list = parsed;
       }
     } catch (e) {}
   }
 
-  return DEFAULT_SERVICES_LIST;
+  if (isFirebaseActive && db) {
+    try {
+      const doc = await withTimeout(db.collection('settings').doc('services_list').get(), 1500);
+      if (doc && doc.exists && doc.data() && Array.isArray(doc.data().items) && doc.data().items.length > 0) {
+        list = doc.data().items;
+        localStorage.setItem('permpoon_services_list', JSON.stringify(list));
+      }
+    } catch (err) {
+      console.warn("Could not load services list from Firebase:", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
+    }
+  }
+
+  return list || DEFAULT_SERVICES_LIST;
 }
 
 async function saveServicesList(list) {
   if (!Array.isArray(list)) list = DEFAULT_SERVICES_LIST;
+
+  // 1. Always save to LocalStorage immediately (guaranteed, instant, offline-safe)
+  localStorage.setItem('permpoon_services_list', JSON.stringify(list));
+
+  // 2. Sync to Firebase with timeout so UI never hangs
   if (isFirebaseActive && db) {
     try {
-      await db.collection('settings').doc('services_list').set({
+      await withTimeout(db.collection('settings').doc('services_list').set({
         items: list,
         updatedAt: new Date().toISOString()
-      });
+      }), 2000);
+      console.log("Services list synced to Firebase successfully");
     } catch (err) {
-      console.error("Error saving services list to Firebase:", err);
+      console.warn("Could not sync services list to Firebase (saved locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
-  localStorage.setItem('permpoon_services_list', JSON.stringify(list));
   return true;
 }
 
@@ -568,44 +640,58 @@ async function savePortfolioProject(proj) {
     timestamp: Date.now()
   };
 
-  if (isFirebaseActive && db) {
-    try {
-      if (isNew) {
-        const ref = await db.collection('portfolio').add(projectData);
-        return { success: true, id: ref.id };
-      } else {
-        await db.collection('portfolio').doc(proj.id).set(projectData, { merge: true });
-        return { success: true, id: proj.id };
-      }
-    } catch (err) {
-      console.error("Firebase portfolio save error:", err);
-    }
-  }
-
+  // 1. Save locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
+  let finalId = proj.id;
   if (isNew) {
-    const id = 'proj_' + Date.now();
-    list.unshift({ id, ...projectData });
+    finalId = 'proj_' + Date.now();
+    projectData.id = finalId;
+    list.unshift({ ...projectData });
   } else {
     const idx = list.findIndex(p => p.id === proj.id);
     if (idx !== -1) list[idx] = { ...list[idx], ...projectData };
   }
   localStorage.setItem('permpoon_portfolio', JSON.stringify(list));
-  return { success: true };
-}
 
-async function deletePortfolioProject(id) {
-  if (isFirebaseActive && db && !id.startsWith('proj_')) {
+  // 2. Sync to Firebase with timeout
+  if (isFirebaseActive && db) {
     try {
-      await db.collection('portfolio').doc(id).delete();
+      if (isNew) {
+        const ref = await withTimeout(db.collection('portfolio').add(projectData), 2000);
+        return { success: true, id: ref.id };
+      } else {
+        await withTimeout(db.collection('portfolio').doc(proj.id).set(projectData, { merge: true }), 2000);
+        return { success: true, id: proj.id };
+      }
     } catch (err) {
-      console.error("Firebase delete project error:", err);
+      console.warn("Firebase portfolio save error (saved locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
     }
   }
 
+  return { success: true, id: finalId };
+}
+
+async function deletePortfolioProject(id) {
+  // 1. Delete locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
   const filtered = list.filter(p => p.id !== id);
   localStorage.setItem('permpoon_portfolio', JSON.stringify(filtered));
+
+  // 2. Sync to Firebase with timeout
+  if (isFirebaseActive && db && !id.startsWith('proj_')) {
+    try {
+      await withTimeout(db.collection('portfolio').doc(id).delete(), 2000);
+    } catch (err) {
+      console.warn("Firebase delete project error (deleted locally):", err.message);
+      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
+        isFirebaseActive = false;
+      }
+    }
+  }
+
   return true;
 }
 
