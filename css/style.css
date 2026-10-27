@@ -65,3 +65,59 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
 }
+
+/* ========================================================
+   EXECUTIVE ARCHITECTURAL BACKGROUNDS (STYLE 4: HYBRID)
+   ======================================================== */
+
+.bg-pattern-hybrid {
+  background-color: #fcfcfc;
+  background-image: 
+    radial-gradient(at 85% 15%, rgba(245, 158, 11, 0.065) 0px, transparent 40%),
+    radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.04) 0px, transparent 40%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+.bg-pattern-hybrid-stone {
+  background-color: #f7f7f8;
+  background-image: 
+    radial-gradient(at 85% 15%, rgba(212, 212, 216, 0.5) 0px, transparent 45%),
+    radial-gradient(at 15% 85%, rgba(245, 158, 11, 0.06) 0px, transparent 40%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* Subtle architectural ghost watermark */
+.arch-watermark {
+  position: absolute;
+  right: 1.5rem;
+  top: 2.5rem;
+  user-select: none;
+  pointer-events: none;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+  font-size: clamp(90px, 15vw, 220px);
+  line-height: 1;
+  color: rgba(24, 24, 27, 0.025);
+  letter-spacing: -0.05em;
+  z-index: 1;
+}
+
+/* Subtle corner crosshairs */
+.arch-crosshairs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  color: rgba(161, 161, 170, 0.35);
+  letter-spacing: 0.05em;
+  z-index: 1;
+}
