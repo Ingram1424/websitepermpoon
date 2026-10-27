@@ -155,6 +155,10 @@
           <i class="fa-solid fa-envelope-open-text"></i>
           <span>รายการลูกค้าติดต่อ (Leads)</span>
         </button>
+        <button onclick="switchTab('homepage')" id="tab-homepage-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
+          <i class="fa-solid fa-desktop text-purple-600"></i>
+          <span>แก้ไขเนื้อหาหน้าแรก (Hero & บริการ 02)</span>
+        </button>
         <button onclick="switchTab('portfolio')" id="tab-portfolio-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
           <i class="fa-solid fa-images text-blue-600"></i>
           <span>จัดการผลงานโครงการ</span>
@@ -239,6 +243,238 @@
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-admin-container">
         <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB: Homepage Content Manager (Hero & Section 02)
+         ========================================== -->
+    <div id="tab-homepage" class="hidden space-y-6">
+      <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-4xl space-y-6">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-zinc-100 pb-4">
+          <div>
+            <h3 class="text-base font-bold text-zinc-900 flex items-center gap-2">
+              <i class="fa-solid fa-desktop text-purple-600"></i>
+              <span>แก้ไขเนื้อหาหน้าแรก (Hero & บริการ 02)</span>
+            </h3>
+            <p class="text-xs text-zinc-500 mt-0.5">แก้ไขข้อความพาดหัว, ภาพประกอบฝั่งขวา, แถบสถิติ และการ์ดบริการ Section 02</p>
+          </div>
+          <span class="text-[11px] bg-purple-50 text-purple-700 font-semibold px-2.5 py-1 rounded-full border border-purple-200 self-start sm:self-auto">
+            อัปเดตหน้าเว็บจริงทันที
+          </span>
+        </div>
+
+        <form onsubmit="handleHomepageSubmit(event)" class="space-y-8 text-xs">
+
+          <!-- 1. HERO SECTION -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm border-b border-zinc-100 pb-2">
+              <span class="w-6 h-6 rounded-lg bg-zinc-900 text-white flex items-center justify-center text-xs">1</span>
+              <span>ส่วนหัวหน้าแรก (Hero Section & รูปภาพฝั่งขวา)</span>
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-700 mb-1">ป้ายกำกับด้านบน (Hero Badge)</label>
+              <input type="text" id="set-hero-badge" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="รับเหมาก่อสร้าง • ปรับปรุงรีโนเวท • ซ่อมแซมอาคาร • ระบบประปาและสุขาภิบาล">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">พาดหัว บรรทัดที่ 1 (ตัวหนา)</label>
+                <input type="text" id="set-hero-title1" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="สร้างและรีโนเวททุกพื้นที่">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">พาดหัว บรรทัดที่ 2 (สีเทา)</label>
+                <input type="text" id="set-hero-title2" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="ด้วยมาตรฐานช่างมืออาชีพ">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">พาดหัว บรรทัดที่ 3 (ขีดเส้นใต้)</label>
+                <input type="text" id="set-hero-title3" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="งบไม่บานปลาย ไม่ทิ้งงาน">
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-medium text-zinc-700 mb-1">คำบรรยายใต้หัวข้อ (Hero Description)</label>
+              <textarea id="set-hero-desc" rows="3" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 resize-none"></textarea>
+            </div>
+
+            <!-- Right Visual Image Editor -->
+            <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-200 space-y-3">
+              <div class="font-bold text-zinc-800 text-xs flex items-center gap-1.5">
+                <i class="fa-solid fa-image text-zinc-500"></i> จัดการรูปภาพฝั่งขวา (Right Hero Visual)
+              </div>
+
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">ลิงก์รูปภาพ (Image URL)</label>
+                <input type="text" id="set-hero-img" oninput="updateHeroImgPreview(this.value)" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 font-mono text-[11px] bg-white" placeholder="https://images.unsplash.com/... หรือ img/company-office.jpg">
+                <p class="text-[10px] text-zinc-400 mt-1">สามารถใส่ URL รูปภาพ หรือพิมพ์ <code class="text-zinc-600 font-bold">img/company-office.jpg</code> เพื่อใช้รูปตึกบริษัทจริงได้</p>
+              </div>
+
+              <!-- Live Image Preview Box -->
+              <div class="flex items-center gap-4 pt-1">
+                <div class="w-32 h-20 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-200 relative shrink-0 shadow-xs">
+                  <img id="hero-img-preview" src="" alt="พรีวิวรูปภาพ" class="w-full h-full object-cover">
+                </div>
+                <div class="text-[11px] text-zinc-500">
+                  <div class="font-medium text-zinc-800">พรีวิวรูปภาพฝั่งขวา</div>
+                  <div class="text-[10px] text-zinc-400">รูปภาพนี้จะไปแสดงเป็นภาพขนาดใหญ่ฝั่งขวาของหน้าแรกทันที</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div>
+                  <label class="block font-medium text-zinc-700 mb-1">ชื่อโครงการบนรูป</label>
+                  <input type="text" id="set-hero-img-title" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="บ้านเดี่ยว Modern Tropical">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-700 mb-1">สถานที่ / รายละเอียด</label>
+                  <input type="text" id="set-hero-img-sub" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="โครงการส่งมอบสำเร็จ • จ.นนทบุรี">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-700 mb-1">ป้ายสถานะ (Badge)</label>
+                  <input type="text" id="set-hero-img-badge" class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-white" placeholder="100% เสร็จสมบูรณ์">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. STATS BAR -->
+          <div class="space-y-4 pt-4 border-t border-zinc-100">
+            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm border-b border-zinc-100 pb-2">
+              <span class="w-6 h-6 rounded-lg bg-zinc-900 text-white flex items-center justify-center text-xs">2</span>
+              <span>แถบตัวเลขสถิติความน่าเชื่อถือ (Statistics Bar)</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div class="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                <span class="text-[10px] font-bold text-zinc-400">ช่องที่ 1</span>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">ตัวเลขสถิติ</label>
+                  <input type="text" id="set-stat1-num" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs font-bold text-zinc-800" placeholder="15+ ปี">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">คำอธิบาย</label>
+                  <input type="text" id="set-stat1-text" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs text-zinc-600" placeholder="ประสบการณ์งานวิศวกรรมช่าง">
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                <span class="text-[10px] font-bold text-zinc-400">ช่องที่ 2</span>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">ตัวเลขสถิติ</label>
+                  <input type="text" id="set-stat2-num" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs font-bold text-zinc-800" placeholder="1,200+">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">คำอธิบาย</label>
+                  <input type="text" id="set-stat2-text" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs text-zinc-600" placeholder="โครงการที่ส่งมอบสำเร็จ">
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                <span class="text-[10px] font-bold text-zinc-400">ช่องที่ 3</span>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">ตัวเลขสถิติ</label>
+                  <input type="text" id="set-stat3-num" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs font-bold text-zinc-800" placeholder="100%">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">คำอธิบาย</label>
+                  <input type="text" id="set-stat3-text" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs text-zinc-600" placeholder="การันตีตามสัญญา ไม่ทิ้งงาน">
+                </div>
+              </div>
+
+              <div class="p-3 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                <span class="text-[10px] font-bold text-zinc-400">ช่องที่ 4</span>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">ตัวเลขสถิติ</label>
+                  <input type="text" id="set-stat4-num" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs font-bold text-zinc-800" placeholder="4.9 / 5">
+                </div>
+                <div>
+                  <label class="block font-medium text-zinc-600 text-[11px] mb-0.5">คำอธิบาย</label>
+                  <input type="text" id="set-stat4-text" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs text-zinc-600" placeholder="ความพึงพอใจจากเจ้าของบ้าน">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. SECTION 02: SERVICES -->
+          <div class="space-y-4 pt-4 border-t border-zinc-100">
+            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm border-b border-zinc-100 pb-2">
+              <span class="w-6 h-6 rounded-lg bg-zinc-900 text-white flex items-center justify-center text-xs">3</span>
+              <span>ข้อความ Section 02 (OUR SERVICES • บริการของเรา)</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">หัวข้อหลัก Section 02</label>
+                <input type="text" id="set-services-title" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="บริการครบวงจร เรื่องบ้านและอาคาร">
+              </div>
+              <div>
+                <label class="block font-medium text-zinc-700 mb-1">คำบรรยายรอง Section 02</label>
+                <input type="text" id="set-services-subtitle" required class="w-full px-3 py-2 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900" placeholder="ดูแลตั้งแต่การออกแบบ สถาปัตย์ วิศวกรรม ก่อสร้าง...">
+              </div>
+            </div>
+
+            <!-- 6 Service Cards -->
+            <div class="space-y-3 pt-2">
+              <label class="block font-semibold text-zinc-800">รายละเอียดการ์ดบริการทั้ง 6 รายการ:</label>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Svc 1 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 1 (รับเหมาก่อสร้าง)</span>
+                  <input type="text" id="set-svc1-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="รับเหมาก่อสร้างบ้านและอาคาร">
+                  <textarea id="set-svc1-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+                <!-- Svc 2 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 2 (รีโนเวท)</span>
+                  <input type="text" id="set-svc2-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="รีโนเวทบ้าน คอนโด ทาวน์โฮม">
+                  <textarea id="set-svc2-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+                <!-- Svc 3 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 3 (บิวท์อิน)</span>
+                  <input type="text" id="set-svc3-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="ตกแต่งภายใน & บิวท์อิน (Built-in)">
+                  <textarea id="set-svc3-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+                <!-- Svc 4 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 4 (งานต่อเติม)</span>
+                  <input type="text" id="set-svc4-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="งานต่อเติมครัว หลังคา และโรงรถ">
+                  <textarea id="set-svc4-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+                <!-- Svc 5 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 5 (งานระบบ)</span>
+                  <input type="text" id="set-svc5-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="งานระบบ ไฟฟ้า ประปา สุขาภิบาล">
+                  <textarea id="set-svc5-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+                <!-- Svc 6 -->
+                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
+                  <span class="text-[10px] font-bold text-zinc-400">บริการ 6 (สำรวจ & BOQ)</span>
+                  <input type="text" id="set-svc6-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="สำรวจหน้างาน ออกแบบ & ทำ BOQ">
+                  <textarea id="set-svc6-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-zinc-100 flex items-center justify-between">
+            <button type="submit" class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium rounded-xl text-xs transition flex items-center gap-2 shadow-sm">
+              <i class="fa-solid fa-floppy-disk"></i>
+              <span>บันทึกการแก้ไขเนื้อหาหน้าแรก</span>
+            </button>
+            <span class="text-[11px] text-zinc-400">ข้อมูลจะถูกซิงค์ไปยัง Firebase และหน้าแรกทันที</span>
+          </div>
+
+        </form>
       </div>
     </div>
 
@@ -773,10 +1009,18 @@
       document.getElementById('stat-projects').innerText = allProjects.length;
     }
 
-    // 6. Site Settings (Edit Contact & Price)
+    // 6. Site Settings & Homepage Content
+    function updateHeroImgPreview(url) {
+      const preview = document.getElementById('hero-img-preview');
+      if (preview) {
+        preview.src = url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80';
+      }
+    }
+
     async function loadSettingsForm() {
       if (typeof getSiteSettings !== 'function') return;
       const s = await getSiteSettings();
+      // Contact & Info
       if (document.getElementById('set-company-name')) document.getElementById('set-company-name').value = s.companyName || '';
       if (document.getElementById('set-tagline')) document.getElementById('set-tagline').value = s.tagline || '';
       document.getElementById('set-phone').value = s.phone || '';
@@ -789,6 +1033,89 @@
       document.getElementById('set-rate-renovate').value = s.rateRenovate || 6500;
       document.getElementById('set-rate-interior').value = s.rateInterior || 9000;
       document.getElementById('set-rate-extension').value = s.rateExtension || 8500;
+
+      // Homepage Fields (Hero Section)
+      if (document.getElementById('set-hero-badge')) document.getElementById('set-hero-badge').value = s.heroBadge || '';
+      if (document.getElementById('set-hero-title1')) document.getElementById('set-hero-title1').value = s.heroTitle1 || '';
+      if (document.getElementById('set-hero-title2')) document.getElementById('set-hero-title2').value = s.heroTitle2 || '';
+      if (document.getElementById('set-hero-title3')) document.getElementById('set-hero-title3').value = s.heroTitle3 || '';
+      if (document.getElementById('set-hero-desc')) document.getElementById('set-hero-desc').value = s.heroDesc || '';
+      if (document.getElementById('set-hero-img')) {
+        document.getElementById('set-hero-img').value = s.heroImg || '';
+        updateHeroImgPreview(s.heroImg);
+      }
+      if (document.getElementById('set-hero-img-title')) document.getElementById('set-hero-img-title').value = s.heroImgTitle || '';
+      if (document.getElementById('set-hero-img-sub')) document.getElementById('set-hero-img-sub').value = s.heroImgSub || '';
+      if (document.getElementById('set-hero-img-badge')) document.getElementById('set-hero-img-badge').value = s.heroImgBadge || '';
+
+      // Stats
+      if (document.getElementById('set-stat1-num')) document.getElementById('set-stat1-num').value = s.stat1Num || '';
+      if (document.getElementById('set-stat1-text')) document.getElementById('set-stat1-text').value = s.stat1Text || '';
+      if (document.getElementById('set-stat2-num')) document.getElementById('set-stat2-num').value = s.stat2Num || '';
+      if (document.getElementById('set-stat2-text')) document.getElementById('set-stat2-text').value = s.stat2Text || '';
+      if (document.getElementById('set-stat3-num')) document.getElementById('set-stat3-num').value = s.stat3Num || '';
+      if (document.getElementById('set-stat3-text')) document.getElementById('set-stat3-text').value = s.stat3Text || '';
+      if (document.getElementById('set-stat4-num')) document.getElementById('set-stat4-num').value = s.stat4Num || '';
+      if (document.getElementById('set-stat4-text')) document.getElementById('set-stat4-text').value = s.stat4Text || '';
+
+      // Services Section 02
+      if (document.getElementById('set-services-title')) document.getElementById('set-services-title').value = s.servicesTitle || '';
+      if (document.getElementById('set-services-subtitle')) document.getElementById('set-services-subtitle').value = s.servicesSubtitle || '';
+      if (document.getElementById('set-svc1-title')) document.getElementById('set-svc1-title').value = s.svc1Title || '';
+      if (document.getElementById('set-svc1-desc')) document.getElementById('set-svc1-desc').value = s.svc1Desc || '';
+      if (document.getElementById('set-svc2-title')) document.getElementById('set-svc2-title').value = s.svc2Title || '';
+      if (document.getElementById('set-svc2-desc')) document.getElementById('set-svc2-desc').value = s.svc2Desc || '';
+      if (document.getElementById('set-svc3-title')) document.getElementById('set-svc3-title').value = s.svc3Title || '';
+      if (document.getElementById('set-svc3-desc')) document.getElementById('set-svc3-desc').value = s.svc3Desc || '';
+      if (document.getElementById('set-svc4-title')) document.getElementById('set-svc4-title').value = s.svc4Title || '';
+      if (document.getElementById('set-svc4-desc')) document.getElementById('set-svc4-desc').value = s.svc4Desc || '';
+      if (document.getElementById('set-svc5-title')) document.getElementById('set-svc5-title').value = s.svc5Title || '';
+      if (document.getElementById('set-svc5-desc')) document.getElementById('set-svc5-desc').value = s.svc5Desc || '';
+      if (document.getElementById('set-svc6-title')) document.getElementById('set-svc6-title').value = s.svc6Title || '';
+      if (document.getElementById('set-svc6-desc')) document.getElementById('set-svc6-desc').value = s.svc6Desc || '';
+    }
+
+    async function handleHomepageSubmit(e) {
+      e.preventDefault();
+      const homepageData = {
+        heroBadge: document.getElementById('set-hero-badge').value.trim(),
+        heroTitle1: document.getElementById('set-hero-title1').value.trim(),
+        heroTitle2: document.getElementById('set-hero-title2').value.trim(),
+        heroTitle3: document.getElementById('set-hero-title3').value.trim(),
+        heroDesc: document.getElementById('set-hero-desc').value.trim(),
+        heroImg: document.getElementById('set-hero-img').value.trim(),
+        heroImgTitle: document.getElementById('set-hero-img-title').value.trim(),
+        heroImgSub: document.getElementById('set-hero-img-sub').value.trim(),
+        heroImgBadge: document.getElementById('set-hero-img-badge').value.trim(),
+
+        stat1Num: document.getElementById('set-stat1-num').value.trim(),
+        stat1Text: document.getElementById('set-stat1-text').value.trim(),
+        stat2Num: document.getElementById('set-stat2-num').value.trim(),
+        stat2Text: document.getElementById('set-stat2-text').value.trim(),
+        stat3Num: document.getElementById('set-stat3-num').value.trim(),
+        stat3Text: document.getElementById('set-stat3-text').value.trim(),
+        stat4Num: document.getElementById('set-stat4-num').value.trim(),
+        stat4Text: document.getElementById('set-stat4-text').value.trim(),
+
+        servicesTitle: document.getElementById('set-services-title').value.trim(),
+        servicesSubtitle: document.getElementById('set-services-subtitle').value.trim(),
+
+        svc1Title: document.getElementById('set-svc1-title').value.trim(),
+        svc1Desc: document.getElementById('set-svc1-desc').value.trim(),
+        svc2Title: document.getElementById('set-svc2-title').value.trim(),
+        svc2Desc: document.getElementById('set-svc2-desc').value.trim(),
+        svc3Title: document.getElementById('set-svc3-title').value.trim(),
+        svc3Desc: document.getElementById('set-svc3-desc').value.trim(),
+        svc4Title: document.getElementById('set-svc4-title').value.trim(),
+        svc4Desc: document.getElementById('set-svc4-desc').value.trim(),
+        svc5Title: document.getElementById('set-svc5-title').value.trim(),
+        svc5Desc: document.getElementById('set-svc5-desc').value.trim(),
+        svc6Title: document.getElementById('set-svc6-title').value.trim(),
+        svc6Desc: document.getElementById('set-svc6-desc').value.trim(),
+      };
+
+      await saveSiteSettings(homepageData);
+      alert('บันทึกเนื้อหาหน้าแรกเรียบร้อยแล้ว! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
     }
 
     async function handleSiteSettingsSubmit(e) {
@@ -890,7 +1217,7 @@
     }
 
     function switchTab(tab) {
-      ['inquiries', 'portfolio', 'settings', 'reviews', 'security'].forEach(t => {
+      ['inquiries', 'homepage', 'portfolio', 'settings', 'reviews', 'security'].forEach(t => {
         const el = document.getElementById(`tab-${t}`);
         const btn = document.getElementById(`tab-${t}-btn`);
         if (el) el.classList.add('hidden');

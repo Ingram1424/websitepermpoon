@@ -140,16 +140,16 @@
         <div class="lg:col-span-7 space-y-5">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-700 text-xs font-medium">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>รับเหมาก่อสร้าง • ปรับปรุงรีโนเวท • ซ่อมแซมอาคาร • ระบบประปาและสุขาภิบาล</span>
+            <span data-bind="heroBadge">รับเหมาก่อสร้าง • ปรับปรุงรีโนเวท • ซ่อมแซมอาคาร • ระบบประปาและสุขาภิบาล</span>
           </div>
 
           <h1 class="text-3xl sm:text-4xl lg:text-[42px] font-bold text-zinc-900 leading-tight tracking-tight">
-            สร้างและรีโนเวททุกพื้นที่ <br>
-            <span class="text-zinc-500 font-normal">ด้วยมาตรฐานช่างมืออาชีพ</span> <br>
-            <span class="border-b-2 border-zinc-900 pb-0.5">งบไม่บานปลาย ไม่ทิ้งงาน</span>
+            <span data-bind="heroTitle1">สร้างและรีโนเวททุกพื้นที่</span> <br>
+            <span class="text-zinc-500 font-normal" data-bind="heroTitle2">ด้วยมาตรฐานช่างมืออาชีพ</span> <br>
+            <span class="border-b-2 border-zinc-900 pb-0.5" data-bind="heroTitle3">งบไม่บานปลาย ไม่ทิ้งงาน</span>
           </h1>
 
-          <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed max-w-xl font-light">
+          <p class="text-zinc-600 text-xs sm:text-sm leading-relaxed max-w-xl font-light" data-bind="heroDesc">
             <strong>บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด</strong> ประกอบกิจการรับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล ดูแลโดยทีมงานมืออาชีพ สัญญาชัดเจน ตรวจสอบ BOQ ได้ทุกขั้นตอน ส่งมอบงานตรงเวลา พร้อมรับประกันผลงานหลังส่งมอบ
           </p>
 
@@ -184,14 +184,14 @@
         <!-- Right Hero Visual -->
         <div class="lg:col-span-5 relative">
           <div class="relative rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[16/11] border border-zinc-200 shadow-md bg-zinc-100">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="ผลงานก่อสร้างและรีโนเวท บริษัทเพิ่มพูน" class="w-full h-full object-cover">
+            <img data-bind-src="heroImg" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="ผลงานก่อสร้างและรีโนเวท บริษัทเพิ่มพูน" class="w-full h-full object-cover">
             
             <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-xl border border-zinc-200/80 shadow-sm flex items-center justify-between text-xs">
               <div>
-                <div class="font-bold text-zinc-900">บ้านเดี่ยว Modern Tropical</div>
-                <div class="text-[10px] text-zinc-500">โครงการส่งมอบสำเร็จ • จ.นนทบุรี</div>
+                <div class="font-bold text-zinc-900" data-bind="heroImgTitle">บ้านเดี่ยว Modern Tropical</div>
+                <div class="text-[10px] text-zinc-500" data-bind="heroImgSub">โครงการส่งมอบสำเร็จ • จ.นนทบุรี</div>
               </div>
-              <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md">
+              <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-md" data-bind="heroImgBadge">
                 100% เสร็จสมบูรณ์
               </span>
             </div>
@@ -209,20 +209,20 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-zinc-200/80">
         <div class="pt-2 md:pt-0">
-          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">15+ ปี</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1">ประสบการณ์งานวิศวกรรมช่าง</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat1Num">15+ ปี</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat1Text">ประสบการณ์งานวิศวกรรมช่าง</div>
         </div>
         <div class="pt-2 md:pt-0">
-          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">1,200+</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1">โครงการที่ส่งมอบสำเร็จ</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat2Num">1,200+</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat2Text">โครงการที่ส่งมอบสำเร็จ</div>
         </div>
         <div class="pt-2 md:pt-0">
-          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">100%</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1">การันตีตามสัญญา ไม่ทิ้งงาน</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat3Num">100%</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat3Text">การันตีตามสัญญา ไม่ทิ้งงาน</div>
         </div>
         <div class="pt-2 md:pt-0">
-          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900">4.9 / 5</div>
-          <div class="text-xs text-zinc-500 font-medium mt-1">ความพึงพอใจจากเจ้าของบ้าน</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-zinc-900" data-bind="stat4Num">4.9 / 5</div>
+          <div class="text-xs text-zinc-500 font-medium mt-1" data-bind="stat4Text">ความพึงพอใจจากเจ้าของบ้าน</div>
         </div>
       </div>
     </div>
@@ -308,8 +308,8 @@
 
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3">
         <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900">บริการครบวงจร เรื่องบ้านและอาคาร</h2>
-          <p class="text-xs text-zinc-500 mt-1">ดูแลตั้งแต่การออกแบบ สถาปัตย์ วิศวกรรม ก่อสร้าง จนถึงส่งมอบงานเสร็จสมบูรณ์</p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-zinc-900" data-bind="servicesTitle">บริการครบวงจร เรื่องบ้านและอาคาร</h2>
+          <p class="text-xs text-zinc-500 mt-1" data-bind="servicesSubtitle">ดูแลตั้งแต่การออกแบบ สถาปัตย์ วิศวกรรม ก่อสร้าง จนถึงส่งมอบงานเสร็จสมบูรณ์</p>
         </div>
       </div>
 
@@ -322,8 +322,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-house"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">รับเหมาก่อสร้างบ้านและอาคาร</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc1Title">รับเหมาก่อสร้างบ้านและอาคาร</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc1Desc">
               สร้างบ้านเดี่ยว ทาวน์โฮม อาคารพาณิชย์ และโกดังเก็บสินค้า ออกแบบตามหลักวิศวกรรมพร้อมยื่นขออนุญาตก่อสร้างครบวงจร
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -342,8 +342,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-hammer"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">รีโนเวทบ้าน คอนโด ทาวน์โฮม</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc2Title">รีโนเวทบ้าน คอนโด ทาวน์โฮม</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc2Desc">
               ปรับปรุงบ้านเก่าให้สวยทันสมัย ปรับแปลน รื้อถอน เสริมโครงสร้าง และแก้ปัญหาน้ำรั่วซึมทรุดร้าวอย่างถาวร
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -362,8 +362,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-couch"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">ตกแต่งภายใน & บิวท์อิน (Built-in)</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc3Title">ตกแต่งภายใน & บิวท์อิน (Built-in)</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc3Desc">
               ออกแบบตกแต่งสไตล์ Minimal, Modern, Nordic บิวท์อินตู้เสื้อผ้า ครัว ห้องนั่งเล่น วัสดุ HMR กันชื้น Soft-close
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -382,8 +382,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-kitchen-set"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">งานต่อเติมครัว หลังคา และโรงรถ</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc4Title">งานต่อเติมครัว หลังคา และโรงรถ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc4Desc">
               ต่อเติมครัวหลังบ้าน โรงรถหน้าบ้าน ลงเสาเข็มไมโครไพล์แยกโครงสร้าง ป้องกันปัญหาการทรุดตัวและดึงรั้ง 100%
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -402,8 +402,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-bolt"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">งานระบบ ไฟฟ้า ประปา สุขาภิบาล</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc5Title">งานระบบ ไฟฟ้า ประปา สุขาภิบาล</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc5Desc">
               ติดตั้งตู้เมนไฟ เดินสายไฟร้อยท่อ เดินท่อน้ำดี PPR ท่อน้ำเสีย ได้มาตรฐานการไฟฟ้านครหลวงและการประปา
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -422,8 +422,8 @@
             <div class="w-11 h-11 rounded-xl bg-white border border-zinc-200 text-zinc-800 flex items-center justify-center text-base shadow-xs">
               <i class="fa-solid fa-ruler-combined"></i>
             </div>
-            <h3 class="font-bold text-zinc-900 text-base">สำรวจหน้างาน ออกแบบ & ทำ BOQ</h3>
-            <p class="text-xs text-zinc-500 leading-relaxed font-light">
+            <h3 class="font-bold text-zinc-900 text-base" data-bind="svc6Title">สำรวจหน้างาน ออกแบบ & ทำ BOQ</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light" data-bind="svc6Desc">
               บริการส่งวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำแนวทางก่อสร้าง พร้อมจัดทำใบเสนอราคา BOQ ละเอียดไม่มีหมกเม็ด
             </p>
             <ul class="text-[11px] text-zinc-600 space-y-1 pt-1">
@@ -431,6 +431,10 @@
               <li class="flex items-center gap-1.5"><i class="fa-solid fa-check text-zinc-800 text-[10px]"></i> เอกสาร BOQ แยกวัสดุ-ค่าแรงชัดเจน</li>
             </ul>
           </div>
+          <a href="#contact" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-900 font-semibold flex items-center justify-between">
+            <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </a>
+        </div>
           <a href="#contact" class="mt-5 pt-3 border-t border-zinc-200/80 text-xs text-zinc-900 font-semibold flex items-center justify-between">
             <span>นัดหมายสำรวจหน้างานฟรี</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </a>

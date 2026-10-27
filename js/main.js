@@ -621,7 +621,30 @@ async function loadDynamicSiteSettings() {
       });
     }
 
-    // 4. Calculator rates
+    // 4. Hero Section, Stats & Services Section Bindings
+    const dynamicKeys = [
+      'heroBadge', 'heroTitle1', 'heroTitle2', 'heroTitle3', 'heroDesc',
+      'heroImgTitle', 'heroImgSub', 'heroImgBadge',
+      'stat1Num', 'stat1Text', 'stat2Num', 'stat2Text', 'stat3Num', 'stat3Text', 'stat4Num', 'stat4Text',
+      'servicesTitle', 'servicesSubtitle',
+      'svc1Title', 'svc1Desc', 'svc2Title', 'svc2Desc', 'svc3Title', 'svc3Desc',
+      'svc4Title', 'svc4Desc', 'svc5Title', 'svc5Desc', 'svc6Title', 'svc6Desc'
+    ];
+    dynamicKeys.forEach(k => {
+      if (settings[k] !== undefined) {
+        document.querySelectorAll(`[data-bind="${k}"]`).forEach(el => {
+          el.innerText = settings[k];
+        });
+      }
+    });
+
+    if (settings.heroImg) {
+      document.querySelectorAll('[data-bind-src="heroImg"]').forEach(el => {
+        el.src = settings.heroImg;
+      });
+    }
+
+    // 5. Calculator rates
     if (settings.rateBuild) {
       const btn = document.querySelector('.calc-btn[data-type="build"]');
       if (btn) btn.setAttribute('data-rate', settings.rateBuild);
