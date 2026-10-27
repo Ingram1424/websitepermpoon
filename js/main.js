@@ -226,21 +226,41 @@ const serviceData = {
 };
 
 function openServiceDetail(serviceKey) {
-  const service = serviceData[serviceKey];
+  let service = serviceData[serviceKey];
+  if (!service) {
+    // Try to find in dynamic services list
+    const saved = localStorage.getItem('permpoon_services_list');
+    if (saved) {
+      try {
+        const list = JSON.parse(saved);
+        const found = list.find(s => s.id === serviceKey || s.modalKey === serviceKey || s.title === serviceKey);
+        if (found) {
+          service = {
+            icon: `<i class="${found.icon || 'fa-solid fa-hammer'} text-zinc-800"></i>`,
+            title: found.title,
+            desc: found.desc,
+            items: [found.point1, found.point2].filter(Boolean)
+          };
+        }
+      } catch (e) {}
+    }
+  }
   if (!service) return;
 
-  document.getElementById('service-modal-icon').innerHTML = service.icon;
+  document.getElementById('service-modal-icon').innerHTML = service.icon || '<i class="fa-solid fa-hammer text-zinc-800"></i>';
   document.getElementById('service-modal-title').innerText = service.title;
   document.getElementById('service-modal-desc').innerText = service.desc;
 
   const listContainer = document.getElementById('service-modal-list');
   listContainer.innerHTML = '';
-  service.items.forEach(item => {
-    const li = document.createElement('li');
-    li.className = 'flex items-start gap-2';
-    li.innerHTML = `<i class="fa-solid fa-check text-zinc-800 text-[10px] mt-1"></i> <span>${item}</span>`;
-    listContainer.appendChild(li);
-  });
+  if (service.items && service.items.length) {
+    service.items.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-2';
+      li.innerHTML = `<i class="fa-solid fa-check text-zinc-800 text-[10px] mt-1"></i> <span>${item}</span>`;
+      listContainer.appendChild(li);
+    });
+  }
 
   const modal = document.getElementById('service-modal');
   modal.classList.remove('hidden');
@@ -668,8 +688,80 @@ async function loadDynamicSiteSettings() {
       currentRate = parseFloat(activeCalc.getAttribute('data-rate')) || currentRate;
       calculateEstimate();
     }
+
+    // Dynamic services cards rendering
+    await renderDynamicServices();
   } catch (err) {
     console.warn("Could not load dynamic site settings:", err);
+  }
+}
+
+/**
+ * 4.3 Dynamic Services Cards Rendering
+ */
+async function renderDynamicServices() {
+  const container = document.getElementById('services-grid');
+  if (!container || typeof getServicesList !== 'function') return;
+
+  try {
+    const list = await getServicesList();
+    if (!list || !Array.isArray(list) || list.length === 0) return;
+
+    container.innerHTML = list.map((svc, index) => {
+      const numStr = String(index + 1).padStart(2, '0');
+      const iconClass = svc.icon || 'fa-solid fa-hammer';
+      const title = svc.title || 'บริการ';
+      const desc = svc.desc || '';
+      const point1 = svc.point1 ? `
+        <li class="flex items-center gap-2">
+          <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+          <span>${svc.point1}</span>
+        </li>` : '';
+      const point2 = svc.point2 ? `
+        <li class="flex items-center gap-2">
+          <span class="w-4 h-4 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-[9px] shrink-0 font-bold"><i class="fa-solid fa-check"></i></span>
+          <span>${svc.point2}</span>
+        </li>` : '';
+
+      const pointsHtml = (point1 || point2) ? `
+        <ul class="text-[11px] text-zinc-700 space-y-2 pt-3 border-t border-zinc-100">
+          ${point1}
+          ${point2}
+        </ul>` : '';
+
+      let actionBtn = '';
+      if (svc.modalKey) {
+        actionBtn = `
+          <button onclick="openServiceDetail('${svc.modalKey}')" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-800 hover:text-zinc-900 font-semibold flex items-center justify-between group/btn cursor-pointer w-full text-left">
+            <span>${svc.actionText || 'ดูขอบเขตงานและมาตรฐาน'}</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-400 group-hover/btn:text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
+          </button>`;
+      } else {
+        const link = svc.actionLink || '#contact';
+        actionBtn = `
+          <a href="${link}" class="mt-6 pt-3.5 border-t border-zinc-100 text-xs text-zinc-900 font-bold flex items-center justify-between group/btn cursor-pointer">
+            <span>${svc.actionText || 'นัดหมายสำรวจหน้างานฟรี'}</span> <i class="fa-solid fa-arrow-right text-[10px] text-zinc-900 group-hover/btn:translate-x-1 transition-all"></i>
+          </a>`;
+      }
+
+      return `
+        <div class="p-6 rounded-2xl bg-white border border-zinc-200/90 hover:border-zinc-900/60 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden before:absolute before:top-0 before:left-0 before:right-0 before:h-1 before:bg-zinc-900 before:opacity-0 group-hover:before:opacity-100 before:transition-opacity">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-zinc-900 text-amber-400 flex items-center justify-center text-lg shadow-sm group-hover:bg-zinc-800 group-hover:scale-105 transition-all">
+                <i class="${iconClass}"></i>
+              </div>
+              <span class="font-mono text-xs font-bold text-zinc-300 group-hover:text-zinc-900 transition-colors">${numStr}</span>
+            </div>
+            <h3 class="font-bold text-zinc-900 text-base mb-2">${title}</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed font-light mb-4">${desc}</p>
+            ${pointsHtml}
+          </div>
+          ${actionBtn}
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error("Failed to render dynamic services:", err);
   }
 }
 
@@ -678,6 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPortfolioFilters();
   loadDynamicPortfolio();
   loadDynamicSiteSettings();
+  renderDynamicServices();
   loadHomeReviews();
 });
 

@@ -351,6 +351,119 @@ async function saveSiteSettings(newSettings) {
 }
 
 /**
+ * 4.2 Dynamic Services List CRUD (เพิ่ม/ลบ/แก้ไขการ์ดบริการ Section 02)
+ */
+const DEFAULT_SERVICES_LIST = [
+  {
+    id: 'svc_1',
+    title: 'รับเหมาก่อสร้างบ้านและอาคาร',
+    desc: 'สร้างบ้านเดี่ยว ทาวน์โฮม อาคารพาณิชย์ และโกดังเก็บสินค้า ออกแบบตามหลักวิศวกรรมพร้อมยื่นขออนุญาตก่อสร้างครบวงจร',
+    icon: 'fa-solid fa-house',
+    point1: 'งานโครงสร้าง คสล. / โครงสร้างเหล็ก',
+    point2: 'สถาปัตย์ 2D / 3D Perspective',
+    modalKey: 'construction',
+    actionText: 'ดูขอบเขตงานและมาตรฐาน',
+    actionLink: ''
+  },
+  {
+    id: 'svc_2',
+    title: 'รีโนเวทบ้าน คอนโด ทาวน์โฮม',
+    desc: 'ปรับปรุงบ้านเก่าให้สวยทันสมัย ปรับแปลน รื้อถอน เสริมโครงสร้าง และแก้ปัญหาน้ำรั่วซึมทรุดร้าวอย่างถาวร',
+    icon: 'fa-solid fa-hammer',
+    point1: 'รื้อถอนและเสริมกำลังโครงสร้าง',
+    point2: 'ปูกระเบื้อง ทาสี เปลี่ยนระบบไฟประปา',
+    modalKey: 'renovation',
+    actionText: 'ดูขอบเขตงานและมาตรฐาน',
+    actionLink: ''
+  },
+  {
+    id: 'svc_3',
+    title: 'ตกแต่งภายใน & บิวท์อิน (Built-in)',
+    desc: 'ออกแบบตกแต่งสไตล์ Minimal, Modern, Nordic บิวท์อินตู้เสื้อผ้า ครัว ห้องนั่งเล่น วัสดุ HMR กันชื้น Soft-close',
+    icon: 'fa-solid fa-couch',
+    point1: 'ไม้ HMR เกรดกันชื้น ไม่บวมน้ำ',
+    point2: 'ออกแบบภาพ 3D เสมือนจริงก่อนผลิต',
+    modalKey: 'interior',
+    actionText: 'ดูขอบเขตงานและมาตรฐาน',
+    actionLink: ''
+  },
+  {
+    id: 'svc_4',
+    title: 'งานต่อเติมครัว หลังคา และโรงรถ',
+    desc: 'ต่อเติมครัวหลังบ้าน โรงรถหน้าบ้าน ลงเสาเข็มไมโครไพล์แยกโครงสร้าง ป้องกันปัญหาการทรุดตัวและดึงรั้ง 100%',
+    icon: 'fa-solid fa-kitchen-set',
+    point1: 'เสาเข็มไมโครไพล์ Spun Micropile',
+    point2: 'โครงสร้างแยกอิสระจากตัวบ้านเดิม',
+    modalKey: 'extension',
+    actionText: 'ดูขอบเขตงานและมาตรฐาน',
+    actionLink: ''
+  },
+  {
+    id: 'svc_5',
+    title: 'งานระบบ ไฟฟ้า ประปา สุขาภิบาล',
+    desc: 'ติดตั้งตู้เมนไฟ เดินสายไฟร้อยท่อ เดินท่อน้ำดี PPR ท่อน้ำเสีย ได้มาตรฐานการไฟฟ้านครหลวงและการประปา',
+    icon: 'fa-solid fa-bolt',
+    point1: 'เบรกเกอร์กันดูด RCBO สายดิน',
+    point2: 'ท่อน้ำดีเชื่อมความร้อน ไร้รั่วซึม',
+    modalKey: 'mep',
+    actionText: 'ดูขอบเขตงานและมาตรฐาน',
+    actionLink: ''
+  },
+  {
+    id: 'svc_6',
+    title: 'สำรวจหน้างาน ออกแบบ & ทำ BOQ',
+    desc: 'บริการส่งวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำแนวทางก่อสร้าง พร้อมจัดทำใบเสนอราคา BOQ ละเอียดไม่มีหมกเม็ด',
+    icon: 'fa-solid fa-ruler-combined',
+    point1: 'สำรวจฟรี ไม่มีค่าใช้จ่ายและข้อผูกมัด',
+    point2: 'เอกสาร BOQ แยกวัสดุ-ค่าแรงชัดเจน',
+    modalKey: '',
+    actionText: 'นัดหมายสำรวจหน้างานฟรี',
+    actionLink: '#contact'
+  }
+];
+
+async function getServicesList() {
+  if (isFirebaseActive && db) {
+    try {
+      const doc = await db.collection('settings').doc('services_list').get();
+      if (doc.exists && doc.data() && Array.isArray(doc.data().items) && doc.data().items.length > 0) {
+        return doc.data().items;
+      }
+    } catch (err) {
+      console.warn("Could not load services list from Firebase:", err);
+    }
+  }
+
+  const saved = localStorage.getItem('permpoon_services_list');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) {}
+  }
+
+  return DEFAULT_SERVICES_LIST;
+}
+
+async function saveServicesList(list) {
+  if (!Array.isArray(list)) list = DEFAULT_SERVICES_LIST;
+  if (isFirebaseActive && db) {
+    try {
+      await db.collection('settings').doc('services_list').set({
+        items: list,
+        updatedAt: new Date().toISOString()
+      });
+    } catch (err) {
+      console.error("Error saving services list to Firebase:", err);
+    }
+  }
+  localStorage.setItem('permpoon_services_list', JSON.stringify(list));
+  return true;
+}
+
+/**
  * 5. Portfolio Projects CRUD (เพิ่ม/ลบ/แก้ไขผลงานโครงการ)
  */
 const INITIAL_PROJECTS = [

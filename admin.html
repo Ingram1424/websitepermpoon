@@ -406,9 +406,15 @@
 
           <!-- 3. SECTION 02: SERVICES -->
           <div class="space-y-4 pt-4 border-t border-zinc-100">
-            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm border-b border-zinc-100 pb-2">
-              <span class="w-6 h-6 rounded-lg bg-zinc-900 text-white flex items-center justify-center text-xs">3</span>
-              <span>ข้อความ Section 02 (OUR SERVICES • บริการของเรา)</span>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-100 pb-3">
+              <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm">
+                <span class="w-6 h-6 rounded-lg bg-zinc-900 text-white flex items-center justify-center text-xs">3</span>
+                <span>จัดการ Section 02 (OUR SERVICES • บริการของเรา)</span>
+              </div>
+              <button type="button" onclick="addNewServiceCard()" class="px-3.5 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition w-fit cursor-pointer">
+                <i class="fa-solid fa-plus text-amber-400"></i>
+                <span>เพิ่มการ์ดบริการใหม่</span>
+              </button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -422,54 +428,18 @@
               </div>
             </div>
 
-            <!-- 6 Service Cards -->
+            <!-- Dynamic Services Cards List -->
             <div class="space-y-3 pt-2">
-              <label class="block font-semibold text-zinc-800">รายละเอียดการ์ดบริการทั้ง 6 รายการ:</label>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                
-                <!-- Svc 1 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 1 (รับเหมาก่อสร้าง)</span>
-                  <input type="text" id="set-svc1-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="รับเหมาก่อสร้างบ้านและอาคาร">
-                  <textarea id="set-svc1-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <label class="font-semibold text-zinc-800 text-xs sm:text-sm">การ์ดบริการที่แสดงผลบนหน้าแรก</label>
+                  <span id="admin-services-count" class="px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 text-[11px] font-mono font-bold">0 รายการ</span>
                 </div>
+                <span class="text-[11px] text-zinc-400 hidden sm:inline">กดเพิ่ม/ลบ หรือเลื่อนลำดับได้อิสระ</span>
+              </div>
 
-                <!-- Svc 2 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 2 (รีโนเวท)</span>
-                  <input type="text" id="set-svc2-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="รีโนเวทบ้าน คอนโด ทาวน์โฮม">
-                  <textarea id="set-svc2-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
-                </div>
-
-                <!-- Svc 3 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 3 (บิวท์อิน)</span>
-                  <input type="text" id="set-svc3-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="ตกแต่งภายใน & บิวท์อิน (Built-in)">
-                  <textarea id="set-svc3-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
-                </div>
-
-                <!-- Svc 4 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 4 (งานต่อเติม)</span>
-                  <input type="text" id="set-svc4-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="งานต่อเติมครัว หลังคา และโรงรถ">
-                  <textarea id="set-svc4-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
-                </div>
-
-                <!-- Svc 5 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 5 (งานระบบ)</span>
-                  <input type="text" id="set-svc5-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="งานระบบ ไฟฟ้า ประปา สุขาภิบาล">
-                  <textarea id="set-svc5-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
-                </div>
-
-                <!-- Svc 6 -->
-                <div class="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50 space-y-2">
-                  <span class="text-[10px] font-bold text-zinc-400">บริการ 6 (สำรวจ & BOQ)</span>
-                  <input type="text" id="set-svc6-title" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs" placeholder="สำรวจหน้างาน ออกแบบ & ทำ BOQ">
-                  <textarea id="set-svc6-desc" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none" placeholder="คำอธิบายบริการ..."></textarea>
-                </div>
-
+              <div id="admin-services-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Rendered dynamically via renderAdminServices() -->
               </div>
             </div>
           </div>
@@ -1155,22 +1125,282 @@
       // Services Section 02
       if (document.getElementById('set-services-title')) document.getElementById('set-services-title').value = s.servicesTitle || '';
       if (document.getElementById('set-services-subtitle')) document.getElementById('set-services-subtitle').value = s.servicesSubtitle || '';
-      if (document.getElementById('set-svc1-title')) document.getElementById('set-svc1-title').value = s.svc1Title || '';
-      if (document.getElementById('set-svc1-desc')) document.getElementById('set-svc1-desc').value = s.svc1Desc || '';
-      if (document.getElementById('set-svc2-title')) document.getElementById('set-svc2-title').value = s.svc2Title || '';
-      if (document.getElementById('set-svc2-desc')) document.getElementById('set-svc2-desc').value = s.svc2Desc || '';
-      if (document.getElementById('set-svc3-title')) document.getElementById('set-svc3-title').value = s.svc3Title || '';
-      if (document.getElementById('set-svc3-desc')) document.getElementById('set-svc3-desc').value = s.svc3Desc || '';
-      if (document.getElementById('set-svc4-title')) document.getElementById('set-svc4-title').value = s.svc4Title || '';
-      if (document.getElementById('set-svc4-desc')) document.getElementById('set-svc4-desc').value = s.svc4Desc || '';
-      if (document.getElementById('set-svc5-title')) document.getElementById('set-svc5-title').value = s.svc5Title || '';
-      if (document.getElementById('set-svc5-desc')) document.getElementById('set-svc5-desc').value = s.svc5Desc || '';
-      if (document.getElementById('set-svc6-title')) document.getElementById('set-svc6-title').value = s.svc6Title || '';
-      if (document.getElementById('set-svc6-desc')) document.getElementById('set-svc6-desc').value = s.svc6Desc || '';
+
+      // Load dynamic services list
+      if (typeof getServicesList === 'function') {
+        try {
+          adminServices = await getServicesList();
+        } catch (e) {
+          adminServices = (typeof DEFAULT_SERVICES_LIST !== 'undefined') ? JSON.parse(JSON.stringify(DEFAULT_SERVICES_LIST)) : [];
+        }
+      } else if (typeof DEFAULT_SERVICES_LIST !== 'undefined') {
+        adminServices = JSON.parse(JSON.stringify(DEFAULT_SERVICES_LIST));
+      }
+      renderAdminServices();
+    }
+
+    let adminServices = [];
+
+    const PRESET_ICONS = [
+      { val: 'fa-solid fa-house', label: '🏠 บ้าน / อาคาร' },
+      { val: 'fa-solid fa-hammer', label: '🔨 รีโนเวท / ปรับปรุง' },
+      { val: 'fa-solid fa-couch', label: '🛋️ บิวท์อิน / ตกแต่งภายใน' },
+      { val: 'fa-solid fa-kitchen-set', label: '🍳 ต่อเติมครัว / หลังคา' },
+      { val: 'fa-solid fa-bolt', label: '⚡ งานระบบ / ไฟฟ้า' },
+      { val: 'fa-solid fa-ruler-combined', label: '📐 สำรวจหน้างาน / BOQ' },
+      { val: 'fa-solid fa-building', label: '🏢 ตึกแถว / อาคารพาณิชย์' },
+      { val: 'fa-solid fa-paint-roller', label: '🎨 ทาสี / ตกแต่ง' },
+      { val: 'fa-solid fa-faucet-drip', label: '💧 ประปา / สุขาภิบาล' },
+      { val: 'fa-solid fa-shield-halved', label: '🛡️ โครงสร้าง / กันซึม' },
+      { val: 'fa-solid fa-warehouse', label: '🏭 โกดัง / โรงงาน' },
+      { val: 'custom', label: '⚙️ อื่นๆ (ระบุ FontAwesome Class)' }
+    ];
+
+    function renderAdminServices() {
+      const container = document.getElementById('admin-services-list');
+      const countBadge = document.getElementById('admin-services-count');
+      if (!container) return;
+
+      if (countBadge) {
+        countBadge.innerText = `${adminServices.length} รายการ`;
+      }
+
+      if (!adminServices.length) {
+        container.innerHTML = `
+          <div class="col-span-full p-8 text-center bg-zinc-50 border border-dashed border-zinc-300 rounded-2xl space-y-3">
+            <i class="fa-solid fa-box-open text-3xl text-zinc-300"></i>
+            <p class="text-xs text-zinc-500">ยังไม่มีการ์ดบริการในระบบ</p>
+            <button type="button" onclick="addNewServiceCard()" class="px-4 py-2 bg-zinc-900 text-white text-xs font-semibold rounded-xl hover:bg-zinc-800 transition cursor-pointer">
+              + เพิ่มการ์ดบริการแรก
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = adminServices.map((item, index) => {
+        const isPreset = PRESET_ICONS.some(p => p.val === item.icon);
+        const selectedPresetVal = isPreset ? item.icon : 'custom';
+        const iconDisplay = item.icon || 'fa-solid fa-hammer';
+
+        const optionsHtml = PRESET_ICONS.map(p => {
+          const selected = p.val === selectedPresetVal ? 'selected' : '';
+          return `<option value="${p.val}" ${selected}>${p.label}</option>`;
+        }).join('');
+
+        const cardNum = String(index + 1).padStart(2, '0');
+
+        return `
+          <div class="p-4 rounded-xl border border-zinc-200 bg-white hover:border-zinc-300 shadow-xs transition-all space-y-3 relative group" data-card-idx="${index}">
+            <!-- Card Header -->
+            <div class="flex items-center justify-between pb-2.5 border-b border-zinc-100">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-md bg-zinc-900 text-amber-400 font-mono text-xs font-bold flex items-center justify-center">
+                  ${cardNum}
+                </span>
+                <span class="text-xs font-bold text-zinc-800 truncate max-w-[200px]" id="preview-title-${index}">
+                  ${escapeHtml(item.title || 'บริการใหม่')}
+                </span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                ${index > 0 ? `
+                  <button type="button" onclick="moveServiceCard(${index}, -1)" title="เลื่อนขึ้น" class="w-7 h-7 rounded-lg bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-zinc-600 flex items-center justify-center text-xs transition cursor-pointer">
+                    <i class="fa-solid fa-arrow-up"></i>
+                  </button>
+                ` : ''}
+                ${index < adminServices.length - 1 ? `
+                  <button type="button" onclick="moveServiceCard(${index}, 1)" title="เลื่อนลง" class="w-7 h-7 rounded-lg bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 text-zinc-600 flex items-center justify-center text-xs transition cursor-pointer">
+                    <i class="fa-solid fa-arrow-down"></i>
+                  </button>
+                ` : ''}
+                <button type="button" onclick="deleteServiceCard(${index})" title="ลบการ์ดนี้" class="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-500 hover:text-white border border-red-200 text-red-600 flex items-center justify-center text-xs transition cursor-pointer">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Row 1: Icon & Title -->
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+              <div class="sm:col-span-5">
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">ไอคอน (Icon)</label>
+                <div class="flex items-center gap-2">
+                  <div class="w-8 h-8 rounded-lg bg-zinc-900 text-amber-400 flex items-center justify-center text-sm shrink-0" id="icon-preview-${index}">
+                    <i class="${iconDisplay}"></i>
+                  </div>
+                  <select onchange="handleServiceIconSelect(${index}, this.value)" class="w-full px-2 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs outline-none focus:ring-1 focus:ring-zinc-900 cursor-pointer">
+                    ${optionsHtml}
+                  </select>
+                </div>
+                <input type="text" id="svc-custom-icon-${index}" value="${escapeHtml(item.icon || '')}" oninput="handleServiceCustomIconInput(${index}, this.value)" class="w-full mt-1.5 px-2 py-1 rounded-md border border-zinc-200 bg-white text-[11px] font-mono text-zinc-600 ${isPreset ? 'hidden' : ''}" placeholder="fa-solid fa-wrench">
+              </div>
+
+              <div class="sm:col-span-7">
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">ชื่อบริการ</label>
+                <input type="text" id="svc-title-${index}" value="${escapeHtml(item.title || '')}" oninput="handleServiceTitleInput(${index}, this.value)" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white font-semibold text-xs outline-none focus:ring-1 focus:ring-zinc-900" placeholder="ระบุชื่อบริการ...">
+              </div>
+            </div>
+
+            <!-- Row 2: Description -->
+            <div>
+              <label class="block text-[10px] font-semibold text-zinc-500 mb-1">คำอธิบายบริการ</label>
+              <textarea id="svc-desc-${index}" rows="2" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs resize-none outline-none focus:ring-1 focus:ring-zinc-900" placeholder="คำอธิบายรายละเอียดบริการ...">${escapeHtml(item.desc || '')}</textarea>
+            </div>
+
+            <!-- Row 3: 2 Bullet points -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">จุดเด่นข้อที่ 1 (เครื่องหมายถูก)</label>
+                <input type="text" id="svc-point1-${index}" value="${escapeHtml(item.point1 || '')}" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs outline-none focus:ring-1 focus:ring-zinc-900" placeholder="เช่น งานโครงสร้าง คสล.">
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">จุดเด่นข้อที่ 2 (เครื่องหมายถูก)</label>
+                <input type="text" id="svc-point2-${index}" value="${escapeHtml(item.point2 || '')}" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs outline-none focus:ring-1 focus:ring-zinc-900" placeholder="เช่น สถาปัตย์ 2D / 3D">
+              </div>
+            </div>
+
+            <!-- Row 4: Action button settings -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-zinc-100">
+              <div>
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">ข้อความปุ่มกดท้ายการ์ด</label>
+                <input type="text" id="svc-action-text-${index}" value="${escapeHtml(item.actionText || 'ดูขอบเขตงานและมาตรฐาน')}" class="w-full px-2.5 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs outline-none focus:ring-1 focus:ring-zinc-900" placeholder="ดูขอบเขตงานและมาตรฐาน">
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold text-zinc-500 mb-1">การทำงานเมื่อกดปุ่ม</label>
+                <select id="svc-action-target-${index}" class="w-full px-2 py-1.5 rounded-lg border border-zinc-200 bg-white text-xs outline-none focus:ring-1 focus:ring-zinc-900 cursor-pointer">
+                  <option value="modal:construction" ${item.modalKey === 'construction' ? 'selected' : ''}>เปิดป๊อปอัป: รับเหมาก่อสร้าง</option>
+                  <option value="modal:renovation" ${item.modalKey === 'renovation' ? 'selected' : ''}>เปิดป๊อปอัป: รีโนเวท</option>
+                  <option value="modal:interior" ${item.modalKey === 'interior' ? 'selected' : ''}>เปิดป๊อปอัป: ตกแต่งภายใน</option>
+                  <option value="modal:extension" ${item.modalKey === 'extension' ? 'selected' : ''}>เปิดป๊อปอัป: ต่อเติมครัว/โรงรถ</option>
+                  <option value="modal:mep" ${item.modalKey === 'mep' ? 'selected' : ''}>เปิดป๊อปอัป: งานระบบไฟฟ้า/ประปา</option>
+                  <option value="modal:custom" ${(item.modalKey && !['construction','renovation','interior','extension','mep'].includes(item.modalKey)) ? 'selected' : ''}>เปิดป๊อปอัป: แสดงรายละเอียดการ์ดนี้</option>
+                  <option value="link:#contact" ${(!item.modalKey && (item.actionLink === '#contact' || !item.actionLink)) ? 'selected' : ''}>เลื่อนไปที่: ฟอร์มติดต่อสำรวจหน้างาน (#contact)</option>
+                  <option value="link:#estimate" ${(item.actionLink === '#estimate') ? 'selected' : ''}>เลื่อนไปที่: คำนวณราคาประเมิน (#estimate)</option>
+                  <option value="link:#portfolio" ${(item.actionLink === '#portfolio') ? 'selected' : ''}>เลื่อนไปที่: ผลงานโครงการ (#portfolio)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function syncAdminServicesFromDOM() {
+      const container = document.getElementById('admin-services-list');
+      if (!container) return;
+
+      const cardElements = container.querySelectorAll('[data-card-idx]');
+      cardElements.forEach(cardEl => {
+        const idx = parseInt(cardEl.getAttribute('data-card-idx'), 10);
+        if (adminServices[idx]) {
+          const titleInput = document.getElementById(`svc-title-${idx}`);
+          const descInput = document.getElementById(`svc-desc-${idx}`);
+          const point1Input = document.getElementById(`svc-point1-${idx}`);
+          const point2Input = document.getElementById(`svc-point2-${idx}`);
+          const actionTextInput = document.getElementById(`svc-action-text-${idx}`);
+          const actionTargetSelect = document.getElementById(`svc-action-target-${idx}`);
+          const customIconInput = document.getElementById(`svc-custom-icon-${idx}`);
+
+          if (titleInput) adminServices[idx].title = titleInput.value.trim();
+          if (descInput) adminServices[idx].desc = descInput.value.trim();
+          if (point1Input) adminServices[idx].point1 = point1Input.value.trim();
+          if (point2Input) adminServices[idx].point2 = point2Input.value.trim();
+          if (actionTextInput) adminServices[idx].actionText = actionTextInput.value.trim();
+
+          if (customIconInput && !customIconInput.classList.contains('hidden')) {
+            adminServices[idx].icon = customIconInput.value.trim() || 'fa-solid fa-wrench';
+          }
+
+          if (actionTargetSelect) {
+            const val = actionTargetSelect.value;
+            if (val.startsWith('modal:')) {
+              const mKey = val.replace('modal:', '');
+              adminServices[idx].modalKey = mKey === 'custom' ? (adminServices[idx].id || 'custom') : mKey;
+              adminServices[idx].actionLink = '';
+            } else if (val.startsWith('link:')) {
+              adminServices[idx].modalKey = '';
+              adminServices[idx].actionLink = val.replace('link:', '');
+            }
+          }
+        }
+      });
+    }
+
+    function handleServiceTitleInput(idx, val) {
+      const preview = document.getElementById(`preview-title-${idx}`);
+      if (preview) preview.innerText = val || 'บริการใหม่';
+      if (adminServices[idx]) adminServices[idx].title = val;
+    }
+
+    function handleServiceIconSelect(idx, val) {
+      const customInput = document.getElementById(`svc-custom-icon-${idx}`);
+      const preview = document.getElementById(`icon-preview-${idx}`);
+      if (val === 'custom') {
+        if (customInput) {
+          customInput.classList.remove('hidden');
+          customInput.focus();
+        }
+      } else {
+        if (customInput) customInput.classList.add('hidden');
+        if (preview) preview.innerHTML = `<i class="${val}"></i>`;
+        if (adminServices[idx]) adminServices[idx].icon = val;
+      }
+    }
+
+    function handleServiceCustomIconInput(idx, val) {
+      const preview = document.getElementById(`icon-preview-${idx}`);
+      const cleanVal = val.trim() || 'fa-solid fa-wrench';
+      if (preview) preview.innerHTML = `<i class="${cleanVal}"></i>`;
+      if (adminServices[idx]) adminServices[idx].icon = cleanVal;
+    }
+
+    function addNewServiceCard() {
+      syncAdminServicesFromDOM();
+      const newId = 'svc_' + Date.now();
+      adminServices.push({
+        id: newId,
+        title: 'บริการใหม่ ' + (adminServices.length + 1),
+        desc: 'รายละเอียดขอบเขตงานและมาตรฐานการดำเนินงาน...',
+        icon: 'fa-solid fa-hammer',
+        point1: 'มาตรฐานวิศวกรรมตรงตามหลัก มอก.',
+        point2: 'รับประกันคุณภาพงานและมี BOQ ชัดเจน',
+        modalKey: 'custom',
+        actionText: 'ดูขอบเขตงานและมาตรฐาน',
+        actionLink: ''
+      });
+      renderAdminServices();
+      setTimeout(() => {
+        const cards = document.querySelectorAll('[data-card-idx]');
+        if (cards.length) {
+          cards[cards.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const firstInput = cards[cards.length - 1].querySelector('input[id^="svc-title"]');
+          if (firstInput) firstInput.focus();
+        }
+      }, 100);
+    }
+
+    function deleteServiceCard(index) {
+      syncAdminServicesFromDOM();
+      const cardTitle = adminServices[index]?.title || 'การ์ดนี้';
+      if (confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบการ์ดบริการ "${cardTitle}"?`)) {
+        adminServices.splice(index, 1);
+        renderAdminServices();
+      }
+    }
+
+    function moveServiceCard(index, direction) {
+      syncAdminServicesFromDOM();
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= adminServices.length) return;
+      const temp = adminServices[index];
+      adminServices[index] = adminServices[newIndex];
+      adminServices[newIndex] = temp;
+      renderAdminServices();
     }
 
     async function handleHomepageSubmit(e) {
       e.preventDefault();
+      syncAdminServicesFromDOM();
+
       const homepageData = {
         heroBadge: document.getElementById('set-hero-badge').value.trim(),
         heroTitle1: document.getElementById('set-hero-title1').value.trim(),
@@ -1193,23 +1423,36 @@
 
         servicesTitle: document.getElementById('set-services-title').value.trim(),
         servicesSubtitle: document.getElementById('set-services-subtitle').value.trim(),
-
-        svc1Title: document.getElementById('set-svc1-title').value.trim(),
-        svc1Desc: document.getElementById('set-svc1-desc').value.trim(),
-        svc2Title: document.getElementById('set-svc2-title').value.trim(),
-        svc2Desc: document.getElementById('set-svc2-desc').value.trim(),
-        svc3Title: document.getElementById('set-svc3-title').value.trim(),
-        svc3Desc: document.getElementById('set-svc3-desc').value.trim(),
-        svc4Title: document.getElementById('set-svc4-title').value.trim(),
-        svc4Desc: document.getElementById('set-svc4-desc').value.trim(),
-        svc5Title: document.getElementById('set-svc5-title').value.trim(),
-        svc5Desc: document.getElementById('set-svc5-desc').value.trim(),
-        svc6Title: document.getElementById('set-svc6-title').value.trim(),
-        svc6Desc: document.getElementById('set-svc6-desc').value.trim(),
       };
 
-      await saveSiteSettings(homepageData);
-      alert('บันทึกเนื้อหาหน้าแรกเรียบร้อยแล้ว! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+      // Backwards compatibility for first 6 services
+      adminServices.slice(0, 6).forEach((svc, i) => {
+        homepageData[`svc${i + 1}Title`] = svc.title || '';
+        homepageData[`svc${i + 1}Desc`] = svc.desc || '';
+      });
+
+      const saveBtn = e.target.querySelector('button[type="submit"]');
+      const originalHtml = saveBtn ? saveBtn.innerHTML : '';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1"></i> กำลังบันทึก...';
+      }
+
+      try {
+        await Promise.all([
+          saveSiteSettings(homepageData),
+          saveServicesList(adminServices)
+        ]);
+        alert('บันทึกเนื้อหาหน้าแรกและการ์ดบริการเรียบร้อยแล้ว! ข้อมูลจะอัปเดตไปแสดงผลบนหน้าแรกทันที');
+      } catch (err) {
+        console.error("Save failed:", err);
+        alert('เกิดข้อผิดพลาดในการบันทึก: ' + err.message);
+      } finally {
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = originalHtml;
+        }
+      }
     }
 
     async function handleSiteSettingsSubmit(e) {
