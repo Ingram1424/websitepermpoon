@@ -27,7 +27,7 @@ async function fetchWithTimeout(resource, options = {}) {
 
 // 1. Initial / Default Site Settings
 const DEFAULT_SITE_SETTINGS = {
-  companyName: "บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด",
+  companyName: "บริษัท เพิ่มพูน คอนทรัคชั่น จำกัด",
   tagline: "รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล",
   phone: "089-123-4567",
   phone2: "02-987-6543",
