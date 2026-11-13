@@ -16,5 +16,8 @@
     "thailand"
   ],
   "author": "Permpoon Construction & Design Co., Ltd.",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^8.23.1"
+  }
 }

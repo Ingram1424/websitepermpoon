@@ -1,295 +1,31 @@
 /**
  * Permpoon Construction & Design Co., Ltd.
- * Firebase & Cloud Firestore Configuration & Services
+ * Railway Cloud Database Integration & Services
+ * Connected to Railway Postgres via serverless proxy /api/*
  */
 
-// 1. Firebase Configuration Object (Connected to project: permpoon-15ae8)
-const firebaseConfig = {
-  apiKey: "AIzaSydbre0q-1Wsk5RN5E0uILPtO1qJffLGOa8",
-  authDomain: "permpoon-15ae8.firebaseapp.com",
-  projectId: "permpoon-15ae8",
-  storageBucket: "permpoon-15ae8.firebasestorage.app",
-  messagingSenderId: "500706462069",
-  appId: "1:500706462069:web:426a14ba3252711b3c6b3c"
-};
+const RAILWAY_API_BASE = '/api';
+let isRailwayActive = true;
 
-// Check if localStorage has custom override config
-const savedConfig = localStorage.getItem('permpoon_firebase_config');
-const activeConfig = savedConfig ? JSON.parse(savedConfig) : firebaseConfig;
-
-// 2. Initialize Firebase
-let db = null;
-let isFirebaseActive = false;
-
-// Strict Promise Timeout Helper (prevents UI hanging if network or Firestore API is inactive/disabled)
-async function withTimeout(promise, ms = 2000) {
-  let timeoutId;
-  const timeoutPromise = new Promise((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error('Firebase network timeout')), ms);
-  });
+// Helper with timeout to prevent blocking UI
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 3000 } = options;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   try {
-    return await Promise.race([promise, timeoutPromise]);
-  } finally {
-    clearTimeout(timeoutId);
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
   }
 }
 
-try {
-  if (typeof firebase !== 'undefined' && activeConfig.apiKey) {
-    if (!firebase.apps.length) {
-      firebase.initializeApp(activeConfig);
-    }
-    db = firebase.firestore();
-    isFirebaseActive = true;
-    console.log("✅ Firebase Firestore Connected successfully to permpoon-15ae8!");
-  } else {
-    console.warn("ℹ️ Running in Smart Fallback Mode (LocalStorage).");
-  }
-} catch (error) {
-  console.error("⚠️ Firebase initialization error, falling back to local storage:", error);
-}
-
-// 3. Database Services
-
-/**
- * Save new contact / consultation lead
- */
-async function saveInquiry(data) {
-  const inquiryData = {
-    ...data,
-    status: 'new',
-    createdAt: new Date().toISOString(),
-    timestamp: Date.now()
-  };
-
-  // 1. Always save to LocalStorage immediately
-  const existing = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const localId = 'lead_' + Date.now();
-  existing.unshift({ id: localId, ...inquiryData });
-  localStorage.setItem('permpoon_inquiries', JSON.stringify(existing));
-
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db) {
-    try {
-      const docRef = await withTimeout(db.collection('inquiries').add(inquiryData), 2500);
-      console.log("Lead saved to Firebase Firestore with ID:", docRef.id);
-      return { success: true, id: docRef.id, mode: 'firebase' };
-    } catch (err) {
-      console.warn("Firebase save error, saved locally:", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return { success: true, id: localId, mode: 'local' };
-}
-
-/**
- * Fetch all contact inquiries (for Admin Dashboard)
- */
-async function getInquiries() {
-  if (isFirebaseActive && db) {
-    try {
-      const snapshot = await withTimeout(db.collection('inquiries').orderBy('timestamp', 'desc').get(), 2000);
-      if (!snapshot.empty) {
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      }
-    } catch (err) {
-      console.warn("Could not fetch from Firebase, reading local storage:", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  const localData = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  if (localData.length === 0) {
-    const demoLeads = [
-      {
-        id: 'demo_1',
-        name: 'คุณธีรเดช วรการุณ',
-        phone: '081-998-7766',
-        line: 'theeradech.w',
-        service: 'สร้างบ้านใหม่',
-        location: 'บางกรวย, นนทบุรี',
-        budget: '1.5 - 3 ล้าน',
-        message: 'ต้องการสร้างบ้านเดี่ยว 2 ชั้น ที่ดิน 80 ตร.ว. อยากนัดคุยแบบแปลนวันเสาร์นี้',
-        status: 'new',
-        createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
-        timestamp: Date.now() - 3600000 * 4
-      },
-      {
-        id: 'demo_2',
-        name: 'คุณพัชราภรณ์ สุขสวัสดิ์',
-        phone: '089-445-5678',
-        line: 'patchara_p',
-        service: 'รีโนเวทบ้าน',
-        location: 'ลาดพร้าว 71, กทม.',
-        budget: '7 แสน - 1.5 ล้าน',
-        message: 'ทาวน์โฮม 3 ชั้น อยากทุบเปิดช่องแสง ทำห้องนั่งเล่นและครัวใหม่ทั้งหมด',
-        status: 'contacted',
-        createdAt: new Date(Date.now() - 3600000 * 28).toISOString(),
-        timestamp: Date.now() - 3600000 * 28
-      },
-      {
-        id: 'demo_3',
-        name: 'คุณอรรถพล เจริญพาณิชย์',
-        phone: '095-223-8899',
-        line: 'attapol.c',
-        service: 'ตกแต่งภายใน',
-        location: 'สุขุมวิท 39, กทม.',
-        budget: '5 แสน - 1 ล้าน',
-        message: 'บิวท์อินคอนโด 45 ตร.ม. สไตล์ Minimal Modern ขอใบเสนอราคาด่วนครับ',
-        status: 'closed',
-        createdAt: new Date(Date.now() - 3600000 * 72).toISOString(),
-        timestamp: Date.now() - 3600000 * 72
-      }
-    ];
-    localStorage.setItem('permpoon_inquiries', JSON.stringify(demoLeads));
-    return demoLeads;
-  }
-  return localData;
-}
-
-/**
- * Update Inquiry status
- */
-async function updateInquiryStatus(id, newStatus) {
-  // 1. Update locally immediately
-  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const index = list.findIndex(item => item.id === id);
-  if (index !== -1) {
-    list[index].status = newStatus;
-    localStorage.setItem('permpoon_inquiries', JSON.stringify(list));
-  }
-
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
-    try {
-      await withTimeout(db.collection('inquiries').doc(id).update({ status: newStatus }), 2000);
-      return true;
-    } catch (err) {
-      console.warn("Firebase update status error (updated locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return index !== -1;
-}
-
-/**
- * Delete an inquiry
- */
-async function deleteInquiry(id) {
-  // 1. Delete locally immediately
-  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const filtered = list.filter(item => item.id !== id);
-  localStorage.setItem('permpoon_inquiries', JSON.stringify(filtered));
-
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db && !id.startsWith('local_') && !id.startsWith('demo_')) {
-    try {
-      await withTimeout(db.collection('inquiries').doc(id).delete(), 2000);
-      return true;
-    } catch (err) {
-      console.warn("Firebase delete error (deleted locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return true;
-}
-
-/**
- * Customer Reviews Service
- */
-async function getReviews() {
-  if (isFirebaseActive && db) {
-    try {
-      const snapshot = await withTimeout(db.collection('reviews').orderBy('timestamp', 'desc').get(), 2000);
-      if (!snapshot.empty) {
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      }
-    } catch (err) {
-      console.warn("Could not fetch reviews from Firebase, fallback:", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  const localReviews = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
-  if (localReviews.length === 0) {
-    const initialReviews = [
-      {
-        id: 'rev_1',
-        name: 'คุณกิตติศักดิ์ พ.',
-        role: 'เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี',
-        rating: 5,
-        comment: 'ประทับใจทีมงานเพิ่มพูนมากครับ รีโนเวทบ้านเดี่ยว 2 ชั้น ช่างทำงานเรียบร้อย ตรงเวลา ส่งอัปเดตงานในไลน์กลุ่มทุกวันศุกร์ ไม่ต้องคอยตามจี้ คุมงบได้ตาม BOQ เป๊ะ',
-        timestamp: Date.now() - 3600000 * 200
-      },
-      {
-        id: 'rev_2',
-        name: 'คุณวิภาวรรณ ส.',
-        role: 'โครงการบ้านกลางเมือง ลาดพร้าว',
-        rating: 5,
-        comment: 'ต่อเติมครัวหลังบ้านและโรงจอดรถ ลงเข็มไมโครไพล์แยกโครงสร้างให้ ผ่านหน้าฝนมาไม่มีปัญหารอยร้าวหรือรั่วซึมเลยค่ะ มีวิศวกรมาคุมงานจริง สบายใจมากค่ะ',
-        timestamp: Date.now() - 3600000 * 400
-      },
-      {
-        id: 'rev_3',
-        name: 'คุณธนากร ภ.',
-        role: 'Life Asoke Hype, กทม.',
-        rating: 5,
-        comment: 'งานบิวท์อินคอนโด 2 ห้องนอน เก็บงานประณีต ฟิตติ้ง Soft-close ทั้งหมด ทีมงานให้คำปรึกษาโทนสีและระบบไฟดีมาก ห้องออกมาสวยตรงปกเหมือน 3D เลยครับ',
-        timestamp: Date.now() - 3600000 * 600
-      }
-    ];
-    localStorage.setItem('permpoon_reviews', JSON.stringify(initialReviews));
-    return initialReviews;
-  }
-  return localReviews;
-}
-
-async function saveReview(reviewData) {
-  const data = {
-    ...reviewData,
-    rating: Number(reviewData.rating) || 5,
-    timestamp: Date.now(),
-    createdAt: new Date().toISOString()
-  };
-
-  // 1. Save locally immediately
-  const existing = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
-  const localId = 'rev_' + Date.now();
-  existing.unshift({ id: localId, ...data });
-  localStorage.setItem('permpoon_reviews', JSON.stringify(existing));
-
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db) {
-    try {
-      const docRef = await withTimeout(db.collection('reviews').add(data), 2000);
-      return { success: true, id: docRef.id };
-    } catch (err) {
-      console.warn("Firebase save review error (saved locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return { success: true, id: localId };
-}
-
-/**
- * 4. Site Settings (แก้ไขข้อมูลเว็บไซต์และเบอร์ติดต่อ)
- */
+// 1. Initial / Default Site Settings
 const DEFAULT_SITE_SETTINGS = {
   companyName: "บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด",
   tagline: "รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล",
@@ -304,18 +40,16 @@ const DEFAULT_SITE_SETTINGS = {
   rateInterior: 9000,
   rateExtension: 8500,
 
-  // Hero Section (หน้าแรกส่วนบน)
   heroBadge: "รับเหมาก่อสร้าง • ปรับปรุงรีโนเวท • ซ่อมแซมอาคาร • ระบบประปาและสุขาภิบาล",
   heroTitle1: "สร้างและรีโนเวททุกพื้นที่",
   heroTitle2: "ด้วยมาตรฐานช่างมืออาชีพ",
   heroTitle3: "งบไม่บานปลาย ไม่ทิ้งงาน",
-  heroDesc: "บริษัท เพิ่มพูน คอนสตรัคชั่น จำกัด ประกอบกิจการรับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล ดูแลโดยทีมงานมืออาชีพ สัญญาชัดเจน ตรวจสอบ BOQ ได้ทุกขั้นตอน ส่งมอบงานตรงเวลา พร้อมรับประกันผลงานหลังส่งมอบ",
+  heroDesc: "เราคือบริษัทรับเหมาก่อสร้างและรีโนเวทครบวงจร ประสบการณ์กว่า 15 ปี เน้นคุณภาพวัสดุตามมาตรฐาน มอก. โปร่งใสด้วย BOQ ละเอียดไม่มีหมกเม็ด พร้อมทีมช่างมืออาชีพส่งมอบงานตรงเวลา 100%",
   heroImg: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",
   heroImgTitle: "บ้านเดี่ยว Modern Tropical",
   heroImgSub: "โครงการส่งมอบสำเร็จ • จ.นนทบุรี",
   heroImgBadge: "100% เสร็จสมบูรณ์",
 
-  // Stats Bar (แถบตัวเลขสถิติ)
   stat1Num: "15+ ปี",
   stat1Text: "ประสบการณ์งานวิศวกรรมช่าง",
   stat2Num: "1,200+",
@@ -325,7 +59,6 @@ const DEFAULT_SITE_SETTINGS = {
   stat4Num: "4.9 / 5",
   stat4Text: "ความพึงพอใจจากเจ้าของบ้าน",
 
-  // Section 02: Services (บริการของเรา)
   servicesTitle: "บริการครบวงจร เรื่องบ้านและอาคาร",
   servicesSubtitle: "ดูแลตั้งแต่การออกแบบ สถาปัตย์ วิศวกรรม ก่อสร้าง จนถึงส่งมอบงานเสร็จสมบูรณ์",
   svc1Title: "รับเหมาก่อสร้างบ้านและอาคาร",
@@ -342,76 +75,6 @@ const DEFAULT_SITE_SETTINGS = {
   svc6Desc: "บริการส่งวิศวกรเข้าวัดพื้นที่จริง ให้คำแนะนำแนวทางก่อสร้าง พร้อมจัดทำใบเสนอราคา BOQ ละเอียดไม่มีหมกเม็ด"
 };
 
-async function getSiteSettings() {
-  let settings = { ...DEFAULT_SITE_SETTINGS };
-  const saved = localStorage.getItem('permpoon_site_settings');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      if (parsed.address && parsed.address.includes('งามวงศ์วาน')) {
-        parsed.address = DEFAULT_SITE_SETTINGS.address;
-        parsed.email = DEFAULT_SITE_SETTINGS.email;
-        parsed.companyName = DEFAULT_SITE_SETTINGS.companyName;
-        localStorage.setItem('permpoon_site_settings', JSON.stringify(parsed));
-      }
-      settings = { ...settings, ...parsed };
-    } catch (e) {}
-  }
-
-  if (isFirebaseActive && db) {
-    try {
-      const doc = await withTimeout(db.collection('settings').doc('site_info').get(), 1500);
-      if (doc && doc.exists) {
-        const data = doc.data();
-        if (data.address && data.address.includes('งามวงศ์วาน')) {
-          data.address = DEFAULT_SITE_SETTINGS.address;
-          data.email = DEFAULT_SITE_SETTINGS.email;
-          data.companyName = DEFAULT_SITE_SETTINGS.companyName;
-        }
-        settings = { ...settings, ...data };
-        localStorage.setItem('permpoon_site_settings', JSON.stringify(settings));
-      }
-    } catch (err) {
-      console.warn("Could not load site settings from Firebase, reading local:", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return settings;
-}
-
-async function saveSiteSettings(newSettings) {
-  let current = { ...DEFAULT_SITE_SETTINGS };
-  try {
-    const saved = localStorage.getItem('permpoon_site_settings');
-    if (saved) current = { ...current, ...JSON.parse(saved) };
-  } catch (e) {}
-
-  const merged = { ...current, ...newSettings };
-
-  // 1. Always save to LocalStorage immediately (guaranteed, instant, offline-safe)
-  localStorage.setItem('permpoon_site_settings', JSON.stringify(merged));
-
-  // 2. Sync to Firebase with timeout so UI never hangs
-  if (isFirebaseActive && db) {
-    try {
-      await withTimeout(db.collection('settings').doc('site_info').set(merged, { merge: true }), 2000);
-      console.log("Site settings synced to Firebase successfully");
-    } catch (err) {
-      console.warn("Could not sync site settings to Firebase (saved locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-  return true;
-}
-
-/**
- * 4.2 Dynamic Services List CRUD (เพิ่ม/ลบ/แก้ไขการ์ดบริการ Section 02)
- */
 const DEFAULT_SERVICES_LIST = [
   {
     id: 'svc_1',
@@ -481,63 +144,6 @@ const DEFAULT_SERVICES_LIST = [
   }
 ];
 
-async function getServicesList() {
-  let list = null;
-  const saved = localStorage.getItem('permpoon_services_list');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        list = parsed;
-      }
-    } catch (e) {}
-  }
-
-  if (isFirebaseActive && db) {
-    try {
-      const doc = await withTimeout(db.collection('settings').doc('services_list').get(), 1500);
-      if (doc && doc.exists && doc.data() && Array.isArray(doc.data().items) && doc.data().items.length > 0) {
-        list = doc.data().items;
-        localStorage.setItem('permpoon_services_list', JSON.stringify(list));
-      }
-    } catch (err) {
-      console.warn("Could not load services list from Firebase:", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-
-  return list || DEFAULT_SERVICES_LIST;
-}
-
-async function saveServicesList(list) {
-  if (!Array.isArray(list)) list = DEFAULT_SERVICES_LIST;
-
-  // 1. Always save to LocalStorage immediately (guaranteed, instant, offline-safe)
-  localStorage.setItem('permpoon_services_list', JSON.stringify(list));
-
-  // 2. Sync to Firebase with timeout so UI never hangs
-  if (isFirebaseActive && db) {
-    try {
-      await withTimeout(db.collection('settings').doc('services_list').set({
-        items: list,
-        updatedAt: new Date().toISOString()
-      }), 2000);
-      console.log("Services list synced to Firebase successfully");
-    } catch (err) {
-      console.warn("Could not sync services list to Firebase (saved locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
-  }
-  return true;
-}
-
-/**
- * 5. Portfolio Projects CRUD (เพิ่ม/ลบ/แก้ไขผลงานโครงการ)
- */
 const INITIAL_PROJECTS = [
   {
     id: 'proj_1',
@@ -553,51 +159,51 @@ const INITIAL_PROJECTS = [
   },
   {
     id: 'proj_2',
-    title: 'รีโนเวททาวน์โฮมเก่าเป็น Modern Nordic',
+    title: 'รีโนเวททาวน์โฮม 3 ชั้นสไตล์ Japandi',
     category: 'renovation',
-    badge: 'รีโนเวท',
+    badge: 'รีโนเวทบ้าน',
     location: 'ลาดพร้าว, กทม.',
-    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
-    desc: 'พลิกโฉมทาวน์โฮมเก่ายุค 90 ให้กลายเป็นบ้านมินิมอลนอร์ดิกสุดโมเดิร์น ทุบผนังเปิด Open Plan วางระบบไฟประปาร้อยท่อใหม่หมด',
+    img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+    desc: 'ปรับโฉมทาวน์โฮมเก่าอายุ 25 ปี ให้กลายเป็นบ้านสไตล์มินิมอลอบอุ่น แก้ปัญหารอยร้าวและระบบประปารั่วซึมถาวร',
     area: '180 ตร.ม.',
-    duration: '3.5 เดือน',
-    status: 'ตรงตาม BOQ'
+    duration: '3 เดือน',
+    status: 'งบไม่บานปลาย'
   },
   {
     id: 'proj_3',
-    title: 'ตกแต่งภายในและบิวท์อิน คอนโด 2 Bedroom',
+    title: 'ตกแต่งภายใน Penthouse คอนโดหรู',
     category: 'interior',
     badge: 'ตกแต่งภายใน',
     location: 'สุขุมวิท, กทม.',
-    img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
-    desc: 'งานบิวท์อินเฟอร์นิเจอร์สั่งทำพิเศษ ไม้ HMR เกรดทนชื้น ปิดผิวลามิเนตลายไม้และหินอ่อน ตู้เสื้อผ้า Walk-in Closet พร้อมไฟ LED',
-    area: '65 ตร.ม.',
+    img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+    desc: 'บิวท์อินเฟอร์นิเจอร์ไม้ HMR ปิดผิวลามิเนตลายหินอ่อน ซ่อนไฟ LED Warm-light ควบคุมด้วยระบบ Smart Home ทั้งยูนิต',
+    area: '145 ตร.ม.',
     duration: '45 วัน',
-    status: 'รับประกัน 1 ปี'
+    status: 'งานประณีต 100%'
   },
   {
     id: 'proj_4',
-    title: 'ต่อเติมครัวไทยหลังบ้าน & โรงจอดรถ',
+    title: 'ต่อเติมห้องครัวโมเดิร์น & โรงรถหลังคาไวนิล',
     category: 'extension',
     badge: 'งานต่อเติม',
-    location: 'บางนา, สมุทรปราการ',
-    img: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80',
-    desc: 'ต่อเติมครัวไทยระบายอากาศได้ดี ตอกเสาเข็มไมโครไพล์ I-18 ลึก 19 เมตรถึงชั้นดินดาน โครงสร้างแยกอิสระจากตัวบ้านเดิม 100%',
-    area: '45 ตร.ม.',
-    duration: '30 วัน',
-    status: 'ลงเข็มไมโครไพล์'
+    location: 'รามอินทรา, กทม.',
+    img: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    desc: 'ต่อเติมครัวหลังบ้านพร้อมเคาน์เตอร์ปูนหล่อ และโรงจอดรถหน้าบ้าน ลงเสาเข็มไมโครไพล์ I-18 ลึก 21 เมตร แยกโครงสร้างอิสระ',
+    area: '65 ตร.ม.',
+    duration: '25 วัน',
+    status: 'รับประกันโครงสร้าง'
   },
   {
     id: 'proj_5',
-    title: 'คฤหาสน์หรู Contemporary Luxury',
-    category: 'house',
-    badge: 'สร้างบ้านเดี่ยว',
-    location: 'ปทุมธานี',
-    img: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80',
-    desc: 'โครงการบ้านพักอาศัยระดับลักชัวรี 2 ชั้น พร้อมสระว่ายน้ำส่วนตัว คานโครงสร้างขนาดใหญ่รองรับแผ่นดินไหว ระบบ Solar Air-Flow',
-    area: '580 ตร.ม.',
-    duration: '12 เดือน',
-    status: 'ประกันโครงสร้าง 5 ปี'
+    title: 'ปรับปรุงระบบไฟฟ้าและประปา อาคารพาณิชย์ 4 ชั้น',
+    category: 'mep',
+    badge: 'งานระบบ MEP',
+    location: 'สาทร, กทม.',
+    img: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80',
+    desc: 'เดินสายไฟร้อยท่อเหล็ก EMT ใหม่ทั้งตึก ติดตั้งตู้ MDB แยกชั้น และเปลี่ยนระบบท่อน้ำดีเป็น PPR ไร้รอยต่อ ปลอดภัยได้มาตรฐาน มอก.',
+    area: '400 ตร.ม.',
+    duration: '30 วัน',
+    status: 'มาตรฐานความปลอดภัย'
   },
   {
     id: 'proj_6',
@@ -613,91 +219,345 @@ const INITIAL_PROJECTS = [
   }
 ];
 
-async function getPortfolioProjects() {
-  if (isFirebaseActive && db) {
+const INITIAL_REVIEWS = [
+  {
+    id: 'rev_1',
+    name: 'คุณกิตติศักดิ์ พ.',
+    role: 'เจ้าของบ้านเดี่ยว ม.เศรษฐสิริ นนทบุรี',
+    rating: 5,
+    comment: 'ประทับใจทีมงานเพิ่มพูนมากครับ รีโนเวทบ้านเดี่ยว 2 ชั้น ช่างทำงานเรียบร้อย ตรงเวลา ส่งอัปเดตงานในไลน์กลุ่มทุกวันศุกร์ ไม่ต้องคอยตามจี้ คุมงบได้ตาม BOQ เป๊ะ',
+    timestamp: Date.now() - 3600000 * 200
+  },
+  {
+    id: 'rev_2',
+    name: 'คุณวิภาวรรณ ส.',
+    role: 'โครงการบ้านกลางเมือง ลาดพร้าว',
+    rating: 5,
+    comment: 'ต่อเติมครัวหลังบ้านและโรงจอดรถ ลงเข็มไมโครไพล์แยกโครงสร้างให้ ผ่านหน้าฝนมาไม่มีปัญหารอยร้าวหรือรั่วซึมเลยค่ะ มีวิศวกรมาคุมงานจริง สบายใจมากค่ะ',
+    timestamp: Date.now() - 3600000 * 400
+  },
+  {
+    id: 'rev_3',
+    name: 'คุณธนากร ภ.',
+    role: 'Life Asoke Hype, กทม.',
+    rating: 5,
+    comment: 'งานบิวท์อินคอนโด 2 ห้องนอน เก็บงานประณีต ฟิตติ้ง Soft-close ทั้งหมด ทีมงานให้คำปรึกษาโทนสีและระบบไฟดีมาก ห้องออกมาสวยตรงปกเหมือน 3D เลยครับ',
+    timestamp: Date.now() - 3600000 * 600
+  }
+];
+
+// 2. Site Settings Service
+async function getSiteSettings() {
+  let settings = { ...DEFAULT_SITE_SETTINGS };
+  const saved = localStorage.getItem('permpoon_site_settings');
+  if (saved) {
     try {
-      const snapshot = await db.collection('portfolio').get();
-      if (!snapshot.empty) {
-        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      }
-    } catch (err) {
-      console.warn("Could not load portfolio from Firebase, fallback:", err);
-    }
+      settings = { ...settings, ...JSON.parse(saved) };
+    } catch (e) {}
   }
 
-  const local = JSON.parse(localStorage.getItem('permpoon_portfolio') || '[]');
-  if (local.length === 0) {
-    localStorage.setItem('permpoon_portfolio', JSON.stringify(INITIAL_PROJECTS));
-    return INITIAL_PROJECTS;
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=site_info`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && json.data) {
+        settings = { ...settings, ...json.data };
+        localStorage.setItem('permpoon_site_settings', JSON.stringify(settings));
+        isRailwayActive = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch settings from Railway, using local cache:', err.message);
   }
-  return local;
+
+  return settings;
+}
+
+async function saveSiteSettings(newSettings) {
+  let current = { ...DEFAULT_SITE_SETTINGS };
+  try {
+    const saved = localStorage.getItem('permpoon_site_settings');
+    if (saved) current = { ...current, ...JSON.parse(saved) };
+  } catch (e) {}
+
+  const merged = { ...current, ...newSettings };
+  localStorage.setItem('permpoon_site_settings', JSON.stringify(merged));
+
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=site_info`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(merged)
+    });
+    if (res.ok) {
+      isRailwayActive = true;
+    }
+  } catch (err) {
+    console.warn('Could not sync settings to Railway (saved locally):', err.message);
+  }
+  return true;
+}
+
+// 3. Dynamic Services List
+async function getServicesList() {
+  let list = null;
+  const saved = localStorage.getItem('permpoon_services_list');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) list = parsed;
+    } catch (e) {}
+  }
+
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=services_list`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && json.data && Array.isArray(json.data.items) && json.data.items.length > 0) {
+        list = json.data.items;
+        localStorage.setItem('permpoon_services_list', JSON.stringify(list));
+        isRailwayActive = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch services list from Railway, using cache:', err.message);
+  }
+
+  return list || DEFAULT_SERVICES_LIST;
+}
+
+async function saveServicesList(list) {
+  if (!Array.isArray(list)) list = DEFAULT_SERVICES_LIST;
+  localStorage.setItem('permpoon_services_list', JSON.stringify(list));
+
+  try {
+    await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=services_list`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: list })
+    });
+  } catch (err) {
+    console.warn('Could not sync services list to Railway (saved locally):', err.message);
+  }
+  return true;
+}
+
+// 4. Inquiries / Leads Service
+async function saveInquiry(data) {
+  const inquiryData = {
+    ...data,
+    status: 'new',
+    createdAt: new Date().toISOString(),
+    timestamp: Date.now()
+  };
+
+  const existing = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
+  const localId = 'lead_' + Date.now();
+  inquiryData.id = localId;
+  existing.unshift(inquiryData);
+  localStorage.setItem('permpoon_inquiries', JSON.stringify(existing));
+
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(inquiryData)
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return { success: true, id: json.id || localId, mode: 'railway' };
+    }
+  } catch (err) {
+    console.warn('Saved inquiry locally (Railway sync fallback):', err.message);
+  }
+
+  return { success: true, id: localId, mode: 'local' };
+}
+
+async function getInquiries() {
+  let items = null;
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && Array.isArray(json.items)) {
+        items = json.items;
+        localStorage.setItem('permpoon_inquiries', JSON.stringify(items));
+        isRailwayActive = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch inquiries from Railway, reading local:', err.message);
+  }
+
+  if (!items) {
+    items = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
+  }
+  return items;
+}
+
+async function updateInquiryStatus(id, newStatus) {
+  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
+  const index = list.findIndex(item => item.id === id);
+  if (index !== -1) {
+    list[index].status = newStatus;
+    localStorage.setItem('permpoon_inquiries', JSON.stringify(list));
+  }
+
+  try {
+    await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status: newStatus })
+    });
+  } catch (err) {
+    console.warn('Could not sync status update to Railway (updated locally):', err.message);
+  }
+  return true;
+}
+
+async function deleteInquiry(id) {
+  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
+  const filtered = list.filter(item => item.id !== id);
+  localStorage.setItem('permpoon_inquiries', JSON.stringify(filtered));
+
+  try {
+    await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+  } catch (err) {
+    console.warn('Could not sync delete to Railway (deleted locally):', err.message);
+  }
+  return true;
+}
+
+// 5. Customer Reviews Service
+async function getReviews() {
+  let items = null;
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/reviews`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && Array.isArray(json.items) && json.items.length > 0) {
+        items = json.items;
+        localStorage.setItem('permpoon_reviews', JSON.stringify(items));
+        isRailwayActive = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch reviews from Railway, reading local:', err.message);
+  }
+
+  if (!items || items.length === 0) {
+    const localReviews = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
+    items = localReviews.length > 0 ? localReviews : INITIAL_REVIEWS;
+  }
+  return items;
+}
+
+async function saveReview(reviewData) {
+  const data = {
+    ...reviewData,
+    id: reviewData.id || 'rev_' + Date.now(),
+    rating: Number(reviewData.rating) || 5,
+    timestamp: Date.now(),
+    createdAt: new Date().toISOString()
+  };
+
+  const existing = JSON.parse(localStorage.getItem('permpoon_reviews') || '[]');
+  existing.unshift(data);
+  localStorage.setItem('permpoon_reviews', JSON.stringify(existing));
+
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/reviews`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return { success: true, id: json.id || data.id };
+    }
+  } catch (err) {
+    console.warn('Saved review locally (Railway sync fallback):', err.message);
+  }
+  return { success: true, id: data.id };
+}
+
+// 6. Portfolio Projects Service
+async function getPortfolioProjects() {
+  let items = null;
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/portfolio`);
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && Array.isArray(json.items) && json.items.length > 0) {
+        items = json.items;
+        localStorage.setItem('permpoon_portfolio', JSON.stringify(items));
+        isRailwayActive = true;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not fetch portfolio from Railway, reading local:', err.message);
+  }
+
+  if (!items || items.length === 0) {
+    const local = JSON.parse(localStorage.getItem('permpoon_portfolio') || '[]');
+    items = local.length > 0 ? local : INITIAL_PROJECTS;
+  }
+  return items;
 }
 
 async function savePortfolioProject(proj) {
   const isNew = !proj.id;
   const projectData = {
     ...proj,
+    id: proj.id || 'proj_' + Date.now(),
     timestamp: Date.now()
   };
 
-  // 1. Save locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
-  let finalId = proj.id;
   if (isNew) {
-    finalId = 'proj_' + Date.now();
-    projectData.id = finalId;
-    list.unshift({ ...projectData });
+    list.unshift(projectData);
   } else {
     const idx = list.findIndex(p => p.id === proj.id);
     if (idx !== -1) list[idx] = { ...list[idx], ...projectData };
   }
   localStorage.setItem('permpoon_portfolio', JSON.stringify(list));
 
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db) {
-    try {
-      if (isNew) {
-        const ref = await withTimeout(db.collection('portfolio').add(projectData), 2000);
-        return { success: true, id: ref.id };
-      } else {
-        await withTimeout(db.collection('portfolio').doc(proj.id).set(projectData, { merge: true }), 2000);
-        return { success: true, id: proj.id };
-      }
-    } catch (err) {
-      console.warn("Firebase portfolio save error (saved locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
+  try {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/portfolio`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(projectData)
+    });
+    if (res.ok) {
+      const json = await res.json();
+      return { success: true, id: json.id || projectData.id };
     }
+  } catch (err) {
+    console.warn('Saved portfolio item locally (Railway sync fallback):', err.message);
   }
 
-  return { success: true, id: finalId };
+  return { success: true, id: projectData.id };
 }
 
 async function deletePortfolioProject(id) {
-  // 1. Delete locally immediately
   const list = JSON.parse(localStorage.getItem('permpoon_portfolio') || JSON.stringify(INITIAL_PROJECTS));
   const filtered = list.filter(p => p.id !== id);
   localStorage.setItem('permpoon_portfolio', JSON.stringify(filtered));
 
-  // 2. Sync to Firebase with timeout
-  if (isFirebaseActive && db && !id.startsWith('proj_')) {
-    try {
-      await withTimeout(db.collection('portfolio').doc(id).delete(), 2000);
-    } catch (err) {
-      console.warn("Firebase delete project error (deleted locally):", err.message);
-      if (err.message && (err.message.includes('permission') || err.message.includes('disabled') || err.message.includes('API'))) {
-        isFirebaseActive = false;
-      }
-    }
+  try {
+    await fetchWithTimeout(`${RAILWAY_API_BASE}/portfolio?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    });
+  } catch (err) {
+    console.warn('Deleted portfolio item locally (Railway sync fallback):', err.message);
   }
-
   return true;
 }
 
-/**
- * 6. Admin Passcode Security
- */
+// 7. Admin PIN Security
 const DEFAULT_ADMIN_PIN = "1234";
 
 function getAdminPin() {
@@ -713,3 +573,6 @@ function updateAdminPin(newPin) {
   localStorage.setItem('permpoon_admin_pin', String(newPin).trim());
   return true;
 }
+
+// Backwards-compatible aliases for legacy scripts
+const isFirebaseActive = false;

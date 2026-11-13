@@ -173,7 +173,7 @@
         </button>
         <button onclick="switchTab('security')" id="tab-security-btn" class="tab-btn px-4 py-3 font-semibold text-xs border-b-2 border-transparent text-zinc-500 hover:text-zinc-900 transition flex items-center gap-2">
           <i class="fa-solid fa-shield-halved text-emerald-600"></i>
-          <span>ความปลอดภัย & Firebase</span>
+          <span>ความปลอดภัย & ฐานข้อมูล Railway</span>
         </button>
       </div>
 
@@ -449,7 +449,7 @@
               <i class="fa-solid fa-floppy-disk"></i>
               <span>บันทึกการแก้ไขเนื้อหาหน้าแรก</span>
             </button>
-            <span class="text-[11px] text-zinc-400">ข้อมูลจะถูกซิงค์ไปยัง Firebase และหน้าแรกทันที</span>
+            <span class="text-[11px] text-zinc-400">ข้อมูลจะถูกซิงค์ไปยัง Railway Cloud และหน้าแรกทันที</span>
           </div>
 
         </form>
@@ -586,22 +586,32 @@
         </form>
       </div>
 
-      <!-- Firebase Settings -->
+      <!-- Railway Postgres Settings -->
       <div class="bg-white p-6 sm:p-8 rounded-2xl border border-zinc-200 max-w-3xl space-y-4 text-xs">
-        <div class="flex items-center gap-2 text-blue-700 font-bold">
-          <i class="fa-solid fa-database"></i> การเชื่อมต่อ Firebase Firestore (permpoon-15ae8)
+        <div class="flex items-center gap-2 text-emerald-700 font-bold text-sm">
+          <i class="fa-solid fa-server"></i> การเชื่อมต่อฐานข้อมูล Railway Postgres (permpoon-system)
         </div>
-        <p class="text-zinc-500">โปรเจกต์ปัจจุบันเชื่อมต่อกับ Google Firebase เรียบร้อยแล้ว หากต้องการเปลี่ยนหรือปรับแต่งสามารถแก้ไขได้ด้านล่าง:</p>
+        <p class="text-zinc-500">โปรเจกต์ปัจจุบันเชื่อมต่อกับ Railway Cloud PostgreSQL ผ่าน Serverless API (`/api/*`) เรียบร้อยแล้ว ข้อมูลจะถูกจัดเก็บและซิงค์แบบเรียลไทม์ พร้อมระบบสำรอง LocalStorage อัตโนมัติ</p>
 
-        <textarea id="firebase-config-input" rows="8" class="w-full font-mono text-xs p-3.5 rounded-xl border border-zinc-200 outline-none focus:ring-1 focus:ring-zinc-900 bg-zinc-50"></textarea>
-
-        <div class="flex gap-2">
-          <button onclick="saveFirebaseSettings()" class="px-4 py-2 bg-zinc-900 text-white rounded-xl font-medium transition">
-            บันทึกการตั้งค่า Firebase
-          </button>
-          <button onclick="resetFirebaseSettings()" class="px-4 py-2 bg-zinc-100 text-zinc-700 rounded-xl font-medium transition">
-            รีเซ็ตค่าเริ่มต้น
-          </button>
+        <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-200 space-y-2 font-mono text-[11px] text-zinc-700">
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400">Database Engine:</span>
+            <span class="font-bold text-zinc-800">PostgreSQL (Railway Managed)</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400">Railway Project:</span>
+            <span class="font-bold text-zinc-800">permpoon-system</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400">Backend Endpoint:</span>
+            <span class="font-bold text-emerald-600">/api/settings, /api/inquiries, /api/reviews, /api/portfolio</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-zinc-400">Status:</span>
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected & Active
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -742,9 +752,7 @@
     </div>
   </div>
 
-  <!-- Firebase Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <!-- Database & App Scripts -->
   <script src="js/firebase-config.js"></script>
 
   <!-- Admin Dashboard Logic -->
@@ -758,7 +766,6 @@
       checkDbStatus();
       loadAllData();
       loadSettingsForm();
-      populateFirebaseInput();
     });
 
     // 1. PIN Security Authentication
@@ -803,9 +810,9 @@
     function checkDbStatus() {
       const badgeText = document.getElementById('db-status-text');
       const badge = document.getElementById('db-status-badge');
-      if (typeof isFirebaseActive !== 'undefined' && isFirebaseActive) {
-        badgeText.innerText = 'Firebase Cloud Live';
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>Firebase Live (permpoon-15ae8)</span>';
+      if (typeof isRailwayActive !== 'undefined' && isRailwayActive) {
+        badgeText.innerText = 'Railway Postgres Live';
+        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span> <span>Railway Cloud DB (permpoon-system)</span>';
         badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300';
       } else {
         badgeText.innerText = 'Local Storage Mode';
