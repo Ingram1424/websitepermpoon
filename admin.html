@@ -143,7 +143,7 @@
           <i class="fa-solid fa-star text-sm text-emerald-500"></i>
         </div>
         <div class="text-2xl font-bold text-emerald-600 mt-2" id="stat-reviews">0</div>
-        <div class="text-[11px] text-zinc-500 mt-0.5">คะแนนเฉลี่ย 4.9/5</div>
+        <div class="text-[11px] text-zinc-500 mt-0.5" id="stat-reviews-avg">คะแนนเฉลี่ย 5.0/5</div>
       </div>
     </div>
 
@@ -752,7 +752,7 @@
   </div>
 
   <!-- Database & App Scripts -->
-  <script src="js/firebase-config.js"></script>
+  <script src="js/firebase-config.js?v=20261127_02"></script>
 
   <!-- Admin Dashboard Logic -->
   <script>
@@ -828,10 +828,17 @@
         const res = await fetchWithTimeout('/health', { timeout: 3000 });
         if (res.ok) {
           const json = await res.json();
-          if (badgeText) badgeText.innerText = 'Cloud Database Connected';
-          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>ฐานข้อมูลเชื่อมต่อปกติ (Cloud DB)</span>';
-          badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300';
-          return;
+          if (json.db_connected) {
+            if (badgeText) badgeText.innerText = 'Cloud Database Connected';
+            badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>ฐานข้อมูลเชื่อมต่อปกติ (PostgreSQL)</span>';
+            badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-800 text-emerald-300';
+            return;
+          } else {
+            if (badgeText) badgeText.innerText = 'Local Storage Mode';
+            badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400"></span> <span>โหมดสำรอง (Local DB Fallback)</span>';
+            badge.className = 'flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950 border border-amber-800 text-amber-300';
+            return;
+          }
         }
       } catch (err) {}
 
@@ -855,8 +862,6 @@
 
       const reviews = await getReviews();
       renderReviews(reviews || []);
-      const rEl = document.getElementById('stat-reviews');
-      if (rEl) rEl.innerText = (reviews || []).length;
     }
 
     function updateStats() {
@@ -1577,22 +1582,38 @@
     // 7. Reviews Render
     function renderReviews(reviews) {
       const container = document.getElementById('reviews-container');
-      container.innerHTML = reviews.map(rev => `
-        <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex flex-col justify-between space-y-3">
-          <div class="space-y-2">
-            <div class="flex text-amber-500 text-xs">
-              ${'<i class="fa-solid fa-star"></i>'.repeat(rev.rating || 5)}
+      if (container) {
+        container.innerHTML = (reviews || []).map(rev => `
+          <div class="bg-white p-5 rounded-2xl border border-zinc-200 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex text-amber-500 text-xs">
+                ${'<i class="fa-solid fa-star"></i>'.repeat(rev.rating || 5)}
+              </div>
+              <p class="text-zinc-700 text-xs leading-relaxed italic">"${escapeHtml(rev.comment)}"</p>
             </div>
-            <p class="text-zinc-700 text-xs leading-relaxed italic">"${escapeHtml(rev.comment)}"</p>
-          </div>
-          <div class="pt-3 border-t border-zinc-100 text-xs flex justify-between items-center">
-            <div>
-              <div class="font-bold text-zinc-900">${escapeHtml(rev.name)}</div>
-              <div class="text-[11px] text-zinc-400">${escapeHtml(rev.role || 'ลูกค้า')}</div>
+            <div class="pt-3 border-t border-zinc-100 text-xs flex justify-between items-center">
+              <div>
+                <div class="font-bold text-zinc-900">${escapeHtml(rev.name)}</div>
+                <div class="text-[11px] text-zinc-400">${escapeHtml(rev.role || 'ลูกค้า')}</div>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
+
+      const rEl = document.getElementById('stat-reviews');
+      if (rEl) rEl.innerText = (reviews || []).length;
+
+      const rAvgEl = document.getElementById('stat-reviews-avg');
+      if (rAvgEl) {
+        if (reviews && reviews.length > 0) {
+          const sum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+          const avg = (sum / reviews.length).toFixed(1);
+          rAvgEl.innerText = `คะแนนเฉลี่ย ${avg}/5`;
+        } else {
+          rAvgEl.innerText = 'คะแนนเฉลี่ย -';
+        }
+      }
     }
 
     // Helper functions

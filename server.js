@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 // Security: Disable X-Powered-By
 app.disable('x-powered-by');
 
-// Security Headers Middleware (BUG-06)
+// Security Headers Middleware (BUG-06, BUG-09)
 app.use((req, res, next) => {
   setCorsHeaders(req, res);
   res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
@@ -20,10 +20,11 @@ app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
     "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; " +
+    "connect-src 'self' https: https://cloudflareinsights.com; " +
     "img-src 'self' https: data: blob:; " +
     "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com https://cdnjs.cloudflare.com; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;"
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com;"
   );
   if (req.method === 'OPTIONS') {
     return res.status(204).end();
@@ -80,19 +81,32 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Serve static assets
-app.use(express.static(__dirname));
+// Serve static assets with cache control (BUG-08)
+app.use(express.static(__dirname, {
+  etag: true,
+  lastModified: true,
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+    }
+  }
+}));
 
-// HTML Routes
+// HTML Routes (Always fresh, no stale cache)
 app.get('/', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/admin', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 app.get('/admin.html', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
