@@ -13,6 +13,9 @@ module.exports = async function handler(req, res) {
       const result = await db.query(
         'SELECT id, title, category, badge, location, img, description, area, duration, status, data, created_at FROM portfolio ORDER BY created_at DESC'
       );
+      if (!result.rows || result.rows.length === 0) {
+        return res.status(200).json({ success: true, items: db.INITIAL_DATA.portfolio });
+      }
       const items = (result.rows || []).map(row => ({
         id: row.id,
         title: row.title,

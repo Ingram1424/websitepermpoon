@@ -13,10 +13,24 @@ module.exports = async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const result = await db.query('SELECT data, updated_at FROM site_settings WHERE key = $1', [key]);
-      if (result.rows && result.rows.length > 0) {
+      if (result.rows && result.rows.length > 0 && result.rows[0].data) {
         return res.status(200).json({ success: true, data: result.rows[0].data, updatedAt: result.rows[0].updated_at });
       }
-      return res.status(200).json({ success: true, data: null });
+      const defaultData = {
+        companyName: "บริษัท เพิ่มพูน คอนทรัคชั่น จำกัด",
+        tagline: "รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล",
+        phone: "089-123-4567",
+        phone2: "02-987-6543",
+        email: "contact@phoemphoon.com",
+        lineId: "@permpoon",
+        address: "เลขที่ 19/57 ซอยเลียบคลองสอง 27 แขวงสามวาตะวันตก เขตคลองสามวา กรุงเทพมหานคร 10510",
+        workDays: "จันทร์ - เสาร์: 08:30 - 17:30 น.",
+        rateBuild: 14500,
+        rateRenovate: 6500,
+        rateInterior: 9000,
+        rateExtension: 8500
+      };
+      return res.status(200).json({ success: true, data: defaultData, updatedAt: new Date().toISOString() });
     }
 
     if (req.method === 'POST') {

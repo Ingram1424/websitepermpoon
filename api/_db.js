@@ -227,6 +227,38 @@ async function initPgTables(client) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+
+    // Seed site_settings if empty
+    const setCheck = await client.query("SELECT 1 FROM site_settings WHERE key = 'site_info'");
+    if (setCheck.rows.length === 0) {
+      await client.query(
+        "INSERT INTO site_settings (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)",
+        ['site_info', JSON.stringify(INITIAL_DATA.site_settings.site_info)]
+      );
+    }
+
+    // Seed reviews if empty
+    const revCheck = await client.query("SELECT COUNT(*) as cnt FROM reviews");
+    if (parseInt(revCheck.rows[0].cnt, 10) === 0) {
+      for (const r of INITIAL_DATA.reviews) {
+        await client.query(
+          "INSERT INTO reviews (id, name, role, rating, comment, data, created_at) VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP)",
+          [r.id, r.name, r.role, r.rating, r.comment, JSON.stringify(r)]
+        );
+      }
+    }
+
+    // Seed portfolio if empty
+    const portCheck = await client.query("SELECT COUNT(*) as cnt FROM portfolio");
+    if (parseInt(portCheck.rows[0].cnt, 10) === 0) {
+      for (const p of INITIAL_DATA.portfolio) {
+        await client.query(
+          "INSERT INTO portfolio (id, title, category, badge, location, img, description, area, duration, status, data, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, CURRENT_TIMESTAMP)",
+          [p.id, p.title, p.category, p.badge, p.location, p.img, p.description, p.area, p.duration, p.status, JSON.stringify(p)]
+        );
+      }
+    }
+
     pgAvailable = true;
   } catch (err) {
     pgAvailable = false;
@@ -340,6 +372,7 @@ function executeLocalQuery(text, params = []) {
 }
 
 module.exports = {
+  INITIAL_DATA,
   getPool,
   isPgConnected() {
     return pgAvailable;

@@ -13,6 +13,9 @@ module.exports = async function handler(req, res) {
       const result = await db.query(
         'SELECT id, name, role, rating, comment, data, created_at FROM reviews ORDER BY created_at DESC'
       );
+      if (!result.rows || result.rows.length === 0) {
+        return res.status(200).json({ success: true, items: db.INITIAL_DATA.reviews });
+      }
       const items = (result.rows || []).map(row => ({
         id: row.id,
         name: row.name,
