@@ -1,12 +1,11 @@
 const db = require('./_db');
+const { setCorsHeaders, requireAdmin } = require('./_auth');
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCorsHeaders(req, res);
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return res.status(204).end();
   }
 
   try {
@@ -14,7 +13,7 @@ module.exports = async function handler(req, res) {
       const result = await db.query(
         'SELECT id, name, role, rating, comment, data, created_at FROM reviews ORDER BY created_at DESC'
       );
-      const items = result.rows.map(row => ({
+      const items = (result.rows || []).map(row => ({
         id: row.id,
         name: row.name,
         role: row.role,
@@ -44,15 +43,17 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'DELETE') {
+      if (!requireAdmin(req, res)) return;
+
       const id = req.query.id;
-      if (!id) return res.status(400).json({ error: 'Missing id' });
+      if (!id) return res.status(400).json({ success: false, error: 'Missing id' });
       await db.query('DELETE FROM reviews WHERE id = $1', [id]);
       return res.status(200).json({ success: true, message: 'Review deleted' });
     }
 
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
   } catch (error) {
-    console.error('API Reviews Error:', error);
-    return res.status(500).json({ success: false, error: error.message });
+    console.error('API Reviews Error');
+    return res.status(503).json({ success: false, error: 'ระบบไม่สามารถประมวลผลคำขอได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง' });
   }
 };

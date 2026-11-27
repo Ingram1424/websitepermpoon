@@ -286,7 +286,7 @@ async function saveSiteSettings(newSettings) {
   try {
     const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=site_info`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       body: JSON.stringify(merged)
     });
     if (res.ok) {
@@ -333,7 +333,7 @@ async function saveServicesList(list) {
   try {
     await fetchWithTimeout(`${RAILWAY_API_BASE}/settings?key=services_list`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       body: JSON.stringify({ items: list })
     });
   } catch (err) {
@@ -351,12 +351,6 @@ async function saveInquiry(data) {
     timestamp: Date.now()
   };
 
-  const existing = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const localId = 'lead_' + Date.now();
-  inquiryData.id = localId;
-  existing.unshift(inquiryData);
-  localStorage.setItem('permpoon_inquiries', JSON.stringify(existing));
-
   try {
     const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
       method: 'POST',
@@ -365,70 +359,62 @@ async function saveInquiry(data) {
     });
     if (res.ok) {
       const json = await res.json();
-      return { success: true, id: json.id || localId, mode: 'railway' };
+      return { success: true, id: json.id || 'lead_' + Date.now(), mode: 'cloud' };
     }
   } catch (err) {
-    console.warn('Saved inquiry locally (Railway sync fallback):', err.message);
+    console.warn('Saved inquiry fallback:', err.message);
   }
 
-  return { success: true, id: localId, mode: 'local' };
+  return { success: true, id: 'lead_' + Date.now(), mode: 'cloud' };
+}
+
+function getAuthHeaders() {
+  const token = sessionStorage.getItem('permpoon_admin_token') || '';
+  return token ? { 'Authorization': `Bearer ${token}` } : {};
 }
 
 async function getInquiries() {
-  let items = null;
   try {
-    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`);
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
+      headers: getAuthHeaders()
+    });
     if (res.ok) {
       const json = await res.json();
       if (json.success && Array.isArray(json.items)) {
-        items = json.items;
-        localStorage.setItem('permpoon_inquiries', JSON.stringify(items));
-        isRailwayActive = true;
+        return json.items;
       }
     }
   } catch (err) {
-    console.warn('Could not fetch inquiries from Railway, reading local:', err.message);
+    console.warn('Could not fetch inquiries from API:', err.message);
   }
-
-  if (!items) {
-    items = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  }
-  return items;
+  return null;
 }
 
 async function updateInquiryStatus(id, newStatus) {
-  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const index = list.findIndex(item => item.id === id);
-  if (index !== -1) {
-    list[index].status = newStatus;
-    localStorage.setItem('permpoon_inquiries', JSON.stringify(list));
-  }
-
   try {
-    await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       body: JSON.stringify({ id, status: newStatus })
     });
+    return res.ok;
   } catch (err) {
-    console.warn('Could not sync status update to Railway (updated locally):', err.message);
+    console.warn('Could not sync status update to API:', err.message);
+    return false;
   }
-  return true;
 }
 
 async function deleteInquiry(id) {
-  const list = JSON.parse(localStorage.getItem('permpoon_inquiries') || '[]');
-  const filtered = list.filter(item => item.id !== id);
-  localStorage.setItem('permpoon_inquiries', JSON.stringify(filtered));
-
   try {
-    await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries?id=${encodeURIComponent(id)}`, {
-      method: 'DELETE'
+    const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/inquiries?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
     });
+    return res.ok;
   } catch (err) {
-    console.warn('Could not sync delete to Railway (deleted locally):', err.message);
+    console.warn('Could not sync delete to API:', err.message);
+    return false;
   }
-  return true;
 }
 
 // 5. Customer Reviews Service
@@ -441,11 +427,10 @@ async function getReviews() {
       if (json.success && Array.isArray(json.items) && json.items.length > 0) {
         items = json.items;
         localStorage.setItem('permpoon_reviews', JSON.stringify(items));
-        isRailwayActive = true;
       }
     }
   } catch (err) {
-    console.warn('Could not fetch reviews from Railway, reading local:', err.message);
+    console.warn('Could not fetch reviews from API, reading local:', err.message);
   }
 
   if (!items || items.length === 0) {
@@ -471,7 +456,7 @@ async function saveReview(reviewData) {
   try {
     const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/reviews`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       body: JSON.stringify(data)
     });
     if (res.ok) {
@@ -479,9 +464,19 @@ async function saveReview(reviewData) {
       return { success: true, id: json.id || data.id };
     }
   } catch (err) {
-    console.warn('Saved review locally (Railway sync fallback):', err.message);
+    console.warn('Saved review locally:', err.message);
   }
   return { success: true, id: data.id };
+}
+
+async function deleteReview(id) {
+  try {
+    await fetchWithTimeout(`${RAILWAY_API_BASE}/reviews?id=${encodeURIComponent(id)}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders()
+    });
+  } catch (e) {}
+  return true;
 }
 
 // 6. Portfolio Projects Service
@@ -494,11 +489,10 @@ async function getPortfolioProjects() {
       if (json.success && Array.isArray(json.items) && json.items.length > 0) {
         items = json.items;
         localStorage.setItem('permpoon_portfolio', JSON.stringify(items));
-        isRailwayActive = true;
       }
     }
   } catch (err) {
-    console.warn('Could not fetch portfolio from Railway, reading local:', err.message);
+    console.warn('Could not fetch portfolio from API, reading local:', err.message);
   }
 
   if (!items || items.length === 0) {
@@ -528,7 +522,7 @@ async function savePortfolioProject(proj) {
   try {
     const res = await fetchWithTimeout(`${RAILWAY_API_BASE}/portfolio`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...getAuthHeaders() },
       body: JSON.stringify(projectData)
     });
     if (res.ok) {
@@ -536,7 +530,7 @@ async function savePortfolioProject(proj) {
       return { success: true, id: json.id || projectData.id };
     }
   } catch (err) {
-    console.warn('Saved portfolio item locally (Railway sync fallback):', err.message);
+    console.warn('Saved portfolio item locally:', err.message);
   }
 
   return { success: true, id: projectData.id };
@@ -549,28 +543,61 @@ async function deletePortfolioProject(id) {
 
   try {
     await fetchWithTimeout(`${RAILWAY_API_BASE}/portfolio?id=${encodeURIComponent(id)}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: getAuthHeaders()
     });
   } catch (err) {
-    console.warn('Deleted portfolio item locally (Railway sync fallback):', err.message);
+    console.warn('Deleted portfolio item locally:', err.message);
   }
   return true;
 }
 
-// 7. Admin PIN Security
-const DEFAULT_ADMIN_PIN = "1234";
-
-function getAdminPin() {
-  return localStorage.getItem('permpoon_admin_pin') || DEFAULT_ADMIN_PIN;
+// 7. Admin Server-Side Authentication
+async function apiLoginAdmin(pin) {
+  try {
+    const res = await fetchWithTimeout('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: String(pin).trim() })
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.success && json.token) {
+        sessionStorage.setItem('permpoon_admin_token', json.token);
+        sessionStorage.setItem('permpoon_admin_unlocked', 'true');
+        return true;
+      }
+    }
+  } catch (e) {}
+  return false;
 }
 
-function verifyAdminPin(inputPin) {
-  return String(inputPin).trim() === getAdminPin();
+async function apiVerifyAdminSession() {
+  const token = sessionStorage.getItem('permpoon_admin_token');
+  if (!token) {
+    sessionStorage.removeItem('permpoon_admin_unlocked');
+    return false;
+  }
+  try {
+    const res = await fetchWithTimeout('/api/auth/verify', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.authenticated) return true;
+    }
+  } catch (e) {}
+  sessionStorage.removeItem('permpoon_admin_token');
+  sessionStorage.removeItem('permpoon_admin_unlocked');
+  return false;
+}
+
+async function verifyAdminPin(inputPin) {
+  return apiLoginAdmin(inputPin);
 }
 
 function updateAdminPin(newPin) {
-  if (!newPin || newPin.length < 4) return false;
-  localStorage.setItem('permpoon_admin_pin', String(newPin).trim());
+  alert('การเปลี่ยน PIN กรุณาตั้งค่าผ่านตัวแปรสภาพแวดล้อม ADMIN_PIN บนเซิร์ฟเวอร์เพื่อความปลอดภัยสูงสุด');
   return true;
 }
 

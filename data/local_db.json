@@ -1,0 +1,135 @@
+{
+  "site_settings": {
+    "site_info": {
+      "companyName": "บริษัท เพิ่มพูน คอนทรัคชั่น จำกัด",
+      "tagline": "รับเหมาก่อสร้าง ปรับปรุงรีโนเวท ซ่อมแซมอาคาร รวมทั้งระบบประปาและระบบสุขาภิบาล",
+      "phone": "089-123-4567",
+      "phone2": "02-987-6543",
+      "email": "contact@phoemphoon.com",
+      "lineId": "@permpoon",
+      "address": "เลขที่ 19/57 ซอยเลียบคลองสอง 27 แขวงสามวาตะวันตก เขตคลองสามวา กรุงเทพมหานคร 10510",
+      "workDays": "จันทร์ - เสาร์: 08:30 - 17:30 น."
+    }
+  },
+  "inquiries": [
+    {
+      "id": "lead_1795762257141",
+      "name": "คุณสมชาย",
+      "phone": "0812345678",
+      "service": "สร้างบ้าน",
+      "status": "new",
+      "data": {
+        "name": "คุณสมชาย",
+        "phone": "0812345678",
+        "service": "สร้างบ้าน"
+      },
+      "created_at": "2026-11-27T06:50:57.144Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev_1",
+      "name": "คุณสมชาย วรเศรษฐ์",
+      "role": "เจ้าของบ้านเดี่ยว 2 ชั้น (บางนา)",
+      "rating": 5,
+      "comment": "ประทับใจทีมงานเพิ่มพูนมากครับ รีโนเวทบ้านเดี่ยว 2 ชั้น ช่างทำงานเรียบร้อย ตรงเวลา ส่งอัปเดตงานในไลน์กลุ่มทุกวันศุกร์ ไม่ต้องคอยตามจี้ คุมงบได้ตาม BOQ เป๊ะ",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "rev_2",
+      "name": "คุณพิมพา สุวรรณมาศ",
+      "role": "เจ้าของทาวน์โฮม (รามอินทรา)",
+      "rating": 5,
+      "comment": "ต่อเติมครัวหลังบ้านและโรงจอดรถกับเพิ่มพูน วิศวกรให้คำแนะนำเรื่องโครงสร้างดีมาก ลงเสาเข็มไมโครไพล์ถูกต้อง ไม่มีทรุดร้าว งานเสร็จก่อนกำหนด 1 สัปดาห์ แนะนำเลยค่ะ",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "rev_3",
+      "name": "คุณธีรเดช กิตติคุณานนต์",
+      "role": "เจ้าของอาคารพาณิชย์ 3 คูหา",
+      "rating": 5,
+      "comment": "รีโนเวทตึกแถวเป็นโฮมออฟฟิศ งานระบบไฟฟ้าและประปาทำได้มาตรฐานสูงมาก ตรวจงานร่วมกับโฟร์แมนทุกขั้นตอน แก้ไขงานตามแบบรวดเร็ว ราคาโปร่งใสคุ้มค่าครับ",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    }
+  ],
+  "portfolio": [
+    {
+      "id": "proj_1",
+      "title": "บ้านพักอาศัยโมเดิร์นทรอปิคอล 2 ชั้น",
+      "category": "house",
+      "badge": "สร้างใหม่",
+      "location": "นนทบุรี",
+      "img": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "description": "งานก่อสร้างบ้านเดี่ยวสไตล์ Modern Tropical เน้นความโปร่งโล่ง รับแสงธรรมชาติ",
+      "area": "350 ตร.ม.",
+      "duration": "10 เดือน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "proj_2",
+      "title": "รีโนเวททาวน์โฮม 3 ชั้น",
+      "category": "renovate",
+      "badge": "รีโนเวท",
+      "location": "ลาดพร้าว กรุงเทพฯ",
+      "img": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+      "description": "ปรับปรุงโครงสร้างและตกแต่งใหม่ทั้งหลัง สไตล์ Japandi เรียบหรู",
+      "area": "220 ตร.ม.",
+      "duration": "4 เดือน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "proj_3",
+      "title": "ตกแต่งภายในคอนโด Luxury Duplex",
+      "category": "interior",
+      "badge": "ตกแต่งภายใน",
+      "location": "สุขุมวิท กรุงเทพฯ",
+      "img": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
+      "description": "งานบิลท์อินไม้แท้ ดีไซน์โมเดิร์นคลาสสิก พร้อมระบบไฟอัจฉริยะ",
+      "area": "140 ตร.ม.",
+      "duration": "3 เดือน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "proj_4",
+      "title": "ต่อเติมครัวไทยและ Glasshouse โรงจอดรถ",
+      "category": "extension",
+      "badge": "ต่อเติม",
+      "location": "ราชพฤกษ์",
+      "img": "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80",
+      "description": "งานโครงสร้างเสาเข็มไมโครไพล์แยกส่วน หลังคาไวนิลกันความร้อน",
+      "area": "65 ตร.ม.",
+      "duration": "45 วัน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "proj_5",
+      "title": "สร้างคฤหาสน์หรู Contemporary Luxury",
+      "category": "house",
+      "badge": "สร้างใหม่",
+      "location": "บางนา-ตราด",
+      "img": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80",
+      "description": "ก่อสร้างพร้อมตกแต่งครบวงจร พร้อมสระว่ายน้ำระบบเกลือ",
+      "area": "650 ตร.ม.",
+      "duration": "14 เดือน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    },
+    {
+      "id": "proj_6",
+      "title": "รีโนเวทและตกแต่งสำนักงาน Modern Industrial",
+      "category": "interior",
+      "badge": "ตกแต่งภายใน",
+      "location": "สาทร กรุงเทพฯ",
+      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+      "description": "ปรับโฉมออฟฟิศ 2 ชั้น เน้นพื้นที่ Co-working space โปร่งทันสมัย",
+      "area": "280 ตร.ม.",
+      "duration": "3.5 เดือน",
+      "status": "completed",
+      "created_at": "2026-11-27T06:50:56.437Z"
+    }
+  ]
+}
